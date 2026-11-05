@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>fantastic demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #0d1117; color: #e6edf3; margin: 0; display: flex; height: 100vh; }
+  aside { width: 260px; border-right: 1px solid #21262d; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  main { flex: 1; display: flex; flex-direction: column; padding: 14px; }
+  h1 { font-size: 15px; margin: 0 0 6px; color: #7ee787; }
+  input, button, textarea { font: inherit; background: #161b22; color: #e6edf3; border: 1px solid #30363d; border-radius: 6px; padding: 8px; }
+  button { cursor: pointer; }
+  button:hover { border-color: #7ee787; }
+  .row { display: flex; gap: 8px; }
+  #convs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+  .conv { padding: 6px 8px; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; gap: 6px; font-size: 12px; }
+  .conv.active { border-color: #7ee787; }
+  .conv .del { color: #f85149; border: none; background: none; padding: 0 2px; }
+  #log { flex: 1; overflow-y: auto; padding: 10px; border: 1px solid #21262d; border-radius: 6px; white-space: pre-wrap; font-size: 13px; line-height: 1.5; }
+  .user { color: #79c0ff; }
+  .assistant { color: #e6edf3; }
+  .tool { color: #d2a8ff; font-size: 12px; }
+  .sys { color: #8b949e; font-size: 12px; }
+  .err { color: #f85149; }
+  #composer { display: flex; gap: 8px; margin-top: 10px; }
+  #msg { flex: 1; resize: none; height: 60px; }
+</style>
+</head>
+<body>
+<aside>
+  <h1>fantastic</h1>
+  <div id="loginBox">
+    <input id="user" placeholder="username" value="aditya">
+    <input id="pass" placeholder="password" type="password" value="fantastic-dev-123">
+    <button id="loginBtn">Login</button>
+    <div id="loginState" class="sys">not logged in</div>
+  </div>
+  <div id="appBox" style="display:none; flex:1; display:flex; flex-direction:column; gap:10px;">
+    <button id="newBtn">+ new conversation</button>
+    <div id="convs"></div>
+  </div>
+</aside>
+<main>
+  <div id="log"><div class="sys">Login dulu, lalu kirim pesan. SSE stream tampil di sini.</div></div>
+  <div id="composer">
+    <textarea id="msg" placeholder="tulis pesan…"></textarea>
+    <button id="sendBtn">Kirim</button>
+  </div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let token = localStorage.getItem("token") || "";
+let convId = null;
+
+function setLoggedIn(name) {
+  $("loginState").textContent = "logged in as " + name;
+  $("appBox").style.display = "flex";
+  loadConvs();
+}
+
+async function api(method, path, body) {
+  const res = await fetch(path, {
+    method,
+    headers: Object.assign({ "Content-Type": "application/json" },
+      token ? { Authorization: "Bearer " + token } : {}),
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 401) { $("loginState").textContent = "token invalid — login lagi"; }
+  return res;
+}
+
+$("loginBtn").onclick = async () => {
+  const res = await fetch("/api/v1/auth/token", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: $("user").value, password: $("pass").value }),
+  });
+  const j = await res.json();
+  if (j.data && j.data.access_token) {
+    token = j.data.access_token;
+    localStorage.setItem("token", token);
+    setLoggedIn($("user").value);
+  } else {
+    $("loginState").textContent = "login gagal: " + (j.message || res.status);
+  }
+};
+
+if (token) setLoggedIn("(saved token)");
+
+async function loadConvs() {
+  const res = await api("GET", "/api/v1/conversations");
+  const j = await res.json();
+  $("convs").innerHTML = "";
+  (j.data || []).forEach(c => {
+    const div = document.createElement("div");
+    div.className = "conv" + (c.id === convId ? " active" : "");
+    const label = document.createElement("span");
+    label.textContent = c.title || "(untitled)";
+    label.onclick = () => { convId = c.id; openConv(); };
+    const del = document.createElement("button");
+    del.className = "del"; del.textContent = "✕";
+    del.onclick = async (ev) => {
+      ev.stopPropagation();
+      await api("DELETE", "/api/v1/conversations/" + c.id);
+      if (convId === c.id) { convId = null; $("log").innerHTML = ""; }
+      loadConvs();
+    };
+    div.append(label, del);
+    $("convs").appendChild(div);
+  });
+}
+
+async function openConv() {
+  if (!convId) return;
+  const res = await api("GET", "/api/v1/conversations/" + convId + "/messages");
+  const j = await res.json();
+  $("log").innerHTML = "";
+  (j.data || []).forEach(m => {
+    if (m.role === "user") appendLine("user", m.content);
+    else if (m.role === "tool") appendLine("tool", "tool result (" + m.tool_call_id + "): " + m.content);
+    else {
+      appendLine("assistant", m.content);
+      (m.tool_calls || []).forEach(tc =>
+        appendLine("tool", "→ panggil tool " + tc.name + "(" + tc.arguments + ")"));
+    }
+  });
+  loadConvs();
+}
+
+$("newBtn").onclick = () => { convId = null; $("log").innerHTML = ""; };
+
+function appendLine(cls, text) {
+  const div = document.createElement("div");
+  div.className = cls;
+  div.textContent = text;
+  $("log").appendChild(div);
+  $("log").scrollTop = $("log").scrollHeight;
+  return div;
+}
+
+$("sendBtn").onclick = async () => {
+  const text = $("msg").value.trim();
+  if (!text) return;
+  if (!token) { appendLine("err", "login dulu."); return; }
+  $("msg").value = "";
+  appendLine("user", text);
+  const streamDiv = appendLine("assistant", "");
+  const body = { message: text };
+  if (convId) body.conversation_id = convId;
+
+  const res = await fetch("/api/v1/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    let msg = res.status;
+    try { msg = (await res.json()).message || msg; } catch {}
+    appendLine("err", "gagal: " + msg);
+    return;
+  }
+  convId = res.headers.get("Conversation-Id") || convId;
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = "";
+  let finalText = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    let idx;
+    while ((idx = buf.indexOf("\n\n")) >= 0) {
+      const frame = buf.slice(0, idx); buf = buf.slice(idx + 2);
+      if (!frame.startsWith("data: ")) continue;
+      const ev = JSON.parse(frame.slice(6));
+      if (ev.type === "stream_chunk") { finalText += ev.content; streamDiv.textContent = finalText; }
+      else if (ev.type === "message" && ev.tool_calls) {
+        ev.tool_calls.forEach(tc => appendLine("tool", "→ panggil tool " + tc.function.name + "(" + tc.function.arguments + ")"));
+        streamDiv.textContent = finalText;
+      }
+      else if (ev.type === "tool_result") { appendLine("tool", "← hasil: " + ev.content); }
+      else if (ev.type === "error") { appendLine("err", "error: " + ev.error); }
+      else if (ev.type === "done") { streamDiv.textContent = finalText || ev.content; }
+    }
+    $("log").scrollTop = $("log").scrollHeight;
+  }
+  loadConvs();
+};
+</script>
+</body>
+</html>

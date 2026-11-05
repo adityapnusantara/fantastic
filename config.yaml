@@ -1,0 +1,48 @@
+# fantastic configuration.
+# Secrets are referenced with "$" braces (e.g. "$"{SOME_VAR}) and resolved from the environment at load.
+
+server:
+  http_port: 5580
+
+database:
+  # Local compose Postgres (pgvector), host port from .env (default 5555).
+  url: ${DATABASE_URL}
+
+llm:
+  base_url: https://api.openai.com/v1   # swap to any OpenAI-compatible gateway
+  # "responses" (/v1/responses, default) is required for reasoning models
+  # with function tools such as gpt-6.1-sol; "chat" (/v1/chat/completions)
+  # suits classic models on gateways without a responses endpoint.
+  api: responses
+  model: gpt-6.1-sol
+  api_key_env: OPENAI_API_KEY
+  # system_prompt: "You are..."
+  # Reasoning models reject temperature — leave 0 to omit the parameter.
+  temperature: 0
+  max_tokens: 2048
+  # Reasoning effort on /responses: low/medium/high/xhigh. Empty = default.
+  reasoning_effort: ""
+
+memory:
+  history_window: 20
+
+auth:
+  issuer: http://localhost:5560
+  client_id: fantastic-app
+  organization: pribadi
+  jwks_url: http://localhost:5560/.well-known/jwks
+  dev_token_endpoint: true
+  client_secret_env: CASDOOR_CLIENT_SECRET
+
+mcp_servers:
+  tebar:
+    url: https://api.tebar.app/mcp
+    headers:
+      Authorization: "Bearer ${TEBAR_MCP_TOKEN}"
+    allow_tools:
+      - list_accounts
+      - get_platform_rules
+      - get_publishing_limits
+      - list_posts
+      - get_post
+      - list_comments

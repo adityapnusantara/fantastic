@@ -1,0 +1,182 @@
+basePath: /api/v1
+definitions:
+  auth.loginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  chat.chatRequest:
+    properties:
+      conversation_id:
+        description: 'optional: absent starts a new conversation'
+        type: string
+      message:
+        type: string
+    type: object
+  response.Envelope:
+    properties:
+      code:
+        type: string
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: '"Bearers {access token}" (Casdoor-issued JWT).'
+  title: fantastic API
+  version: 0.1.0
+paths:
+  /auth/token:
+    post:
+      consumes:
+      - application/json
+      description: Password grant proxy to Casdoor; disabled unless auth.dev_token_endpoint
+        is true (then the route is absent and returns 404).
+      parameters:
+      - description: username and password
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/auth.loginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      summary: Exchange credentials for a token (dev only)
+      tags:
+      - auth
+  /chat:
+    post:
+      consumes:
+      - application/json
+      description: 'SSE: emits data frames with types stream_chunk, message, tool_result,
+        done, error (eino http-sse-service format). The Conversation-Id response header
+        carries the conversation id (created on the fly when the request omits it).'
+      parameters:
+      - description: message and optional conversation id
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/chat.chatRequest'
+      produces:
+      - text/event-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Stream one chat turn
+      tags:
+      - chat
+  /conversations:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: List my conversations
+      tags:
+      - conversations
+    post:
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Create a conversation
+      tags:
+      - conversations
+  /conversations/{id}:
+    delete:
+      parameters:
+      - description: conversation id (uuid)
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Delete a conversation
+      tags:
+      - conversations
+  /conversations/{id}/messages:
+    get:
+      description: Flattened user/assistant/tool messages in order, including tool
+        calls and their results.
+      parameters:
+      - description: conversation id (uuid)
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Get conversation messages
+      tags:
+      - conversations
+  /whoami:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Who am I
+      tags:
+      - auth
+swagger: "2.0"

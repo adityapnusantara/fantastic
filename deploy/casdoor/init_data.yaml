@@ -1,0 +1,69 @@
+# Casdoor declarative seed, applied on first boot (initDataNewOnly=true).
+# Mounted into the casdoor container at /init_data.yaml (see docker-compose.yml).
+# Dev values only — everything here is localhost-only.
+organizations:
+  - owner: admin
+    name: pribadi
+    displayName: Fantastic Personal
+    websiteUrl: ""
+    passwordType: bcrypt
+    passwordOptions:
+      - AtLeast6
+    defaultTokenFormat: JWT
+    languages:
+      - en
+      - id
+
+applications:
+  - owner: admin
+    name: fantastic-app
+    displayName: Fantastic
+    organization: pribadi
+    cert: cert-built-in
+    enablePassword: true
+    enableSignUp: false
+    clientId: fantastic-app
+    clientSecret: fantastic-dev-secret-123
+    tokenFormat: JWT
+    expireInHours: 168
+    grantTypes:
+      - authorization_code
+      - password
+      - client_credentials
+      - refresh_token
+    redirectUris:
+      - http://localhost:5580
+    signinMethods:
+      - name: Password
+        displayName: Password
+        rule: All
+    signupItems:
+      - name: ID
+        visible: false
+        required: true
+        rule: Random
+      - name: Username
+        visible: true
+        required: true
+        rule: None
+      - name: Display name
+        visible: true
+        required: true
+        rule: None
+      - name: Password
+        visible: true
+        required: true
+        rule: None
+      - name: Confirm password
+        visible: true
+        required: true
+        rule: None
+
+users:
+  - owner: pribadi
+    name: aditya
+    displayName: Aditya
+    type: normal-user
+    password: fantastic-dev-123
+    isAdmin: true
+    signupApplication: fantastic-app

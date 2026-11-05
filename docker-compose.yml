@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-fantastic}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fantastic-dev}
+      POSTGRES_DB: ${POSTGRES_DB:-fantastic}
+    ports:
+      - "${POSTGRES_PORT:-5555}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./deploy/postgres/init.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fantastic} -d ${POSTGRES_DB:-fantastic}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  casdoor:
+    image: casbin/casdoor:4.25.0
+    command: ["/bin/sh", "-c", "./server --createDatabase=true"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      RUNNING_IN_DOCKER: "true"
+      driverName: postgres
+      dataSourceName: user=${POSTGRES_USER:-fantastic} password=${POSTGRES_PASSWORD:-fantastic-dev} host=postgres port=5432 sslmode=disable dbname=casdoor
+      initDataFile: /init_data.yaml
+      initDataNewOnly: "true"
+    ports:
+      - "${CASDOOR_PORT:-5560}:8000"
+    volumes:
+      - ./deploy/casdoor/init_data.yaml:/init_data.yaml:ro
+
+volumes:
+  pgdata:

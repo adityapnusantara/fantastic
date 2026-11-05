@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# Go build artifacts
+fantastic
+*.test
+*.out
+
+# Local logs
+*.log
+
+# OS noise
+.DS_Store
+*.swp
+
+# Agent runtime state (transient team coordination)
+.omz/
+
+# Synced copies of user-level agent skills (kept globally, not per-repo)
+.agents/
