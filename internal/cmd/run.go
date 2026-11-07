@@ -1,5 +1,5 @@
 // Package cmd defines the fantastic command-line surface:
-// `fantastic api` and `fantastic migrate`.
+// `fantastic api`, `fantastic migrate` and `fantastic faq`.
 package cmd
 
 import (
@@ -45,6 +45,7 @@ func Run(args []string) error {
 		Commands: []*cli.Command{
 			apiCommand(),
 			migrateCommand(),
+			faqCommand(),
 		},
 	}
 	return cmd.Run(context.Background(), args)

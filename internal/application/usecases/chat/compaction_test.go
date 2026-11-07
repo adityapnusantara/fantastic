@@ -51,6 +51,34 @@ func waitFor(t *testing.T, what string, cond func() bool) {
 	t.Fatalf("timed out waiting for %s", what)
 }
 
+// tick records one hook invocation without ever blocking the caller:
+// tokens beyond the channel capacity are dropped, which is harmless — a
+// test awaits only as many tokens as the exercised flow guarantees.
+func tick(ch chan struct{}) {
+	select {
+	case ch <- struct{}{}:
+	default:
+	}
+}
+
+// awaitTokens receives n completion tokens from ch, failing after the
+// same 3s deadline waitFor uses. Store hooks tick once per mocked call,
+// after the mock has recorded the call, so awaiting tokens joins the
+// service's detached compaction goroutine (service.go maybeCompact)
+// before the test reads state that goroutine mutates: the channel
+// receive is the happens-before edge that makes the reads race-free.
+func awaitTokens(t *testing.T, what string, ch <-chan struct{}, n int) {
+	t.Helper()
+	deadline := time.After(3 * time.Second)
+	for i := 0; i < n; i++ {
+		select {
+		case <-ch:
+		case <-deadline:
+			t.Fatalf("timed out waiting for %s (got %d/%d)", what, i, n)
+		}
+	}
+}
+
 func TestCompactionFoldsOverflowIntoSummary(t *testing.T) {
 	conv := &domain.Conversation{ID: convID(), UserID: "alice", Title: "t"} // SummaryUntilSeq = 0
 	recent := []domain.Message{
@@ -78,27 +106,41 @@ func TestCompactionFoldsOverflowIntoSummary(t *testing.T) {
 	}
 	svc := newService(t, mock, mdl, nil)
 
+	// SaveSummary runs on the detached compaction goroutine. The callback
+	// stores the values, then ticks: the token is the happens-before edge
+	// that lets the assertions below read the locals race-free.
+	summarySaved := make(chan struct{}, 1)
 	var savedSummary string
 	var savedUntil int64
 	mock.SaveSummaryFn = func(_ context.Context, _ uuid.UUID, _ string, summary string, untilSeq int64) error {
 		savedSummary, savedUntil = summary, untilSeq
+		tick(summarySaved)
 		return nil
 	}
 
 	drain(t, mustStream(t, svc, conv.ID, "hi"))
 
-	waitFor(t, "summary save", func() bool { return savedSummary != "" })
+	awaitTokens(t, "summary save", summarySaved, 1)
 	assert.Equal(t, "the conversation was about old questions", savedSummary)
 	assert.Equal(t, int64(3), savedUntil, "coverage marker advances to just before the window")
 
+	// Also ordered by the summarySaved token: on the compaction goroutine
+	// the summarizer's Generate call and every mock.Calls append
+	// (LoadWindow, GetMessages, SaveSummary) precede the SaveSummary hook.
 	require.Equal(t, 1, mdl.generateCalls, "summarizer runs once, only on overflow")
 	assert.Contains(t, mock.Calls, "GetMessages")
 }
 
 func TestNoOverflowSkipsSummarizer(t *testing.T) {
 	conv := &domain.Conversation{ID: convID(), UserID: "alice", Title: "t"}
+	// Two window loads are guaranteed: Stream's own and the detached
+	// compaction pass's. With an empty window the compaction pass returns
+	// right after LoadWindow, so after the second token mock.Calls is
+	// final and safe to assert on.
+	windowLoads := make(chan struct{}, 2)
 	mock := &mocks.MockConversationStore{
 		LoadWindowFn: func(context.Context, uuid.UUID, string, int) (*domain.Conversation, []domain.Message, error) {
+			tick(windowLoads)
 			return conv, nil, nil // window has everything; nothing uncovered
 		},
 	}
@@ -107,7 +149,7 @@ func TestNoOverflowSkipsSummarizer(t *testing.T) {
 
 	drain(t, mustStream(t, svc, conv.ID, "hi"))
 
-	time.Sleep(100 * time.Millisecond) // let any (wrong) async compaction run
+	awaitTokens(t, "compaction window load", windowLoads, 2) // join async compaction
 	assert.Zero(t, mdl.generateCalls, "no summarizer call without overflow")
 	assert.NotContains(t, mock.Calls, "SaveSummary")
 }

@@ -21,12 +21,19 @@ type ConversationStore interface {
 	GetConversation(ctx context.Context, conversationID uuid.UUID, userID string) (*domain.Conversation, error)
 
 	// ListConversations returns the caller's conversations ordered by
-	// most recent activity first.
-	ListConversations(ctx context.Context, userID string) ([]domain.Conversation, error)
+	// most recent activity first. When agentID is non-nil, only
+	// conversations bound to that agent are returned.
+	ListConversations(ctx context.Context, userID string, agentID *string) ([]domain.Conversation, error)
 
 	// DeleteConversation removes the conversation and its messages.
 	// Returns domain.ErrNotFound when not owned by userID.
 	DeleteConversation(ctx context.Context, conversationID uuid.UUID, userID string) error
+
+	// CountByAgent returns how many conversations are bound to the given
+	// agent (0 for an unknown agent). The agent admin use case uses it to
+	// refuse deleting an agent that conversations still reference
+	// (domain.ErrAgentInUse, HTTP 409).
+	CountByAgent(ctx context.Context, agentID string) (int64, error)
 
 	// AppendMessage persists one message atomically: assigns the next seq
 	// within the conversation, ignores duplicate message ids (idempotent

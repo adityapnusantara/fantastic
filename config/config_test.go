@@ -101,3 +101,44 @@ func TestAPIKeyMissing(t *testing.T) {
 	_, err = cfg.APIKey()
 	assert.Error(t, err)
 }
+
+func TestFaqEmbeddingDefaults(t *testing.T) {
+	path := writeTemp(t, "server: {}\n")
+	cfg, _, err := Load(path)
+	require.NoError(t, err)
+	assert.Equal(t, DefaultFaqEmbeddingModel, cfg.FAQ.Embedding.Model)
+	assert.Equal(t, "", cfg.FAQ.Embedding.BaseURL, "empty base_url means the OpenAI default endpoint")
+}
+
+func TestFAQEmbeddingAPIKeyFromInterpolation(t *testing.T) {
+	t.Setenv("OPENAI_API_KEY", "sk-embed")
+	path := writeTemp(t, "faq:\n  embedding:\n    api_key: ${OPENAI_API_KEY}\n")
+	cfg, warnings, err := Load(path)
+	require.NoError(t, err)
+	assert.Empty(t, warnings)
+
+	key, err := cfg.FAQEmbeddingAPIKey()
+	require.NoError(t, err)
+	assert.Equal(t, "sk-embed", key)
+}
+
+func TestFAQEmbeddingAPIKeyFallsBackToEnv(t *testing.T) {
+	t.Setenv("OPENAI_API_KEY", "sk-env-fallback")
+	path := writeTemp(t, "server: {}\n")
+	cfg, _, err := Load(path)
+	require.NoError(t, err)
+
+	key, err := cfg.FAQEmbeddingAPIKey()
+	require.NoError(t, err)
+	assert.Equal(t, "sk-env-fallback", key)
+}
+
+func TestFAQEmbeddingAPIKeyMissing(t *testing.T) {
+	t.Setenv("OPENAI_API_KEY", "")
+	path := writeTemp(t, "server: {}\n")
+	cfg, _, err := Load(path)
+	require.NoError(t, err)
+
+	_, err = cfg.FAQEmbeddingAPIKey()
+	assert.Error(t, err)
+}

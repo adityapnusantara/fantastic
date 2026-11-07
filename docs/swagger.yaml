@@ -1,5 +1,32 @@
 basePath: /api/v1
 definitions:
+  agent.agentWriteRequest:
+    properties:
+      api:
+        type: string
+      description:
+        type: string
+      display_name:
+        type: string
+      enabled:
+        type: boolean
+      icon:
+        type: string
+      model:
+        type: string
+      reasoning_effort:
+        type: string
+      sort_order:
+        type: integer
+      system_prompt:
+        type: string
+      temperature:
+        type: number
+      tools:
+        items:
+          type: string
+        type: array
+    type: object
   auth.loginRequest:
     properties:
       password:
@@ -29,6 +56,228 @@ info:
   title: fantastic API
   version: 0.1.0
 paths:
+  /agent-tools:
+    get:
+      description: 'Sorted names of the runtime tool catalog: the only tools an agent
+        may be assigned (spec: Catalog-driven tool assignment). Feeds the admin page''s
+        tool checkboxes.'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: List assignable tool names (admin)
+      tags:
+      - agents
+  /agents:
+    get:
+      description: 'Listing metadata of every agent: display name, description, icon,
+        enabled, sort order and degraded tool names. System prompts, tools and overrides
+        are never included.'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: List agents (metadata only)
+      tags:
+      - agents
+  /agents/{agent}/chat:
+    post:
+      consumes:
+      - application/json
+      description: 'SSE: emits data frames with types stream_chunk, message, tool_result,
+        done, error (eino http-sse-service format). The Conversation-Id response header
+        carries the conversation id (created on the fly and bound to the path agent
+        when the request omits it). Unknown or disabled agents are rejected with 404;
+        chatting into a conversation bound to another agent is rejected with 409.'
+      parameters:
+      - description: agent id (slug)
+        in: path
+        name: agent
+        required: true
+        type: string
+      - description: message and optional conversation id
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/chat.chatRequest'
+      produces:
+      - text/event-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Stream one chat turn for an agent
+      tags:
+      - chat
+  /agents/{id}:
+    delete:
+      description: 'Refused with 409 while conversations still reference the agent;
+        disable it (enabled: false) instead.'
+      parameters:
+      - description: agent id (slug)
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Delete an agent (admin)
+      tags:
+      - agents
+    get:
+      description: Adds the system prompt, tool assignment and model overrides to
+        the listing metadata.
+      parameters:
+      - description: agent id (slug)
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Get agent detail (admin)
+      tags:
+      - agents
+    patch:
+      description: 'Only the provided fields change; the rest keeps its current value.
+        The id is immutable: the path is authoritative.'
+      parameters:
+      - description: agent id (slug)
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: fields to change
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/agent.agentWriteRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Update an agent (admin)
+      tags:
+      - agents
+    post:
+      description: 'Validated create: the id is the path slug, the system prompt is
+        required, every tool name must exist in the runtime catalog. Missing strings
+        default empty, enabled defaults true, sort order defaults 0, nil overrides
+        inherit the global llm default.'
+      parameters:
+      - description: agent id (lowercase slug)
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: agent fields
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/agent.agentWriteRequest'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - bearerAuth: []
+      summary: Create an agent (admin)
+      tags:
+      - agents
   /auth/token:
     post:
       consumes:
@@ -56,46 +305,15 @@ paths:
       summary: Exchange credentials for a token (dev only)
       tags:
       - auth
-  /chat:
-    post:
-      consumes:
-      - application/json
-      description: 'SSE: emits data frames with types stream_chunk, message, tool_result,
-        done, error (eino http-sse-service format). The Conversation-Id response header
-        carries the conversation id (created on the fly when the request omits it).'
-      parameters:
-      - description: message and optional conversation id
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/chat.chatRequest'
-      produces:
-      - text/event-stream
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/response.Envelope'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/response.Envelope'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/response.Envelope'
-      security:
-      - bearerAuth: []
-      summary: Stream one chat turn
-      tags:
-      - chat
   /conversations:
     get:
+      description: When agent_id is set, only conversations bound to that agent are
+        returned.
+      parameters:
+      - description: filter by bound agent id
+        in: query
+        name: agent_id
+        type: string
       responses:
         "200":
           description: OK

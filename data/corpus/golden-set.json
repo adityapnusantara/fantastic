@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-05T18:56:52Z",
+  "scoring_rule": "a hit is scored at the CHUNK level — top-k must contain the chunk whose `content_hash` equals the pinned expected chunk; MRR on the same unit",
+  "questions": [
+    {
+      "n": 1,
+      "question": "Apa itu LinkAja dan apa saja layanannya?",
+      "topic": "Product overview",
+      "expected_chunk_hash": "0e9b88c1dd4d576bdefbdcd70be25fe645c4eda75ce15739845a6ca9365b2e39",
+      "expected_source_url": "https://www.linkaja.id/news/pengajuan-full-service-linkaja-ditolak",
+      "pinned_fact": "LinkAja memiliki dua tipe akun, yaitu Basic Service dan Full Service"
+    },
+    {
+      "n": 2,
+      "question": "Bagaimana cara top up / isi saldo LinkAja?",
+      "topic": "How-to: top up",
+      "expected_chunk_hash": "0642a0d958ad8eb6f037e6d0cf25690ec413e2f2685722b59e747e2c15eff3ce",
+      "expected_source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+      "pinned_fact": "Kamu bisa isi saldo LinkAja melalui ATM, mobile banking, internet banking, hingga merchant retail"
+    },
+    {
+      "n": 3,
+      "question": "Berapa limit saldo dan transaksi LinkAja?",
+      "topic": "Limits (substituted for original fee-table question)",
+      "expected_chunk_hash": "6d7f192f7268a8d96679477eaf310e9bc7edb24019b627fd23f42efa577741fb",
+      "expected_source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+      "pinned_fact": "Limit merupakan batas maksimum saldo atau transaksi yang dapat dilakukan dalam periode tertentu",
+      "substitution_status": "confirmed_by_owner (2026-11-06)"
+    },
+    {
+      "n": 4,
+      "question": "Bagaimana cara transfer saldo LinkAja ke pengguna lain atau ke bank?",
+      "topic": "How-to: transfer/withdraw",
+      "expected_chunk_hash": "41f729990c2566a20de21931be3cd9f8343d8067e278b5bf7f03533c10936391",
+      "expected_source_url": "https://www.linkaja.id/news/cara-kirim-uang-pakai-linkaja-praktis-ke-sesama-linkaja-atau-rekening-bank",
+      "pinned_fact": "kamu bisa mengirim saldo LinkAja ke sesama pengguna LinkAja maupun ke berbagai rekening bank langsung dari aplikasi"
+    },
+    {
+      "n": 5,
+      "question": "Bagaimana cara reset PIN LinkAja kalau lupa?",
+      "topic": "Account recovery",
+      "expected_chunk_hash": "9da17a9bc71a925d991521772d4529178bfaa72dc3bd507284c2e07c26e2251b",
+      "expected_source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-via-email",
+      "pinned_fact": "Pilih opsi Lupa PIN atau Reset PIN di aplikasi LinkAja"
+    },
+    {
+      "n": 6,
+      "question": "Bagaimana cara menghubungi customer service LinkAja?",
+      "topic": "Support channels",
+      "expected_chunk_hash": "d13d55677fbbe17cc7ad360991ad5b5c95c15852fc34c31976ca7085322120c0",
+      "expected_source_url": "https://www.linkaja.id/news/layanan-pelanggan-linkaja",
+      "pinned_fact": "menghubungi LinkAja melalui 021-80602109"
+    },
+    {
+      "n": 7,
+      "question": "Apa itu LinkAja Syariah dan apa bedanya dengan LinkAja biasa?",
+      "topic": "Product variant",
+      "expected_chunk_hash": "a29956e1e56aac05d702d67a9d9d3768de8a3937857907c24284e1aedd515ddb",
+      "expected_source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+      "pinned_fact": "akad seperti Qardh, Wakalah bil Ujrah, dan Ijarah pada transaksi yang relevan"
+    },
+    {
+      "n": 8,
+      "question": "Bagaimana cara menghapus atau menutup akun LinkAja?",
+      "topic": "Account lifecycle",
+      "expected_chunk_hash": null,
+      "expected_source_url": null,
+      "pinned_fact": null,
+      "substitution_status": "unresolvable",
+      "unresolvable_reason": "Topic genuinely absent from the corpus: no unit in data/corpus/linkaja-faq.json (420 units, questions and answers both scanned) covers deleting/closing/deactivating a LinkAja account. All 'hapus'/'tutup' hits are unrelated (metode pembayaran removal, 'Tutup dan Buka Kembali Aplikasi' restart step). No page-URL fallback pinned because no article is about account closure either. Escalate to owner: add a corpus article or replace this golden question."
+    },
+    {
+      "n": 9,
+      "question": "Di mana saja LinkAja bisa dipakai untuk bayar (merchant/QRIS)?",
+      "topic": "Acceptance network",
+      "expected_chunk_hash": "0a10a7613dfdbbe2bf5395063aa1e7e14cdbd28d100f7c9e1dcd6b683905ce1e",
+      "expected_source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+      "pinned_fact": "Pembayaran merchant melalui QRIS"
+    },
+    {
+      "n": 10,
+      "question": "Bagaimana cara upgrade akun ke KYC terverifikasi dan apa manfaatnya?",
+      "topic": "KYC/upgrade",
+      "expected_chunk_hash": "ffede28ad0a6e157c3f287d75cb53fc3551d7501e5e7208ba8ff6316842e4dc0",
+      "expected_source_url": "https://www.linkaja.id/news/cara-upgrade-full-service-linkaja",
+      "pinned_fact": "Ambil foto e-KTP sesuai area yang tersedia"
+    }
+  ],
+  "known_gaps": [
+    {
+      "question": "Berapa biaya admin untuk top up LinkAja?",
+      "original_n": 3,
+      "scored": false,
+      "reason": "Fee tables are images: article daftar-biaya-admin-di-linkaja body has 4 <img> and 0 <table> elements; corpus-wide scan finds NO top-up/isi-saldo fee amounts in any unit text (docs/rag/corpus-report.md section 4a). Closest unit cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant_07 only states fees 'dapat berbeda tergantung bank atau merchant' — amountless. Substituted per the D11 substitution rule; substitution pending owner confirmation before task 3.2.",
+      "owner_decision": "confirmed_dropped (2026-11-06)"
+    }
+  ]
+}

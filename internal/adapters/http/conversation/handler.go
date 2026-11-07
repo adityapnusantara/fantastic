@@ -17,7 +17,7 @@ import (
 
 // Service is the conversation capability the handlers need.
 type Service interface {
-	List(ctx context.Context, p domain.Principal) ([]domain.Conversation, error)
+	List(ctx context.Context, p domain.Principal, agentID *string) ([]domain.Conversation, error)
 	Get(ctx context.Context, p domain.Principal, id uuid.UUID) (*domain.Conversation, error)
 	Messages(ctx context.Context, p domain.Principal, id uuid.UUID) ([]domain.Message, error)
 	Delete(ctx context.Context, p domain.Principal, id uuid.UUID) error
@@ -27,6 +27,7 @@ type Service interface {
 // conversationDTO is the wire form of a conversation.
 type conversationDTO struct {
 	ID        string `json:"id"`
+	AgentID   string `json:"agent_id"`
 	Title     string `json:"title"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
@@ -53,6 +54,7 @@ type toolCallDTO struct {
 func toConversationDTO(c domain.Conversation) conversationDTO {
 	return conversationDTO{
 		ID:        c.ID.String(),
+		AgentID:   c.AgentID,
 		Title:     c.Title,
 		CreatedAt: c.CreatedAt.UTC().Format(timeFormat),
 		UpdatedAt: c.UpdatedAt.UTC().Format(timeFormat),
@@ -131,17 +133,23 @@ func (h *handlers) Create(c *echo.Context) error {
 
 // List returns the caller's conversations, newest activity first.
 //
-//	@Summary	List my conversations
-//	@Tags		conversations
-//	@Success	200	{object}	response.Envelope
-//	@Security	bearerAuth
-//	@Router		/conversations [get]
+//	@Summary		List my conversations
+//	@Description	When agent_id is set, only conversations bound to that agent are returned.
+//	@Tags			conversations
+//	@Param			agent_id	query		string	false	"filter by bound agent id"
+//	@Success		200	{object}	response.Envelope
+//	@Security		bearerAuth
+//	@Router			/conversations [get]
 func (h *handlers) List(c *echo.Context) error {
 	p, err := h.principal(c)
 	if err != nil {
 		return err
 	}
-	convs, err := h.svc.List(c.Request().Context(), p)
+	var agentID *string
+	if v := c.QueryParam("agent_id"); v != "" {
+		agentID = &v
+	}
+	convs, err := h.svc.List(c.Request().Context(), p, agentID)
 	if err != nil {
 		return notFound(c, err)
 	}

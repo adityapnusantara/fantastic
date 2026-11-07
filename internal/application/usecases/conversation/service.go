@@ -13,6 +13,10 @@ import (
 	"github.com/adityapratamanusantara/fantastic/internal/domain"
 )
 
+// DefaultAgentID is the agent every conversation created through Create
+// is bound to: the seeded default row from migration 0005.
+const DefaultAgentID = "general"
+
 // Service manages conversations for verified callers.
 type Service struct {
 	store driven.ConversationStore
@@ -23,12 +27,13 @@ func NewService(store driven.ConversationStore) *Service {
 	return &Service{store: store}
 }
 
-// List returns the caller's conversations, newest activity first.
-func (s *Service) List(ctx context.Context, p domain.Principal) ([]domain.Conversation, error) {
+// List returns the caller's conversations, newest activity first. When
+// agentID is non-nil, only conversations bound to that agent are returned.
+func (s *Service) List(ctx context.Context, p domain.Principal, agentID *string) ([]domain.Conversation, error) {
 	if p.IsZero() {
 		return nil, errors.New("no principal")
 	}
-	convs, err := s.store.ListConversations(ctx, p.UserID)
+	convs, err := s.store.ListConversations(ctx, p.UserID, agentID)
 	if err != nil {
 		return nil, fmt.Errorf("list conversations: %w", err)
 	}
@@ -53,12 +58,23 @@ func (s *Service) Get(ctx context.Context, p domain.Principal, conversationID uu
 	return s.store.GetConversation(ctx, conversationID, p.UserID)
 }
 
-// Create starts a new, empty conversation for the caller.
+// Create starts a new, empty conversation for the caller, bound to the
+// default agent (general). Convenience for callers that do not choose an
+// agent; the chat path uses CreateForAgent.
 func (s *Service) Create(ctx context.Context, p domain.Principal) (*domain.Conversation, error) {
+	return s.CreateForAgent(ctx, p, DefaultAgentID)
+}
+
+// CreateForAgent starts a new, empty conversation for the caller, bound to
+// the given agent for its whole lifetime.
+func (s *Service) CreateForAgent(ctx context.Context, p domain.Principal, agentID string) (*domain.Conversation, error) {
 	if p.IsZero() {
 		return nil, errors.New("no principal")
 	}
-	conv := domain.NewConversation(p.UserID)
+	if agentID == "" {
+		return nil, errors.New("no agent id")
+	}
+	conv := domain.NewConversation(p.UserID, agentID)
 	if err := s.store.CreateConversation(ctx, conv); err != nil {
 		return nil, fmt.Errorf("create conversation: %w", err)
 	}

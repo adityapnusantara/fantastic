@@ -18,3 +18,7 @@ fantastic
 
 # Synced copies of user-level agent skills (kept globally, not per-repo)
 .agents/
+
+# RAG spike (add-faq-rag-search): raw HTML cache is machine-local, reproducible by re-crawl.
+# The curated corpus in data/corpus/ stays committed (design D5) — do not add a broad data/ rule.
+data/raw/

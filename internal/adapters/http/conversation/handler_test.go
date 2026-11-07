@@ -21,12 +21,14 @@ import (
 )
 
 type stubService struct {
-	convs  []domain.Conversation
-	msgs   []domain.Message
-	getErr error
+	convs     []domain.Conversation
+	msgs      []domain.Message
+	getErr    error
+	listAgent *string
 }
 
-func (s *stubService) List(context.Context, domain.Principal) ([]domain.Conversation, error) {
+func (s *stubService) List(_ context.Context, _ domain.Principal, agentID *string) ([]domain.Conversation, error) {
+	s.listAgent = agentID
 	return s.convs, nil
 }
 
@@ -49,7 +51,7 @@ func (s *stubService) Messages(_ context.Context, _ domain.Principal, _ uuid.UUI
 func (s *stubService) Delete(context.Context, domain.Principal, uuid.UUID) error { return nil }
 
 func (s *stubService) Create(_ context.Context, _ domain.Principal) (*domain.Conversation, error) {
-	return &domain.Conversation{ID: uuid.New(), UserID: "alice"}, nil
+	return &domain.Conversation{ID: uuid.New(), UserID: "alice", AgentID: "general"}, nil
 }
 
 func newApp(svc conversation.Service) *echo.Echo {
@@ -96,6 +98,38 @@ func TestListNewestFirst(t *testing.T) {
 	require.Len(t, body.Data, 2)
 	assert.Equal(t, "recent", body.Data[0].Title, "most recent activity first")
 	assert.Equal(t, "00", body.Code)
+}
+
+func TestListForwardsAgentFilter(t *testing.T) {
+	e := newApp(&stubService{convs: []domain.Conversation{
+		{ID: uuid.New(), UserID: "alice", AgentID: "faq", Title: "faq chat", UpdatedAt: time.Now()},
+	}})
+
+	rec := do(e, http.MethodGet, "/api/v1/conversations?agent_id=faq")
+	require.Equal(t, http.StatusOK, rec.Code)
+
+	var body struct {
+		Code string `json:"code"`
+		Data []struct {
+			ID      string `json:"id"`
+			AgentID string `json:"agent_id"`
+		} `json:"data"`
+	}
+	require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &body))
+	require.Len(t, body.Data, 1)
+	assert.Equal(t, "faq", body.Data[0].AgentID, "the wire form exposes the binding")
+}
+
+func TestListAgentFilterReachesService(t *testing.T) {
+	stub := &stubService{}
+	e := newApp(stub)
+
+	do(e, http.MethodGet, "/api/v1/conversations?agent_id=social")
+	require.NotNil(t, stub.listAgent)
+	assert.Equal(t, "social", *stub.listAgent)
+
+	do(e, http.MethodGet, "/api/v1/conversations")
+	assert.Nil(t, stub.listAgent, "no query param means no filter")
 }
 
 func TestMessagesIncludeToolCalls(t *testing.T) {

@@ -2,6 +2,7 @@ package casdoor
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -18,9 +19,55 @@ const accessTokenType = "access-token"
 type claims struct {
 	jwt.RegisteredClaims
 
-	TokenType string `json:"tokenType"`
-	Owner     string `json:"owner"`
-	Name      string `json:"name"`
+	TokenType string    `json:"tokenType"`
+	Owner     string    `json:"owner"`
+	Name      string    `json:"name"`
+	Roles     roleNames `json:"roles"`
+}
+
+// roleNames tolerates both shapes of Casdoor's roles claim: an array of
+// role-name strings (custom token fields) and — the default JWT mode —
+// an array of role objects carrying a name field. Anything else per item
+// is ignored rather than failing the whole token.
+type roleNames []string
+
+func (r *roleNames) UnmarshalJSON(data []byte) error {
+	var raw []json.RawMessage
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	out := make([]string, 0, len(raw))
+	for _, item := range raw {
+		var name string
+		if err := json.Unmarshal(item, &name); err == nil {
+			if name = strings.TrimSpace(name); name != "" {
+				out = append(out, name)
+			}
+			continue
+		}
+		var role struct {
+			Name string `json:"name"`
+		}
+		if err := json.Unmarshal(item, &role); err == nil {
+			if name := strings.TrimSpace(role.Name); name != "" {
+				out = append(out, name)
+			}
+		}
+	}
+	*r = out
+	return nil
+}
+
+// roles returns the token's roles claim normalized: absent claim yields
+// an empty (never nil) slice, entries are trimmed, blanks dropped.
+func (c claims) roles() []string {
+	out := make([]string, 0, len(c.Roles))
+	for _, r := range c.Roles {
+		if r = strings.TrimSpace(r); r != "" {
+			out = append(out, r)
+		}
+	}
+	return out
 }
 
 // Verifier validates Casdoor access tokens into a domain.Principal.
@@ -72,6 +119,7 @@ func (v *Verifier) Verify(ctx context.Context, rawToken string) (domain.Principa
 	return domain.Principal{
 		UserID:       username,
 		Organization: strings.TrimSpace(c.Owner),
+		Roles:        c.roles(),
 	}, nil
 }
 

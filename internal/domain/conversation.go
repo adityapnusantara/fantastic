@@ -8,10 +8,12 @@ import (
 	"github.com/google/uuid"
 )
 
-// Conversation is a chat thread owned by exactly one user.
+// Conversation is a chat thread owned by exactly one user and bound to
+// exactly one agent for its whole lifetime.
 type Conversation struct {
 	ID              uuid.UUID
 	UserID          string
+	AgentID         string
 	Title           string
 	RollingSummary  string
 	SummaryUntilSeq int64
@@ -19,13 +21,14 @@ type Conversation struct {
 	UpdatedAt       time.Time
 }
 
-// NewConversation builds a conversation for the given owner. Timestamps
-// are left zero: the store assigns them server-side so every row shares
-// one clock.
-func NewConversation(userID string) *Conversation {
+// NewConversation builds a conversation for the given owner, bound to the
+// given agent. Timestamps are left zero: the store assigns them server-side
+// so every row shares one clock.
+func NewConversation(userID, agentID string) *Conversation {
 	return &Conversation{
 		ID:              uuid.New(),
 		UserID:          userID,
+		AgentID:         agentID,
 		SummaryUntilSeq: 0,
 	}
 }

@@ -19,8 +19,21 @@ import (
 	"github.com/adityapratamanusantara/fantastic/internal/domain"
 )
 
+// ErrAgentMismatch is returned when the addressed conversation is bound
+// to a different agent than the one the turn names (design D7: the
+// conversation belongs to its agent for its whole lifetime; the HTTP
+// layer maps this to 409). Nothing is persisted on mismatch.
+var ErrAgentMismatch = errors.New("conversation is bound to another agent")
+
 // Config tunes the chat service.
 type Config struct {
+	// AgentName is the ADK agent identity; it is stamped onto every
+	// emitted event (Event.AgentName). Empty falls back to "fantastic".
+	AgentName string
+	// AgentDescription describes the agent to the ADK (used in
+	// multi-agent transfer prompts). Empty falls back to the default
+	// personal-assistant description.
+	AgentDescription string
 	// SystemPrompt is the agent instruction (system prompt).
 	SystemPrompt string
 	// HistoryWindow is how many recent messages accompany the summary.
@@ -47,9 +60,10 @@ type Service struct {
 // tools.
 func NewService(store driven.ConversationStore, chatModel model.AgenticModel, tools []tool.BaseTool, cfg Config, log *slog.Logger) (*Service, error) {
 	ctx := context.Background()
+	name, description := agentIdentity(cfg)
 	agent, err := adk.NewTypedChatModelAgent[*schema.AgenticMessage](ctx, &adk.TypedChatModelAgentConfig[*schema.AgenticMessage]{
-		Name:        "fantastic",
-		Description: "A personal assistant with MCP tools",
+		Name:        name,
+		Description: description,
 		Instruction: cfg.SystemPrompt,
 		Model:       chatModel,
 		ToolsConfig: adk.ToolsConfig{
@@ -69,15 +83,20 @@ func NewService(store driven.ConversationStore, chatModel model.AgenticModel, to
 	}, nil
 }
 
-// Stream runs one turn: it validates ownership, persists the user message
-// before any provider work (an errored turn still shows what was asked),
-// streams agent events on the returned channel, and persists the
-// assembled output once the turn ends — however it ends. The channel
-// closes when the turn is over.
-func (s *Service) Stream(ctx context.Context, p domain.Principal, conversationID uuid.UUID, text string) (<-chan Event, error) {
+// Stream runs one turn for the named agent: it validates ownership and
+// the conversation's agent binding, persists the user message before any
+// provider work (an errored turn still shows what was asked), streams
+// agent events on the returned channel, and persists the assembled output
+// once the turn ends — however it ends. The channel closes when the turn
+// is over. A conversation bound to another agent fails with
+// ErrAgentMismatch and nothing is persisted.
+func (s *Service) Stream(ctx context.Context, p domain.Principal, conversationID uuid.UUID, agentID string, text string) (<-chan Event, error) {
 	conv, recent, err := s.store.LoadWindow(ctx, conversationID, p.UserID, s.cfg.HistoryWindow)
 	if err != nil {
 		return nil, err // domain.ErrNotFound for foreign/missing conversations
+	}
+	if conv.AgentID != agentID {
+		return nil, ErrAgentMismatch // refused before anything is persisted
 	}
 
 	// Durability: the user message is stored before the provider runs.
@@ -377,6 +396,27 @@ func deriveTitle(content string) string {
 }
 
 const defaultSummaryPrefix = "Summary of the earlier conversation (messages below are more recent):\n"
+
+// Built-in chat agent identity, used when Config leaves the agent fields
+// empty (pre-registry callers that do not know about per-agent identity).
+const (
+	defaultAgentName        = "fantastic"
+	defaultAgentDescription = "A personal assistant with MCP tools"
+)
+
+// agentIdentity resolves the configured agent identity against the
+// built-in defaults.
+func agentIdentity(cfg Config) (name, description string) {
+	name = cfg.AgentName
+	if name == "" {
+		name = defaultAgentName
+	}
+	description = cfg.AgentDescription
+	if description == "" {
+		description = defaultAgentDescription
+	}
+	return name, description
+}
 
 // agenticText concatenates the generated text blocks of an assistant
 // message (or generated deltas of a stream chunk).

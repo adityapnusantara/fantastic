@@ -22,18 +22,34 @@ import (
 	"github.com/adityapratamanusantara/fantastic/internal/domain"
 )
 
-// Streamer is the chat capability the handler needs.
+// Streamer is the chat capability the handler needs: one streaming turn
+// for the agent the request names.
 type Streamer interface {
-	Stream(ctx context.Context, p domain.Principal, conversationID uuid.UUID, text string) (<-chan chatusecase.Event, error)
+	Stream(ctx context.Context, p domain.Principal, conversationID uuid.UUID, agentID string, text string) (<-chan chatusecase.Event, error)
 }
 
-// ConversationCreator creates new conversation rows, so a chat request
-// without a conversation id can start one.
+// AgentResolver resolves the agent id named in the request path to that
+// agent's streaming service. ok is false for unknown or disabled agents,
+// which the handler rejects with 404 before anything else happens.
+type AgentResolver interface {
+	Resolve(agentID string) (Streamer, bool)
+}
+
+// ResolverFunc adapts a plain function to AgentResolver (the bootstrap
+// wiring uses it for its transitional single-service resolver).
+type ResolverFunc func(agentID string) (Streamer, bool)
+
+// Resolve implements AgentResolver.
+func (f ResolverFunc) Resolve(agentID string) (Streamer, bool) { return f(agentID) }
+
+// ConversationCreator creates new conversation rows bound to an agent, so
+// a chat request without a conversation id can start one bound to the
+// agent in the path.
 type ConversationCreator interface {
-	Create(ctx context.Context, p domain.Principal) (*domain.Conversation, error)
+	CreateForAgent(ctx context.Context, p domain.Principal, agentID string) (*domain.Conversation, error)
 }
 
-// chatRequest is the POST /api/v1/chat payload.
+// chatRequest is the POST /api/v1/agents/{agent}/chat payload.
 type chatRequest struct {
 	ConversationID *uuid.UUID `json:"conversation_id"` // optional: absent starts a new conversation
 	Message        string     `json:"message"`
@@ -62,25 +78,39 @@ type wireFnCall struct {
 	Arguments string `json:"arguments"`
 }
 
-// NewHandler builds the POST /api/v1/chat handler.
+// NewHandler builds the POST /api/v1/agents/{agent}/chat handler: the
+// path names the agent, whose service is resolved per request (design
+// D1/D4); unknown or disabled agents are 404, and a conversation bound to
+// another agent is 409 (design D7).
 //
-//	@Summary		Stream one chat turn
-//	@Description	SSE: emits data frames with types stream_chunk, message, tool_result, done, error (eino http-sse-service format). The Conversation-Id response header carries the conversation id (created on the fly when the request omits it).
+//	@Summary		Stream one chat turn for an agent
+//	@Description	SSE: emits data frames with types stream_chunk, message, tool_result, done, error (eino http-sse-service format). The Conversation-Id response header carries the conversation id (created on the fly and bound to the path agent when the request omits it). Unknown or disabled agents are rejected with 404; chatting into a conversation bound to another agent is rejected with 409.
 //	@Tags			chat
 //	@Accept			json
 //	@Produce		text/event-stream
+//	@Param			agent	path	string		true	"agent id (slug)"
 //	@Param			request	body	chatRequest	true	"message and optional conversation id"
 //	@Success		200		{string}	string
 //	@Failure		400		{object}	response.Envelope
 //	@Failure		401		{object}	response.Envelope
 //	@Failure		404		{object}	response.Envelope
+//	@Failure		409		{object}	response.Envelope
 //	@Security		bearerAuth
-//	@Router			/chat [post]
-func NewHandler(svc Streamer, conversations ConversationCreator, log *slog.Logger) echo.HandlerFunc {
+//	@Router			/agents/{agent}/chat [post]
+func NewHandler(resolver AgentResolver, conversations ConversationCreator, log *slog.Logger) echo.HandlerFunc {
 	return func(c *echo.Context) error {
 		p, ok := middleware.PrincipalFrom(c)
 		if !ok {
 			return response.Fail(c, http.StatusUnauthorized, "unauthorized", "authentication required")
+		}
+
+		agentID := c.Param("agent")
+		if resolver == nil || agentID == "" {
+			return response.Fail(c, http.StatusNotFound, "not_found", "unknown or disabled agent")
+		}
+		svc, ok := resolver.Resolve(agentID)
+		if !ok {
+			return response.Fail(c, http.StatusNotFound, "not_found", "unknown or disabled agent")
 		}
 
 		var req chatRequest
@@ -92,22 +122,27 @@ func NewHandler(svc Streamer, conversations ConversationCreator, log *slog.Logge
 		if req.ConversationID != nil {
 			convID = *req.ConversationID
 		} else if conversations != nil {
-			// starting a new conversation: persist its row first so the
-			// turn's user message has an owner row to attach to
-			conv, err := conversations.Create(c.Request().Context(), p)
+			// starting a new conversation: persist its row first, bound to
+			// the agent in the path, so the turn's user message has an owner
+			// row to attach to
+			conv, err := conversations.CreateForAgent(c.Request().Context(), p, agentID)
 			if err != nil {
 				return response.Fail(c, http.StatusInternalServerError, "internal", "failed to create conversation")
 			}
 			convID = conv.ID
 		}
 
-		events, err := svc.Stream(c.Request().Context(), p, convID, req.Message)
+		events, err := svc.Stream(c.Request().Context(), p, convID, agentID, req.Message)
 		if err != nil {
-			if errors.Is(err, domain.ErrNotFound) {
+			switch {
+			case errors.Is(err, domain.ErrNotFound):
 				return response.Fail(c, http.StatusNotFound, "not_found", "conversation not found")
+			case errors.Is(err, chatusecase.ErrAgentMismatch):
+				return response.Fail(c, http.StatusConflict, "conflict", "conversation belongs to another agent")
+			default:
+				log.Warn("chat stream failed to start", slog.String("error", err.Error()))
+				return response.Fail(c, http.StatusInternalServerError, "internal", "failed to start chat turn")
 			}
-			log.Warn("chat stream failed to start", slog.String("error", err.Error()))
-			return response.Fail(c, http.StatusInternalServerError, "internal", "failed to start chat turn")
 		}
 
 		w := c.Response()

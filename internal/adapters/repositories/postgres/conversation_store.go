@@ -29,13 +29,14 @@ func NewStore(pool *pgxpool.Pool) *Store {
 // compile-time port conformance check.
 var _ driven.ConversationStore = (*Store)(nil)
 
-// CreateConversation persists a new conversation row; timestamps are
-// assigned by the database so all rows share one clock.
+// CreateConversation persists a new conversation row with its agent
+// binding; timestamps are assigned by the database so all rows share one
+// clock.
 func (s *Store) CreateConversation(ctx context.Context, conv *domain.Conversation) error {
 	_, err := s.pool.Exec(ctx, `
-		INSERT INTO conversations (id, user_id, title, rolling_summary, summary_until_seq)
-		VALUES ($1, $2, $3, $4, $5)`,
-		conv.ID, conv.UserID, conv.Title, conv.RollingSummary, conv.SummaryUntilSeq,
+		INSERT INTO conversations (id, user_id, agent_id, title, rolling_summary, summary_until_seq)
+		VALUES ($1, $2, $3, $4, $5, $6)`,
+		conv.ID, conv.UserID, conv.AgentID, conv.Title, conv.RollingSummary, conv.SummaryUntilSeq,
 	)
 	if err != nil {
 		return fmt.Errorf("insert conversation: %w", err)
@@ -46,17 +47,27 @@ func (s *Store) CreateConversation(ctx context.Context, conv *domain.Conversatio
 // GetConversation returns the conversation when owned by userID.
 func (s *Store) GetConversation(ctx context.Context, id uuid.UUID, userID string) (*domain.Conversation, error) {
 	row := s.pool.QueryRow(ctx, `
-		SELECT id, user_id, title, rolling_summary, summary_until_seq, created_at, updated_at
+		SELECT id, user_id, agent_id, title, rolling_summary, summary_until_seq, created_at, updated_at
 		FROM conversations WHERE id = $1 AND user_id = $2`, id, userID)
 	return scanConversation(row)
 }
 
-// ListConversations returns the caller's conversations, newest activity first.
-func (s *Store) ListConversations(ctx context.Context, userID string) ([]domain.Conversation, error) {
-	rows, err := s.pool.Query(ctx, `
-		SELECT id, user_id, title, rolling_summary, summary_until_seq, created_at, updated_at
-		FROM conversations WHERE user_id = $1
-		ORDER BY updated_at DESC`, userID)
+// ListConversations returns the caller's conversations, newest activity
+// first. When agentID is non-nil, only conversations bound to that agent
+// are returned (the (user_id, agent_id, updated_at DESC) index serves the
+// filtered form).
+func (s *Store) ListConversations(ctx context.Context, userID string, agentID *string) ([]domain.Conversation, error) {
+	query := `
+		SELECT id, user_id, agent_id, title, rolling_summary, summary_until_seq, created_at, updated_at
+		FROM conversations WHERE user_id = $1`
+	args := []any{userID}
+	if agentID != nil {
+		query += ` AND agent_id = $2`
+		args = append(args, *agentID)
+	}
+	query += ` ORDER BY updated_at DESC`
+
+	rows, err := s.pool.Query(ctx, query, args...)
 	if err != nil {
 		return nil, fmt.Errorf("list conversations: %w", err)
 	}
@@ -83,6 +94,19 @@ func (s *Store) DeleteConversation(ctx context.Context, id uuid.UUID, userID str
 		return domain.ErrNotFound
 	}
 	return nil
+}
+
+// CountByAgent returns the number of conversations bound to agentID.
+// Unknown agents simply count zero.
+func (s *Store) CountByAgent(ctx context.Context, agentID string) (int64, error) {
+	var n int64
+	err := s.pool.QueryRow(ctx,
+		`SELECT COUNT(*) FROM conversations WHERE agent_id = $1`, agentID,
+	).Scan(&n)
+	if err != nil {
+		return 0, fmt.Errorf("count conversations for agent: %w", err)
+	}
+	return n, nil
 }
 
 // AppendMessage persists one message atomically (single-message batch).
@@ -250,7 +274,7 @@ func (s *Store) inTx(ctx context.Context, fn func(tx pgx.Tx) error) error {
 // scanConversation scans one conversation row.
 func scanConversation(row pgx.Row) (*domain.Conversation, error) {
 	var c domain.Conversation
-	err := row.Scan(&c.ID, &c.UserID, &c.Title, &c.RollingSummary, &c.SummaryUntilSeq, &c.CreatedAt, &c.UpdatedAt)
+	err := row.Scan(&c.ID, &c.UserID, &c.AgentID, &c.Title, &c.RollingSummary, &c.SummaryUntilSeq, &c.CreatedAt, &c.UpdatedAt)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return nil, domain.ErrNotFound
 	}

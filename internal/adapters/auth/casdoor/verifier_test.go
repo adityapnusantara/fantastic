@@ -178,3 +178,79 @@ func TestCachedKeysSurviveJWKSEndpointOutage(t *testing.T) {
 	_, err = v.Verify(context.Background(), token)
 	assert.NoError(t, err, "cached key must keep working while the endpoint is down")
 }
+
+func TestVerifyExtractsRoles(t *testing.T) {
+	clock := newFakeClock()
+	key := newKey(t)
+	server := newJWKSServer(t, map[string]*rsa.PrivateKey{"k1": key})
+	v := newTestVerifier(t, server.URL, clock)
+
+	claims := validClaims()
+	claims["roles"] = []string{"fantastic-admin", "  Fantastic-Other  ", "other"}
+	token := signRS256(t, "k1", key, claims)
+
+	p, err := v.Verify(context.Background(), token)
+	require.NoError(t, err)
+	assert.Equal(t, []string{"fantastic-admin", "Fantastic-Other", "other"}, p.Roles,
+		"roles are trimmed but keep their original casing")
+	assert.True(t, p.HasAnyRole("fantastic-admin"))
+	assert.True(t, p.HasAnyRole("FANTASTIC-ADMIN"), "match is case-insensitive")
+	assert.False(t, p.HasAnyRole("unknown-role"))
+}
+
+func TestVerifyExtractsRolesFromRoleObjects(t *testing.T) {
+	// Casdoor's default JWT mode embeds the user's Roles []*Role — the
+	// claim arrives as an array of objects, not strings. Names are
+	// extracted; unparseable items are ignored, never failing the token.
+	clock := newFakeClock()
+	key := newKey(t)
+	server := newJWKSServer(t, map[string]*rsa.PrivateKey{"k1": key})
+	v := newTestVerifier(t, server.URL, clock)
+
+	claims := validClaims()
+	claims["roles"] = []any{
+		map[string]any{"owner": "pribadi", "name": "fantastic-admin", "displayName": "Fantastic Admin"},
+		map[string]any{"name": "  spaced-name  "},
+		"plain-string-role",
+		42,
+	}
+	token := signRS256(t, "k1", key, claims)
+
+	p, err := v.Verify(context.Background(), token)
+	require.NoError(t, err, "object-shaped roles claim must parse, not 401 the token")
+	assert.Equal(t, []string{"fantastic-admin", "spaced-name", "plain-string-role"}, p.Roles)
+	assert.True(t, p.HasAnyRole("fantastic-admin"))
+}
+
+func TestVerifyWithoutRolesClaimYieldsEmptyRoles(t *testing.T) {
+	clock := newFakeClock()
+	key := newKey(t)
+	server := newJWKSServer(t, map[string]*rsa.PrivateKey{"k1": key})
+	v := newTestVerifier(t, server.URL, clock)
+
+	token := signRS256(t, "k1", key, validClaims())
+
+	p, err := v.Verify(context.Background(), token)
+	require.NoError(t, err)
+	assert.NotNil(t, p.Roles, "absent claim must yield an empty, non-nil slice")
+	assert.Empty(t, p.Roles)
+	assert.False(t, p.HasAnyRole("fantastic-admin"))
+	assert.False(t, p.HasAnyRole())
+}
+
+func TestVerifyDropsBlankRoles(t *testing.T) {
+	clock := newFakeClock()
+	key := newKey(t)
+	server := newJWKSServer(t, map[string]*rsa.PrivateKey{"k1": key})
+	v := newTestVerifier(t, server.URL, clock)
+
+	claims := validClaims()
+	claims["roles"] = []string{"", "   "}
+	token := signRS256(t, "k1", key, claims)
+
+	p, err := v.Verify(context.Background(), token)
+	require.NoError(t, err)
+	assert.NotNil(t, p.Roles)
+	assert.Empty(t, p.Roles)
+	assert.False(t, p.HasAnyRole("fantastic-admin"))
+}

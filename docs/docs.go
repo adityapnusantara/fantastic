@@ -15,6 +15,334 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/agent-tools": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Sorted names of the runtime tool catalog: the only tools an agent may be assigned (spec: Catalog-driven tool assignment). Feeds the admin page's tool checkboxes.",
+                "tags": [
+                    "agents"
+                ],
+                "summary": "List assignable tool names (admin)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            }
+        },
+        "/agents": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Listing metadata of every agent: display name, description, icon, enabled, sort order and degraded tool names. System prompts, tools and overrides are never included.",
+                "tags": [
+                    "agents"
+                ],
+                "summary": "List agents (metadata only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            }
+        },
+        "/agents/{agent}/chat": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "SSE: emits data frames with types stream_chunk, message, tool_result, done, error (eino http-sse-service format). The Conversation-Id response header carries the conversation id (created on the fly and bound to the path agent when the request omits it). Unknown or disabled agents are rejected with 404; chatting into a conversation bound to another agent is rejected with 409.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/event-stream"
+                ],
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Stream one chat turn for an agent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent id (slug)",
+                        "name": "agent",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "message and optional conversation id",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/chat.chatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            }
+        },
+        "/agents/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Adds the system prompt, tool assignment and model overrides to the listing metadata.",
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Get agent detail (admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent id (slug)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Validated create: the id is the path slug, the system prompt is required, every tool name must exist in the runtime catalog. Missing strings default empty, enabled defaults true, sort order defaults 0, nil overrides inherit the global llm default.",
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Create an agent (admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent id (lowercase slug)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "agent fields",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/agent.agentWriteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Refused with 409 while conversations still reference the agent; disable it (enabled: false) instead.",
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Delete an agent (admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent id (slug)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Only the provided fields change; the rest keeps its current value. The id is immutable: the path is authoritative.",
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Update an agent (admin)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "agent id (slug)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "fields to change",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/agent.agentWriteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Envelope"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/token": {
             "post": {
                 "description": "Password grant proxy to Casdoor; disabled unless auth.dev_token_endpoint is true (then the route is absent and returns 404).",
@@ -55,63 +383,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/chat": {
-            "post": {
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "description": "SSE: emits data frames with types stream_chunk, message, tool_result, done, error (eino http-sse-service format). The Conversation-Id response header carries the conversation id (created on the fly when the request omits it).",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "text/event-stream"
-                ],
-                "tags": [
-                    "chat"
-                ],
-                "summary": "Stream one chat turn",
-                "parameters": [
-                    {
-                        "description": "message and optional conversation id",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/chat.chatRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Envelope"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/response.Envelope"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.Envelope"
-                        }
-                    }
-                }
-            }
-        },
         "/conversations": {
             "get": {
                 "security": [
@@ -119,10 +390,19 @@ const docTemplate = `{
                         "bearerAuth": []
                     }
                 ],
+                "description": "When agent_id is set, only conversations bound to that agent are returned.",
                 "tags": [
                     "conversations"
                 ],
                 "summary": "List my conversations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "filter by bound agent id",
+                        "name": "agent_id",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -254,6 +534,47 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "agent.agentWriteRequest": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "reasoning_effort": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "integer"
+                },
+                "system_prompt": {
+                    "type": "string"
+                },
+                "temperature": {
+                    "type": "number"
+                },
+                "tools": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "auth.loginRequest": {
             "type": "object",
             "properties": {

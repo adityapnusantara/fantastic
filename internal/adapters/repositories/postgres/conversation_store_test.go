@@ -69,7 +69,13 @@ var poolInstance = func() *pgxpool.Pool {
 
 func newConvFor(t *testing.T, userID string) *domain.Conversation {
 	t.Helper()
-	conv := domain.NewConversation(userID)
+	return newConvForAgent(t, userID, "general")
+}
+
+// newConvForAgent inserts a conversation bound to the given agent.
+func newConvForAgent(t *testing.T, userID, agentID string) *domain.Conversation {
+	t.Helper()
+	conv := domain.NewConversation(userID, agentID)
 	require.NoError(t, testStore.CreateConversation(context.Background(), conv))
 	return conv
 }
@@ -229,11 +235,44 @@ func TestListConversationsNewestFirst(t *testing.T) {
 	_, err := testStore.AppendMessage(ctx, first.ID, alice, msg, nil)
 	require.NoError(t, err)
 
-	got, err := testStore.ListConversations(ctx, alice)
+	got, err := testStore.ListConversations(ctx, alice, nil)
 	require.NoError(t, err)
 	require.Len(t, got, 2)
 	assert.Equal(t, first.ID, got[0].ID, "conversation with latest activity comes first")
 	assert.Equal(t, second.ID, got[1].ID)
+}
+
+func TestListConversationsAgentFilter(t *testing.T) {
+	truncate(t)
+	ctx := context.Background()
+
+	// the filter target must be a real agents row (FK): create one, then
+	// remove it with the test's conversation rows — the bound conversations
+	// must go first, or the agent delete is FK-blocked and the row leaks
+	social := &domain.Agent{ID: "zz-agent-test-filter", DisplayName: "filter target"}
+	_, err := NewAgentStore(testPool()).CreateIfAbsent(ctx, social)
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		_, _ = testPool().Exec(context.Background(), `TRUNCATE messages, conversations CASCADE`)
+		_ = NewAgentStore(testPool()).Delete(ctx, social.ID)
+	})
+
+	newConvFor(t, alice) // default agent
+	socialConv := newConvForAgent(t, alice, social.ID)
+	newConvFor(t, bob)
+
+	got, err := testStore.ListConversations(ctx, alice, nil)
+	require.NoError(t, err)
+	require.Len(t, got, 2, "no filter returns every conversation")
+
+	got, err = testStore.ListConversations(ctx, alice, strPtr(social.ID))
+	require.NoError(t, err)
+	require.Len(t, got, 1, "the filter keeps only the bound agent's conversations")
+	assert.Equal(t, socialConv.ID, got[0].ID)
+
+	got, err = testStore.ListConversations(ctx, alice, strPtr("nonexistent"))
+	require.NoError(t, err)
+	assert.Empty(t, got, "an unknown agent matches nothing")
 }
 
 func TestDeleteConversationCascade(t *testing.T) {
@@ -255,4 +294,49 @@ func TestDeleteConversationCascade(t *testing.T) {
 	msgs, err := testStore.GetMessages(ctx, conv.ID, alice)
 	require.NoError(t, err)
 	assert.Empty(t, msgs, "messages must cascade with the conversation")
+}
+
+// TestCountByAgent exercises the agent-admin delete-protection query on
+// the real database. Like agent_store_test.go it creates its own unique
+// zz- agent rows for the FK and cleans them up afterwards, so it never
+// disturbs the seeded 'general' agent or the other tests.
+func TestCountByAgent(t *testing.T) {
+	ctx := context.Background()
+
+	agentID := "zz-agent-test-count"
+	otherID := "zz-agent-test-count-other"
+	for _, id := range []string{agentID, otherID} {
+		_, err := NewAgentStore(testPool()).CreateIfAbsent(ctx, &domain.Agent{ID: id, DisplayName: "count fixture"})
+		require.NoError(t, err)
+		cleanupAgent(t, id)
+	}
+
+	// start each fixture agent from zero conversations (a crashed earlier
+	// run must not skew the counts)
+	_, err := testPool().Exec(ctx, `DELETE FROM conversations WHERE agent_id IN ($1, $2)`, agentID, otherID)
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		_, err := testPool().Exec(context.Background(), `DELETE FROM conversations WHERE agent_id IN ($1, $2)`, agentID, otherID)
+		require.NoError(t, err)
+	})
+
+	n, err := testStore.CountByAgent(ctx, agentID)
+	require.NoError(t, err)
+	assert.Zero(t, n, "an agent without conversations counts zero")
+
+	require.NoError(t, testStore.CreateConversation(ctx, domain.NewConversation(alice, agentID)))
+	require.NoError(t, testStore.CreateConversation(ctx, domain.NewConversation(bob, agentID)))
+	require.NoError(t, testStore.CreateConversation(ctx, domain.NewConversation(alice, otherID)))
+
+	n, err = testStore.CountByAgent(ctx, agentID)
+	require.NoError(t, err)
+	assert.Equal(t, int64(2), n, "only conversations bound to the agent count")
+
+	n, err = testStore.CountByAgent(ctx, otherID)
+	require.NoError(t, err)
+	assert.Equal(t, int64(1), n)
+
+	n, err = testStore.CountByAgent(ctx, "zz-agent-test-count-missing")
+	require.NoError(t, err)
+	assert.Zero(t, n, "an unknown agent counts zero conversations")
 }

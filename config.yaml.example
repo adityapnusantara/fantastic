@@ -1,0 +1,146 @@
+# fantastic configuration — complete example. Copy to config.yaml (or
+# pass --config) and fill in the environment variables below. Secrets are
+# referenced with ${VAR} braces and resolved from the environment at load;
+# a missing variable expands to "" and is reported as a load warning.
+
+server:
+  http_port: 5580
+
+database:
+  # Postgres connection string (pgvector-capable instance).
+  url: ${DATABASE_URL}
+
+llm:
+  base_url: https://api.openai.com/v1   # swap to any OpenAI-compatible gateway
+  # "responses" (/v1/responses, default) is required for reasoning models
+  # with function tools such as gpt-6.1-sol; "chat" (/v1/chat/completions)
+  # suits classic models on gateways without a responses endpoint.
+  api: responses
+  model: gpt-6.1-sol
+  # Name of the environment variable holding the OpenAI-compatible key.
+  api_key_env: OPENAI_API_KEY
+  # Optional global system prompt; a built-in default applies when unset.
+  # system_prompt: "You are..."
+  # Reasoning models reject temperature — leave 0 to omit the parameter.
+  temperature: 0
+  max_tokens: 2048
+  # Reasoning effort on /responses: low/medium/high/xhigh. Empty = default.
+  reasoning_effort: ""
+
+memory:
+  # Recent messages sent to the model alongside the rolling summary.
+  history_window: 20
+
+faq:
+  embedding:
+    model: text-embedding-3-small
+    # Vector dimension of the model — a vector column is a
+    # (model, dimension) pair; a new model means a new column + migration,
+    # never a different value here.
+    dims: 1536
+    # Optional OpenAI-compatible gateway; empty = OpenAI default endpoint.
+    base_url: ""
+    # Resolved from the environment at load — no literal secrets here.
+    api_key: ${OPENAI_API_KEY}
+  search:
+    # How many FAQ chunks the search_faq tool returns at most (1..20).
+    top_k: 5
+  scrape:
+    # Politeness policy: only these hosts are ever fetched.
+    allowed_hosts:
+      - linkaja.id
+      - www.linkaja.id
+    # Milliseconds between requests; the default keeps cadence at >=1 req/s.
+    request_delay_ms: 1000
+    # User-Agent sent with every scrape request.
+    user_agent: "fantastic-faq-spike/0.1 (personal project; contact via repo)"
+    # Raw HTML cache so re-embedding never re-crawls (gitignored).
+    cache_dir: data/raw
+  corpus:
+    # Committed JSON corpus artifact.
+    path: data/corpus/linkaja-faq.json
+    # Per-chunk hash integrity manifest emitted by the index step.
+    manifest_path: data/corpus/index-manifest.json
+
+auth:
+  issuer: http://localhost:5560
+  client_id: fantastic-app
+  organization: pribadi
+  jwks_url: http://localhost:5560/.well-known/jwks
+  # Dev-only login route (POST /api/v1/auth/token). Disable before
+  # exposing the service beyond localhost.
+  dev_token_endpoint: true
+  client_secret_env: CASDOOR_CLIENT_SECRET
+  # Casdoor roles (from the token's `roles` claim) allowed to manage
+  # agents (GET/POST/PATCH/DELETE /api/v1/agents/{id} and
+  # /api/v1/agent-tools). Defaults to [fantastic-admin] when omitted.
+  # The gate fails closed: with the Casdoor application token format set
+  # to JWT-Empty the roles claim never reaches the service and every
+  # management call gets 403 — including the real admin.
+  admin_roles:
+    - fantastic-admin
+
+mcp_servers:
+  # Tool catalog boundary (config-only): MCP tools join the catalog as
+  # "<server>.<tool>" names; adding a server means editing this block and
+  # restarting. One unreachable server degrades to the remaining tools,
+  # never blocks startup. transport: "http" (streamable, default) or
+  # "sse"; allow_tools absent = expose all tools the server announces.
+  tebar:
+    url: https://api.tebar.app/mcp
+    headers:
+      Authorization: "Bearer ${TEBAR_MCP_TOKEN}"
+    allow_tools:
+      - list_accounts
+      - get_platform_rules
+      - get_publishing_limits
+      - list_posts
+      - get_post
+      - list_comments
+
+# Agent seeds (declarative): inserted at startup with
+# ON CONFLICT (id) DO NOTHING — rows edited through the admin API or the
+# DB always win over this file, and a hand-emptied table reseeds on
+# restart. The map key is the agent id: a lowercase slug (regex
+# ^[a-z0-9-]+$) that appears in the chat URL and conversations.agent_id
+# and is immutable once created.
+#
+# Per-field validation (applied at load and on every admin-API write):
+#   display_name / description / icon — free-form listing metadata.
+#   system_prompt — REQUIRED, non-empty.
+#   tools         — every name must exist in the runtime tool catalog
+#                   (local tools like search_faq keep their name; MCP
+#                   tools are "<server>.<tool>"). Unknown names are
+#                   rejected with 400 naming the tool.
+#   model / api / temperature / reasoning_effort — optional per-agent
+#                   overrides; unset keys inherit the global llm block
+#                   ("leave 0 to omit" applies to temperature, as in llm).
+#                   api accepts only "responses" or "chat"; temperature
+#                   must be 0..2.
+#   enabled       — defaults to true when omitted; false removes the
+#                   agent from chat (404) while its history stays
+#                   readable.
+#   sort_order    — orders agents in listings; defaults to 0.
+agents:
+  general:
+    display_name: General Assistant
+    description: Default assistant; answers LinkAja questions from the FAQ knowledge base.
+    icon: assistant
+    tools:
+      - search_faq
+    # Optional per-agent overrides (one commented override example):
+    # model: gpt-6.1-sol
+    # api: responses
+    # temperature: 0
+    # reasoning_effort: ""
+    enabled: true
+    sort_order: 0
+    # REQUIRED. Placeholder — replace with your prompt. The shipped
+    # general seed carries the canonical FAQ-answer rules (answer in the
+    # user's language, call search_faq before answering LinkAja
+    # questions, cite the returned source_url only, admit when the FAQ
+    # does not cover it): see config.yaml agents.general.system_prompt;
+    # migration 0005 bakes the same rules into the seeded row.
+    system_prompt: |
+      You are a helpful personal assistant. Use the available tools when
+      they help you answer accurately.

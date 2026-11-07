@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>fantastic · agent admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #f6f8fa; --panel: #ffffff; --border: #d0d7de; --text: #1f2328;
+    --muted: #656d76; --accent: #0969da; --green-bg: #dafbe1; --green-fg: #1a7f37;
+    --red-bg: #ffebe9; --red-fg: #cf222e; --amber-bg: #fff8c5; --amber-fg: #9a6700;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.45; }
+  header { display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: var(--panel); border-bottom: 1px solid var(--border); }
+  header h1 { font-size: 15px; margin: 0; flex: 1; font-weight: 600; }
+  header h1 span { color: var(--muted); font-weight: 400; }
+  #who { color: var(--muted); font-size: 12px; }
+  main { max-width: 980px; margin: 20px auto; padding: 0 16px 40px; }
+  h2 { font-size: 16px; margin: 0; }
+  h3 { font-size: 14px; margin: 0; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  input, select, textarea, button { font: inherit; }
+  input, select, textarea { background: #fff; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid #0969da33; border-color: var(--accent); }
+  input[readonly] { background: var(--bg); color: var(--muted); }
+  textarea { width: 100%; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  button { cursor: pointer; background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover { background: #0757ba; }
+  button.danger { color: var(--red-fg); }
+  button.danger:hover { border-color: var(--red-fg); }
+  button.small { padding: 2px 8px; font-size: 12px; }
+  /* banners */
+  #banner { max-width: 980px; margin: 12px auto 0; padding: 0 16px; }
+  #bannerBox { display: flex; align-items: flex-start; gap: 10px; border-radius: 8px; padding: 10px 12px; border: 1px solid; }
+  #bannerBox.error { background: var(--red-bg); border-color: #ff818266; color: var(--red-fg); }
+  #bannerBox.ok { background: var(--green-bg); border-color: #4ac26b66; color: var(--green-fg); }
+  #bannerBox.info { background: #ddf4ff; border-color: #54aeff66; color: #0550ae; }
+  #bannerBox .dismiss { border: none; background: none; padding: 0 4px; font-size: 14px; color: inherit; }
+  /* login */
+  #loginView { max-width: 380px; margin: 60px auto 0; }
+  #loginView .panel { display: flex; flex-direction: column; gap: 12px; }
+  #loginView h2 { margin-bottom: 2px; }
+  #loginView .hint { color: var(--muted); font-size: 12px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field > span { font-size: 12px; color: var(--muted); }
+  .form-error { color: var(--red-fg); font-size: 13px; min-height: 1em; white-space: pre-wrap; }
+  .form-notice { color: var(--muted); font-size: 12px; white-space: pre-wrap; }
+  /* table */
+  .toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .toolbar h2 { flex: 1; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  th { font-size: 12px; color: var(--muted); font-weight: 600; background: #fbfcfd; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: #f8fafc; }
+  td.code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  td.actions { white-space: nowrap; }
+  td.actions button { margin-right: 6px; }
+  .badge { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; }
+  .badge.on { background: var(--green-bg); color: var(--green-fg); }
+  .badge.off { background: var(--red-bg); color: var(--red-fg); }
+  .badge.warn { background: var(--amber-bg); color: var(--amber-fg); font-weight: 400; }
+  .muted { color: var(--muted); }
+  /* form */
+  #formView { margin-top: 20px; }
+  #agentForm .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  #agentForm .full { grid-column: 1 / -1; }
+  #agentForm fieldset { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin: 0; }
+  #agentForm legend { font-size: 12px; color: var(--muted); padding: 0 4px; }
+  #f-tools { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  #f-tools label.tool { display: inline-flex; align-items: center; gap: 5px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  #f-tools .none { color: var(--muted); font-size: 12px; }
+  .chk { display: inline-flex; align-items: center; gap: 6px; }
+  .form-actions { display: flex; gap: 8px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>fantastic <span>· agent admin</span></h1>
+  <div id="who"></div>
+  <button id="logoutBtn" hidden>Log out</button>
+</header>
+
+<div id="banner" hidden><div id="bannerBox"><span id="bannerMsg"></span><button class="dismiss" id="bannerClose" title="dismiss">✕</button></div></div>
+
+<main>
+  <!-- (a) login -->
+  <section id="loginView">
+    <form id="loginForm" class="panel">
+      <h2>Agent admin</h2>
+      <div class="hint">Log in with your Casdoor account. Managing agents needs the admin role.</div>
+      <label class="field"><span>username</span><input id="username" autocomplete="username" autofocus></label>
+      <label class="field"><span>password</span><input id="password" type="password" autocomplete="current-password"></label>
+      <button type="submit" class="primary">Log in</button>
+      <div id="loginError" class="form-error"></div>
+    </form>
+  </section>
+
+  <section id="appView" hidden>
+    <!-- (b) agent table -->
+    <div class="toolbar">
+      <h2>Agents</h2>
+      <button id="refreshBtn" title="reload the agent list">Refresh</button>
+      <button id="newBtn" class="primary">New agent</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>id</th><th>display_name</th><th>enabled</th><th>degraded_tools</th><th>sort_order</th><th>actions</th></tr>
+      </thead>
+      <tbody id="agentsBody"></tbody>
+    </table>
+
+    <!-- (c) create/edit form -->
+    <section id="formView" class="panel" hidden>
+      <h3 id="formTitle"></h3>
+      <form id="agentForm">
+        <div class="grid">
+          <label class="field"><span>id — lowercase slug, immutable after creation</span><input id="f-id"></label>
+          <label class="field"><span>display_name</span><input id="f-display-name"></label>
+          <label class="field"><span>description</span><input id="f-description"></label>
+          <label class="field"><span>icon</span><input id="f-icon"></label>
+          <label class="field full"><span>system_prompt — required</span><textarea id="f-system-prompt" rows="6"></textarea></label>
+          <fieldset class="full"><legend>tools — assigned from the runtime tool catalog</legend><div id="f-tools"></div></fieldset>
+          <fieldset class="full"><legend>model overrides — empty means inherit the global llm config</legend>
+            <div class="grid">
+              <label class="field"><span>model</span><input id="f-model"></label>
+              <label class="field"><span>api</span>
+                <select id="f-api">
+                  <option value=""></option><option value="responses">responses</option><option value="chat">chat</option>
+                </select>
+              </label>
+              <label class="field"><span>temperature (0–2)</span><input id="f-temperature" type="number" step="0.1" min="0" max="2"></label>
+              <label class="field"><span>reasoning_effort</span>
+                <select id="f-reasoning-effort">
+                  <option value=""></option><option value="low">low</option><option value="medium">medium</option><option value="high">high</option><option value="xhigh">xhigh</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+          <div class="field"><span>availability</span><label class="chk"><input id="f-enabled" type="checkbox" checked> enabled</label></div>
+          <label class="field"><span>sort_order</span><input id="f-sort-order" type="number" step="1"></label>
+        </div>
+        <div id="formMsg" class="form-error"></div>
+        <div id="formNotes" class="form-notice"></div>
+        <div class="form-actions">
+          <button type="submit" class="primary" id="saveBtn">Save</button>
+          <button type="button" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </section>
+  </section>
+</main>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+
+// ---------- token (memory + sessionStorage) ----------
+let token = null;
+function saveToken(t) { token = t; try { sessionStorage.setItem("adminToken", t); } catch (e) {} }
+function clearToken() { token = null; try { sessionStorage.removeItem("adminToken"); } catch (e) {} }
+
+// ---------- banners (no alert()) ----------
+let bannerTimer = null;
+function banner(kind, msg) {
+  if (bannerTimer) { clearTimeout(bannerTimer); bannerTimer = null; }
+  $("bannerMsg").textContent = msg;
+  $("bannerBox").className = kind;
+  $("banner").hidden = false;
+  if (kind !== "error") bannerTimer = setTimeout(() => { $("banner").hidden = true; }, 5000);
+}
+$("bannerClose").onclick = () => { $("banner").hidden = true; };
+
+function formMsg(text, isError) {
+  $("formMsg").textContent = text;
+  $("formMsg").className = isError ? "form-error" : "form-notice";
+  $("formNotes").textContent = "";
+}
+
+// ---------- API client ----------
+class ApiError extends Error {
+  constructor(status, code, message) { super(message); this.status = status; this.code = code; }
+}
+
+// api() calls one management endpoint and centralizes 401/403 handling:
+// 401 clears the (stale) token and shows the login form, 403 raises the
+// "admin role required" banner — authorization stays enforced by the API,
+// the page only surfaces the rejection.
+async function api(method, path, body) {
+  let res;
+  try {
+    res = await fetch(path, {
+      method,
+      headers: Object.assign({ "Content-Type": "application/json" },
+        token ? { Authorization: "Bearer " + token } : {}),
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+  } catch (e) {
+    throw new ApiError(0, "network", "network error: " + (e && e.message ? e.message : e));
+  }
+  let env = {};
+  try { env = await res.json(); } catch (e) {}
+  if (res.status === 401) {
+    clearToken();
+    showLogin("session expired — log in again");
+    throw new ApiError(401, "unauthorized", "authentication required");
+  }
+  if (res.status === 403) {
+    banner("error", "admin role required (403) — you are logged in without the admin role, so this action was rejected");
+    throw new ApiError(403, env.code || "forbidden", env.message || "admin role required");
+  }
+  if (!res.ok) throw new ApiError(res.status, env.code || "error", env.message || (res.status + " " + res.statusText));
+  return env.data;
+}
+
+function handleActionError(e) {
+  if (e instanceof ApiError) {
+    if (e.status === 0) banner("error", e.message);
+    return; // 401 (login shown) and 403 (banner shown) are handled centrally
+  }
+  banner("error", "unexpected error: " + (e && e.message ? e.message : String(e)));
+}
+
+// ---------- login / session ----------
+function showLogin(msg) {
+  $("appView").hidden = true;
+  $("loginView").hidden = false;
+  $("logoutBtn").hidden = true;
+  $("who").textContent = "";
+  $("loginError").textContent = msg || "";
+  if (msg) return;
+  $("username").focus();
+}
+
+async function enterApp(username) {
+  $("loginView").hidden = true;
+  $("appView").hidden = false;
+  $("logoutBtn").hidden = false;
+  $("who").textContent = username ? ("logged in as " + username) : "session restored";
+  await loadAgents();
+}
+
+$("loginForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const username = $("username").value.trim();
+  const password = $("password").value;
+  if (!username || !password) { $("loginError").textContent = "username and password required"; return; }
+  $("loginError").textContent = "";
+  try {
+    const res = await fetch("/api/v1/auth/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    const env = await res.json();
+    if (res.ok && env.data && env.data.access_token) {
+      saveToken(env.data.access_token);
+      $("password").value = "";
+      await enterApp(username);
+    } else {
+      $("loginError").textContent = env.message || ("login failed (" + res.status + ")");
+    }
+  } catch (e) {
+    $("loginError").textContent = "login failed: " + (e && e.message ? e.message : e);
+  }
+};
+
+$("logoutBtn").onclick = () => { clearToken(); showLogin(""); };
+
+// ---------- agent table ----------
+async function loadAgents() {
+  let agents;
+  try { agents = await api("GET", "/api/v1/agents"); }
+  catch (e) { handleActionError(e); return; }
+  renderAgents(agents || []);
+}
+
+function td(text, cls) {
+  const c = document.createElement("td");
+  if (cls) c.className = cls;
+  c.textContent = text;
+  return c;
+}
+
+function actionBtn(label, onclick, cls) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "small" + (cls ? " " + cls : "");
+  b.textContent = label;
+  b.onclick = onclick;
+  return b;
+}
+
+function renderAgents(agents) {
+  const tb = $("agentsBody");
+  tb.innerHTML = "";
+  if (!agents.length) {
+    const tr = document.createElement("tr");
+    const c = td("no agents yet — create one with “New agent”", "muted");
+    c.colSpan = 6;
+    tr.appendChild(c);
+    tb.appendChild(tr);
+    return;
+  }
+  for (const a of agents) {
+    const tr = document.createElement("tr");
+    tr.appendChild(td(a.id, "code"));
+    tr.appendChild(td(a.display_name || "—"));
+
+    const en = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = "badge " + (a.enabled ? "on" : "off");
+    badge.textContent = a.enabled ? "enabled" : "disabled";
+    en.appendChild(badge);
+    tr.appendChild(en);
+
+    const dg = document.createElement("td");
+    if (a.degraded_tools && a.degraded_tools.length) {
+      const w = document.createElement("span");
+      w.className = "badge warn";
+      w.textContent = a.degraded_tools.join(", ");
+      w.title = "assigned tools missing from the runtime catalog: " + a.degraded_tools.join(", ");
+      dg.appendChild(w);
+    } else {
+      dg.textContent = "—";
+      dg.className = "muted";
+    }
+    tr.appendChild(dg);
+
+    tr.appendChild(td(String(a.sort_order)));
+
+    const ac = document.createElement("td");
+    ac.className = "actions";
+    ac.appendChild(actionBtn("Edit", () => openEdit(a.id)));
+    ac.appendChild(actionBtn(a.enabled ? "Disable" : "Enable", () => toggleAgent(a)));
+    ac.appendChild(actionBtn("Delete", () => deleteAgent(a), "danger"));
+    tr.appendChild(ac);
+
+    tb.appendChild(tr);
+  }
+}
+
+$("refreshBtn").onclick = loadAgents;
+
+// ---------- create/edit form ----------
+let editingId = null; // null = create mode
+let loaded = null;    // snapshot of the detail at edit-load (the PATCH diff base)
+
+// The tool checkboxes are fed by GET /api/v1/agent-tools (admin only), so
+// the catalog is fetched when the form opens, not on page load: a
+// non-admin browsing the table never triggers the 403.
+async function openCreate() {
+  let tools;
+  try { tools = await api("GET", "/api/v1/agent-tools"); }
+  catch (e) { handleActionError(e); return; }
+  editingId = null;
+  loaded = null;
+  fillForm(null, tools || []);
+  showForm("New agent");
+}
+
+async function openEdit(id) {
+  let detail, tools;
+  try {
+    detail = await api("GET", "/api/v1/agents/" + encodeURIComponent(id));
+    tools = await api("GET", "/api/v1/agent-tools");
+  } catch (e) { handleActionError(e); return; }
+  editingId = id;
+  loaded = {
+    display_name: detail.display_name || "",
+    description: detail.description || "",
+    icon: detail.icon || "",
+    system_prompt: detail.system_prompt || "",
+    tools: (detail.tools || []).slice().sort(),
+    model: detail.model || "",
+    api: detail.api || "",
+    temperature: (detail.temperature === null || detail.temperature === undefined) ? null : detail.temperature,
+    reasoning_effort: detail.reasoning_effort || "",
+    enabled: !!detail.enabled,
+    sort_order: detail.sort_order || 0,
+  };
+  fillForm(detail, tools || []);
+  showForm("Edit agent: " + id);
+}
+
+function fillForm(detail, tools) {
+  $("f-id").value = detail ? detail.id : "";
+  $("f-id").readOnly = !!detail; // the id is immutable after creation
+  $("f-display-name").value = detail ? (detail.display_name || "") : "";
+  $("f-description").value = detail ? (detail.description || "") : "";
+  $("f-icon").value = detail ? (detail.icon || "") : "";
+  $("f-system-prompt").value = detail ? (detail.system_prompt || "") : "";
+
+  const box = $("f-tools");
+  box.innerHTML = "";
+  if (!tools.length) {
+    const none = document.createElement("span");
+    none.className = "none";
+    none.textContent = "the runtime tool catalog is empty (no MCP tools configured, FAQ search unavailable)";
+    box.appendChild(none);
+  }
+  const current = detail ? (detail.tools || []) : [];
+  for (const name of tools) {
+    const label = document.createElement("label");
+    label.className = "tool";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.value = name;
+    cb.checked = current.includes(name);
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(name));
+    box.appendChild(label);
+  }
+
+  $("f-model").value = detail ? (detail.model || "") : "";
+  $("f-api").value = detail ? (detail.api || "") : "";
+  $("f-temperature").value = (detail && detail.temperature !== null && detail.temperature !== undefined) ? String(detail.temperature) : "";
+  $("f-reasoning-effort").value = detail ? (detail.reasoning_effort || "") : "";
+  $("f-enabled").checked = detail ? !!detail.enabled : true;
+  $("f-sort-order").value = detail ? String(detail.sort_order || 0) : "";
+  formMsg("", false);
+}
+
+function showForm(title) {
+  $("formTitle").textContent = title;
+  $("formView").hidden = false;
+  $("formView").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeForm() {
+  $("formView").hidden = true;
+  editingId = null;
+  loaded = null;
+}
+
+$("newBtn").onclick = openCreate;
+$("cancelBtn").onclick = closeForm;
+
+function readForm() {
+  const temperatureRaw = $("f-temperature").value.trim();
+  const sortRaw = $("f-sort-order").value.trim();
+  return {
+    display_name: $("f-display-name").value,
+    description: $("f-description").value,
+    icon: $("f-icon").value,
+    system_prompt: $("f-system-prompt").value,
+    tools: Array.prototype.map.call(
+      document.querySelectorAll("#f-tools input[type=checkbox]:checked"),
+      (cb) => cb.value),
+    model: $("f-model").value.trim(),
+    api: $("f-api").value,
+    temperature: temperatureRaw === "" ? null : Number(temperatureRaw),
+    reasoning_effort: $("f-reasoning-effort").value,
+    enabled: $("f-enabled").checked,
+    sort_order: sortRaw === "" ? null : Number(sortRaw),
+  };
+}
+
+function clientValidate(cur, isCreate) {
+  if (isCreate && !/^[a-z0-9-]+$/.test($("f-id").value.trim())) {
+    return "id must be a lowercase slug (a-z, 0-9, dashes)";
+  }
+  if (!cur.system_prompt.trim()) return "system_prompt is required";
+  if (cur.temperature !== null && (isNaN(cur.temperature) || cur.temperature < 0 || cur.temperature > 2)) {
+    return "temperature must be a number between 0 and 2 (leave it blank to inherit)";
+  }
+  if (cur.sort_order !== null && !Number.isInteger(cur.sort_order)) {
+    return "sort_order must be an integer";
+  }
+  return "";
+}
+
+function sortedJoin(names) { return names.slice().sort().join("\n"); }
+
+// buildCreateBody sends the whole form; empty overrides are omitted so the
+// server stores nil (inherit the global llm block).
+function buildCreateBody(cur) {
+  const body = {
+    display_name: cur.display_name,
+    description: cur.description,
+    icon: cur.icon,
+    system_prompt: cur.system_prompt,
+    tools: cur.tools,
+    enabled: cur.enabled,
+  };
+  if (cur.model !== "") body.model = cur.model;
+  if (cur.api !== "") body.api = cur.api;
+  if (cur.temperature !== null) body.temperature = cur.temperature;
+  if (cur.reasoning_effort !== "") body.reasoning_effort = cur.reasoning_effort;
+  if (cur.sort_order !== null) body.sort_order = cur.sort_order;
+  return body;
+}
+
+// buildPatch diffs the form against the loaded detail and sends ONLY the
+// changed fields (the API's PATCH is partial: absent keys keep their
+// value). Clearing semantics: model / reasoning_effort accept "" (stored
+// as "", the runtime treats an empty override as inherit); api and
+// temperature cannot be cleared through this API ("" is rejected, null
+// means "keep"), so a cleared value is omitted and reported as a note.
+function buildPatch(cur) {
+  const patch = {};
+  const notes = [];
+  for (const k of ["display_name", "description", "icon", "system_prompt"]) {
+    if (cur[k] !== loaded[k]) patch[k] = cur[k];
+  }
+  if (sortedJoin(cur.tools) !== sortedJoin(loaded.tools)) patch.tools = cur.tools;
+  for (const k of ["model", "reasoning_effort"]) {
+    if (cur[k] !== loaded[k]) patch[k] = cur[k];
+  }
+  if (cur.api !== loaded.api) {
+    if (cur.api === "") notes.push("api override kept (the API cannot clear a set api — switch between responses/chat instead)");
+    else patch.api = cur.api;
+  }
+  if (cur.temperature !== loaded.temperature) {
+    if (cur.temperature === null) notes.push("temperature override kept (the API cannot clear a set temperature — set a value instead)");
+    else patch.temperature = cur.temperature;
+  }
+  if (cur.enabled !== loaded.enabled) patch.enabled = cur.enabled;
+  if (cur.sort_order !== null && cur.sort_order !== loaded.sort_order) patch.sort_order = cur.sort_order;
+  else if (cur.sort_order === null && loaded.sort_order !== 0) notes.push("sort_order kept (field left blank)");
+  return { patch, notes };
+}
+
+$("agentForm").onsubmit = async (ev) => {
+  ev.preventDefault();
+  const cur = readForm();
+  const isCreate = editingId === null;
+  const invalid = clientValidate(cur, isCreate);
+  if (invalid) { formMsg(invalid, true); return; }
+
+  let notes = [];
+  try {
+    if (isCreate) {
+      await api("POST", "/api/v1/agents/" + encodeURIComponent($("f-id").value.trim()), buildCreateBody(cur));
+    } else {
+      const built = buildPatch(cur);
+      notes = built.notes;
+      if (Object.keys(built.patch).length === 0) {
+        formMsg(notes.length ? "no changes to save.\n" + notes.join("\n") : "no changes to save", false);
+        return;
+      }
+      await api("PATCH", "/api/v1/agents/" + encodeURIComponent(editingId), built.patch);
+    }
+  } catch (e) {
+    // 400 messages name the offending field or tool — show them verbatim.
+    if (e instanceof ApiError && (e.status === 400 || e.status === 409 || e.status === 404)) {
+      formMsg(e.message, true);
+      return;
+    }
+    handleActionError(e);
+    return;
+  }
+  banner("ok", (isCreate ? "agent created: " : "agent saved: ") + (isCreate ? $("f-id").value.trim() : editingId) +
+    (notes.length ? " — note: " + notes.join("; ") : ""));
+  closeForm();
+  loadAgents();
+};
+
+// ---------- row actions ----------
+async function toggleAgent(a) {
+  try { await api("PATCH", "/api/v1/agents/" + encodeURIComponent(a.id), { enabled: !a.enabled }); }
+  catch (e) { handleActionError(e); return; }
+  banner("ok", (a.enabled ? "disabled: " : "enabled: ") + a.id);
+  loadAgents();
+}
+
+async function deleteAgent(a) {
+  if (!confirm('Delete agent "' + a.id + '"?\nAgents still referenced by conversations cannot be deleted (the API answers 409 and suggests disabling instead).')) return;
+  try { await api("DELETE", "/api/v1/agents/" + encodeURIComponent(a.id)); }
+  catch (e) {
+    // 409 keeps the agent: show the server's message verbatim (it
+    // suggests disabling with enabled: false instead of deleting).
+    if (e instanceof ApiError && (e.status === 409 || e.status === 404)) banner("error", e.message);
+    else handleActionError(e);
+    return;
+  }
+  banner("ok", "deleted: " + a.id);
+  loadAgents();
+}
+
+// ---------- init: restore the session from sessionStorage ----------
+(function init() {
+  let saved = null;
+  try { saved = sessionStorage.getItem("adminToken"); } catch (e) {}
+  if (saved) {
+    token = saved;
+    enterApp("");
+  } else {
+    showLogin("");
+  }
+})();
+</script>
+</body>
+</html>

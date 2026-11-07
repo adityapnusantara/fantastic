@@ -17,17 +17,35 @@ var alice = domain.Principal{UserID: "alice", Organization: "pribadi"}
 
 func TestListPassesCallerIdentity(t *testing.T) {
 	mock := &mocks.MockConversationStore{
-		ListConversationsFn: func(_ context.Context, userID string) ([]domain.Conversation, error) {
+		ListConversationsFn: func(_ context.Context, userID string, agentID *string) ([]domain.Conversation, error) {
 			assert.Equal(t, "alice", userID, "store must be queried with the verified identity")
-			return []domain.Conversation{{ID: uuid.New(), UserID: userID, Title: "only mine"}}, nil
+			assert.Nil(t, agentID, "no filter means every agent's conversations")
+			return []domain.Conversation{{ID: uuid.New(), UserID: userID, AgentID: conversation.DefaultAgentID, Title: "only mine"}}, nil
 		},
 	}
 
 	svc := conversation.NewService(mock)
-	got, err := svc.List(context.Background(), alice)
+	got, err := svc.List(context.Background(), alice, nil)
 	require.NoError(t, err)
 	require.Len(t, got, 1)
 	assert.Equal(t, "alice", got[0].UserID, "results are scoped to the caller")
+}
+
+func TestListPassesAgentFilter(t *testing.T) {
+	faq := "faq"
+	var got *string
+	mock := &mocks.MockConversationStore{
+		ListConversationsFn: func(_ context.Context, _ string, agentID *string) ([]domain.Conversation, error) {
+			got = agentID
+			return nil, nil
+		},
+	}
+
+	svc := conversation.NewService(mock)
+	_, err := svc.List(context.Background(), alice, &faq)
+	require.NoError(t, err)
+	require.NotNil(t, got)
+	assert.Equal(t, "faq", *got, "the agent filter reaches the store verbatim")
 }
 
 func TestMessagesRejectsForeignConversation(t *testing.T) {
@@ -96,6 +114,41 @@ func TestDeleteScopesToCaller(t *testing.T) {
 
 func TestZeroPrincipalRejected(t *testing.T) {
 	svc := conversation.NewService(&mocks.MockConversationStore{})
-	_, err := svc.List(context.Background(), domain.Principal{})
+	_, err := svc.List(context.Background(), domain.Principal{}, nil)
 	assert.Error(t, err)
+}
+
+func TestCreateForAgentBindsAgent(t *testing.T) {
+	var bound string
+	mock := &mocks.MockConversationStore{
+		CreateConversationFn: func(_ context.Context, conv *domain.Conversation) error {
+			bound = conv.AgentID
+			return nil
+		},
+	}
+
+	svc := conversation.NewService(mock)
+	conv, err := svc.CreateForAgent(context.Background(), alice, "faq")
+	require.NoError(t, err)
+	assert.Equal(t, "faq", bound, "the conversation is bound to the requested agent for its whole lifetime")
+	assert.Equal(t, "faq", conv.AgentID)
+
+	_, err = svc.CreateForAgent(context.Background(), alice, "")
+	assert.Error(t, err, "an empty agent id must not create an unbound conversation")
+}
+
+func TestCreateDefaultsToGeneralAgent(t *testing.T) {
+	var bound string
+	mock := &mocks.MockConversationStore{
+		CreateConversationFn: func(_ context.Context, conv *domain.Conversation) error {
+			bound = conv.AgentID
+			return nil
+		},
+	}
+
+	svc := conversation.NewService(mock)
+	conv, err := svc.Create(context.Background(), alice)
+	require.NoError(t, err)
+	assert.Equal(t, conversation.DefaultAgentID, bound, "Create is the default-agent convenience")
+	assert.Equal(t, conversation.DefaultAgentID, conv.AgentID)
 }

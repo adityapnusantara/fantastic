@@ -16,8 +16,9 @@ import (
 type MockConversationStore struct {
 	CreateConversationFn func(ctx context.Context, conv *domain.Conversation) error
 	GetConversationFn    func(ctx context.Context, conversationID uuid.UUID, userID string) (*domain.Conversation, error)
-	ListConversationsFn  func(ctx context.Context, userID string) ([]domain.Conversation, error)
+	ListConversationsFn  func(ctx context.Context, userID string, agentID *string) ([]domain.Conversation, error)
 	DeleteConversationFn func(ctx context.Context, conversationID uuid.UUID, userID string) error
+	CountByAgentFn       func(ctx context.Context, agentID string) (int64, error)
 	AppendMessageFn      func(ctx context.Context, conversationID uuid.UUID, userID string, msg *domain.Message, title *string) (int64, error)
 	AppendMessagesFn     func(ctx context.Context, conversationID uuid.UUID, userID string, msgs []*domain.Message, title *string) ([]int64, error)
 	GetMessagesFn        func(ctx context.Context, conversationID uuid.UUID, userID string) ([]domain.Message, error)
@@ -69,10 +70,10 @@ func (m *MockConversationStore) GetConversation(ctx context.Context, conversatio
 	return &domain.Conversation{ID: conversationID, UserID: userID}, nil
 }
 
-func (m *MockConversationStore) ListConversations(ctx context.Context, userID string) ([]domain.Conversation, error) {
+func (m *MockConversationStore) ListConversations(ctx context.Context, userID string, agentID *string) ([]domain.Conversation, error) {
 	m.record("ListConversations")
 	if m.ListConversationsFn != nil {
-		return m.ListConversationsFn(ctx, userID)
+		return m.ListConversationsFn(ctx, userID, agentID)
 	}
 	return nil, nil
 }
@@ -83,6 +84,14 @@ func (m *MockConversationStore) DeleteConversation(ctx context.Context, conversa
 		return m.DeleteConversationFn(ctx, conversationID, userID)
 	}
 	return nil
+}
+
+func (m *MockConversationStore) CountByAgent(ctx context.Context, agentID string) (int64, error) {
+	m.record("CountByAgent")
+	if m.CountByAgentFn != nil {
+		return m.CountByAgentFn(ctx, agentID)
+	}
+	return 0, nil
 }
 
 func (m *MockConversationStore) AppendMessage(ctx context.Context, conversationID uuid.UUID, userID string, msg *domain.Message, title *string) (int64, error) {

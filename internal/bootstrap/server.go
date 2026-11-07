@@ -7,22 +7,26 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"maps"
 	"net/http"
 	"os"
 	"os/signal"
+	"slices"
+	"strings"
 	"syscall"
 	"time"
 
 	"github.com/adityapratamanusantara/fantastic/docs"
 
-	"github.com/cloudwego/eino-ext/components/model/agenticopenai"
-	"github.com/cloudwego/eino/components/model"
-	"github.com/openai/openai-go/v3/responses"
+	"github.com/cloudwego/eino-ext/components/embedding/openai"
+	"github.com/cloudwego/eino/components/tool"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v5"
 
 	"github.com/adityapratamanusantara/fantastic/config"
 	"github.com/adityapratamanusantara/fantastic/internal/adapters/auth/casdoor"
+	adminhttp "github.com/adityapratamanusantara/fantastic/internal/adapters/http/admin"
+	agenthttp "github.com/adityapratamanusantara/fantastic/internal/adapters/http/agent"
 	authhttp "github.com/adityapratamanusantara/fantastic/internal/adapters/http/auth"
 	chathttp "github.com/adityapratamanusantara/fantastic/internal/adapters/http/chat"
 	convhttp "github.com/adityapratamanusantara/fantastic/internal/adapters/http/conversation"
@@ -32,8 +36,13 @@ import (
 	"github.com/adityapratamanusantara/fantastic/internal/adapters/http/response"
 	mcpadapter "github.com/adityapratamanusantara/fantastic/internal/adapters/mcp"
 	"github.com/adityapratamanusantara/fantastic/internal/adapters/repositories/postgres"
+	faqtool "github.com/adityapratamanusantara/fantastic/internal/adapters/tools/faq"
+	"github.com/adityapratamanusantara/fantastic/internal/application/agentregistry"
+	"github.com/adityapratamanusantara/fantastic/internal/application/ports/driven"
+	agentadmin "github.com/adityapratamanusantara/fantastic/internal/application/usecases/agentadmin"
 	chatusecase "github.com/adityapratamanusantara/fantastic/internal/application/usecases/chat"
 	"github.com/adityapratamanusantara/fantastic/internal/application/usecases/conversation"
+	"github.com/adityapratamanusantara/fantastic/internal/domain"
 )
 
 // Server owns the HTTP server and its dependencies.
@@ -88,6 +97,10 @@ func New(cfg *config.Config, log *slog.Logger) (*Server, error) {
 	// Static demo page (login + SSE chat + conversation list).
 	demohttp.Register(e)
 
+	// Static agent-admin page (login + agent CRUD UI); authorization is
+	// enforced by the management API behind it, not by the page.
+	adminhttp.Register(e)
+
 	api := e.Group("/api/v1")
 	api.Use(middleware.BearerAuth(verifier, log))
 	api.GET("/whoami", authhttp.Whoami)
@@ -100,28 +113,53 @@ func New(cfg *config.Config, log *slog.Logger) (*Server, error) {
 	convService := conversation.NewService(store)
 	convhttp.Register(api, convService)
 
-	// Chat: model + MCP tools + streaming usecase. Without an API key the
-	// route still registers but reports the missing configuration.
+	// Declarative agent seeding (design D8): insert the config-declared
+	// agents with ON CONFLICT (id) DO NOTHING — missing rows are created,
+	// existing rows untouched (DB edits always win). Runs before anything
+	// reads the agents table and whether or not chat is enabled.
+	// Degrade-not-fail: seeding trouble only warns; the agents table and
+	// the management API keep whatever rows already exist.
+	agentStore := postgres.NewAgentStore(s.pool)
+	if _, err := agentStore.SeedAgents(context.Background(), cfg.Agents, log); err != nil {
+		log.Warn("agent seeding degraded; continuing with existing rows", slog.String("error", err.Error()))
+	}
+
+	// Agent runtime (design D4): the tool catalog is built exactly once
+	// per boot — MCP tools under "<server>.<tool>" names, the local FAQ
+	// search tool (design D10: the first local tool in the repo; the
+	// registry stays MCP-only) under its own name "search_faq", absent
+	// with only a warning when the capability cannot come up — and every
+	// enabled agent row is built into the registry through the factory
+	// below. The management API (listing open to all authenticated users,
+	// detail and CRUD behind RequireAdmin) is mounted whether or not chat
+	// is configured: agents still list and manage without an LLM key;
+	// only chat turns are refused.
+	mcpRegistry := mcpadapter.NewRegistry(context.Background(), cfg.MCPSrv, log)
+	catalog := buildToolCatalog(context.Background(), mcpRegistry, cfg, s.pool, log)
 	apiKey, keyErr := cfg.APIKey()
+	agentRegistry := agentregistry.New(newAgentFactory(store, catalog, cfg, apiKey, log))
+	loadAgents(context.Background(), agentRegistry, agentStore, log)
+
+	adminSvc, err := agentadmin.NewService(agentStore, agentRegistry, catalog, store)
+	if err != nil {
+		return nil, fmt.Errorf("create agent admin service: %w", err)
+	}
+	agenthttp.Register(api, adminSvc, cfg.Auth.AdminRoles)
+
+	// Chat: without an API key the route still registers but reports the
+	// missing configuration (agents keep listing above). With one, each
+	// request resolves the path agent through the registry (design D4) —
+	// unknown or disabled agents are left unresolved and answer 404.
 	if keyErr != nil {
 		log.Warn("chat disabled: llm api key not set", slog.String("env", cfg.LLM.APIKeyEnv))
-		api.POST("/chat", func(c *echo.Context) error {
+		api.POST("/agents/:agent/chat", func(c *echo.Context) error {
 			return response.Fail(c, http.StatusServiceUnavailable, "not_configured", "chat requires "+cfg.LLM.APIKeyEnv)
 		})
 	} else {
-		agenticModel, err := llmModel(context.Background(), cfg, apiKey)
-		if err != nil {
-			return nil, fmt.Errorf("create chat model: %w", err)
-		}
-		registry := mcpadapter.NewRegistry(context.Background(), cfg.MCPSrv, log)
-		chatSvc, err := chatusecase.NewService(store, agenticModel, registry.Tools(), chatusecase.Config{
-			SystemPrompt:  cfg.LLM.SystemPrompt,
-			HistoryWindow: cfg.Memory.HistoryWindow,
-		}, log)
-		if err != nil {
-			return nil, fmt.Errorf("create chat service: %w", err)
-		}
-		api.POST("/chat", chathttp.NewHandler(chatSvc, convService, log))
+		resolver := chathttp.ResolverFunc(func(agentID string) (chathttp.Streamer, bool) {
+			return agentRegistry.Get(agentID)
+		})
+		api.POST("/agents/:agent/chat", chathttp.NewHandler(resolver, convService, log))
 	}
 
 	s.http = &http.Server{
@@ -132,47 +170,125 @@ func New(cfg *config.Config, log *slog.Logger) (*Server, error) {
 	return s, nil
 }
 
-// llmModel builds the agent model per llm.api. "responses" (the default)
-// targets OpenAI /v1/responses — required for reasoning models with
-// function tools such as gpt-6.1-sol — while "chat" targets
-// /v1/chat/completions for classic models on gateways without a responses
-// endpoint. Both come from eino-ext agenticopenai and speak
-// *schema.AgenticMessage, so the usecase layer is identical.
-func llmModel(ctx context.Context, cfg *config.Config, apiKey string) (model.AgenticModel, error) {
-	switch cfg.LLM.API {
-	case "", "responses":
-		mc := &agenticopenai.ResponsesConfig{
-			APIKey:  apiKey,
-			BaseURL: cfg.LLM.BaseURL,
-			Model:   cfg.LLM.Model,
-		}
-		if cfg.LLM.Temperature != 0 {
-			t := cfg.LLM.Temperature
-			mc.Temperature = &t
-		}
-		if cfg.LLM.MaxTokens > 0 {
-			mt := cfg.LLM.MaxTokens
-			mc.MaxTokens = &mt
-		}
-		if cfg.LLM.ReasoningEffort != "" {
-			mc.Reasoning = &responses.ReasoningParam{
-				Effort: responses.ReasoningEffort(cfg.LLM.ReasoningEffort),
+// buildToolCatalog assembles the named tool catalog: the MCP registry's
+// "<server>.<tool>" entries plus the local search_faq tool when it can
+// come up (degrade-not-fail: missing credentials just leave the key out).
+// The catalog is built exactly once per boot (design D4): agent builds
+// resolve their assigned tool names against this map (design D5) and the
+// management API validates assignments against it. Agent prompts live in
+// the agents-table rows — the FAQ answering rules travel with the seeded
+// row prompts (migration 0005 / the config agents block), not with the
+// catalog.
+func buildToolCatalog(ctx context.Context, registry *mcpadapter.Registry, cfg *config.Config, pool *pgxpool.Pool, log *slog.Logger) map[string]tool.BaseTool {
+	catalog := registry.Catalog()
+	if faqTool := newFaqSearchTool(ctx, cfg, pool, log); faqTool != nil {
+		catalog[faqtool.Name] = faqTool
+	}
+	return catalog
+}
+
+// newFaqSearchTool builds the local search_faq tool over the shared
+// database pool and the faq.embedding config (design D10: appended at
+// bootstrap beside the MCP tools). Mirroring the MCP registry's
+// degrade-not-fail rule, it returns nil — chat continues without FAQ
+// grounding — when the FAQ capability cannot come up; a failure at call
+// time reaches the agent as a tool error instead.
+func newFaqSearchTool(ctx context.Context, cfg *config.Config, pool *pgxpool.Pool, log *slog.Logger) tool.BaseTool {
+	apiKey, err := cfg.FAQEmbeddingAPIKey()
+	if err != nil {
+		log.Warn("faq search disabled: embedding credential unavailable", slog.String("error", err.Error()))
+		return nil
+	}
+	embedder, err := openai.NewEmbedder(ctx, &openai.EmbeddingConfig{
+		APIKey:  apiKey,
+		BaseURL: cfg.FAQ.Embedding.BaseURL,
+		Model:   cfg.FAQ.Embedding.Model,
+		Timeout: 2 * time.Minute,
+	})
+	if err != nil {
+		log.Warn("faq search disabled: embedder unavailable", slog.String("error", err.Error()))
+		return nil
+	}
+	faqTool, err := faqtool.NewSearchTool(postgres.NewFaqSearchStore(pool), embedder, cfg.FAQ.Search.TopK)
+	if err != nil {
+		log.Warn("faq search disabled", slog.String("error", err.Error()))
+		return nil
+	}
+	return faqTool
+}
+
+// newAgentFactory returns the agentregistry.Factory that builds one
+// agent's chat service from its stored row (design D4). The agent's tool
+// names resolve against the boot-wide catalog: names missing from the
+// catalog become BuildResult.DegradedTools and the agent still builds,
+// running on the resolvable subset (design D5: startup degrade — an
+// unreachable MCP server is an infra condition, not an input bug). The
+// model is built from the agent's overrides over the global llm block,
+// and the service carries the agent's identity and prompt. An error
+// fails only that agent's build: the registry's Load collects it and the
+// agent stays out of the runtime (chat to it answers 404).
+func newAgentFactory(store driven.ConversationStore, catalog map[string]tool.BaseTool, cfg *config.Config, apiKey string, log *slog.Logger) agentregistry.Factory {
+	return func(a domain.Agent) (agentregistry.BuildResult, error) {
+		tools := make([]tool.BaseTool, 0, len(a.Tools))
+		var degraded []string
+		for _, name := range a.Tools {
+			if t, ok := catalog[name]; ok {
+				tools = append(tools, t)
+			} else {
+				degraded = append(degraded, name)
 			}
 		}
-		return agenticopenai.NewResponsesModel(ctx, mc)
-	case "chat":
-		mc := &agenticopenai.ChatConfig{
-			APIKey:  apiKey,
-			BaseURL: cfg.LLM.BaseURL,
-			Model:   cfg.LLM.Model,
+
+		agenticModel, err := llmModel(context.Background(), cfg, apiKey, overridesFromAgent(a))
+		if err != nil {
+			return agentregistry.BuildResult{}, fmt.Errorf("build model for agent %q: %w", a.ID, err)
 		}
-		if cfg.LLM.Temperature != 0 {
-			t := cfg.LLM.Temperature
-			mc.Temperature = &t
+		svc, err := chatusecase.NewService(store, agenticModel, tools, chatusecase.Config{
+			AgentName:        a.ID,
+			AgentDescription: a.Description,
+			SystemPrompt:     a.SystemPrompt,
+			HistoryWindow:    cfg.Memory.HistoryWindow,
+		}, log)
+		if err != nil {
+			return agentregistry.BuildResult{}, fmt.Errorf("build chat service for agent %q: %w", a.ID, err)
 		}
-		return agenticopenai.NewChatModel(ctx, mc)
-	default:
-		return nil, fmt.Errorf("llm.api must be \"responses\" or \"chat\", got %q", cfg.LLM.API)
+		return agentregistry.BuildResult{Service: svc, DegradedTools: degraded}, nil
+	}
+}
+
+// loadAgents loads every enabled agent row from the store into the
+// registry (design D4). It never fails the boot: a store error or a
+// per-agent factory error is only warned and that agent stays out of the
+// registry (chat to it answers 404), and agents whose tools cannot all
+// be resolved are logged with the missing names (design D5 / task 3.4).
+func loadAgents(ctx context.Context, reg *agentregistry.Registry, store driven.AgentStore, log *slog.Logger) {
+	agents, err := store.List(ctx)
+	if err != nil {
+		log.Warn("agent registry load degraded: listing agents failed", slog.String("error", err.Error()))
+		return
+	}
+	enabled := make([]domain.Agent, 0, len(agents))
+	for _, a := range agents {
+		if a.Enabled {
+			enabled = append(enabled, a)
+		}
+	}
+	if err := reg.Load(ctx, enabled); err != nil {
+		var le *agentregistry.LoadError
+		if errors.As(err, &le) {
+			for _, id := range slices.Sorted(maps.Keys(le.Errors)) {
+				log.Warn("agent build failed; chat to it will 404 until restart",
+					slog.String("agent_id", id), slog.String("error", le.Errors[id].Error()))
+			}
+		} else {
+			log.Warn("agent registry load degraded", slog.String("error", err.Error()))
+		}
+	}
+	for _, a := range enabled {
+		if missing := reg.Degraded(a.ID); len(missing) > 0 {
+			log.Warn("agent running without tools",
+				slog.String("agent_id", a.ID), slog.String("tools", strings.Join(missing, ", ")))
+		}
 	}
 }
 

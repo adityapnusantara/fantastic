@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"maps"
+	"slices"
 
 	mcptool "github.com/cloudwego/eino-ext/components/tool/mcp"
 	"github.com/mark3labs/mcp-go/client"
@@ -17,9 +19,11 @@ import (
 	"github.com/adityapratamanusantara/fantastic/config"
 )
 
-// Registry holds the tools of every MCP server that came up.
+// Registry holds the tools of every MCP server that came up, keyed by
+// catalog name "<serverName>.<toolName>" so identically named tools from
+// different servers stay distinct entries.
 type Registry struct {
-	tools     []tool.BaseTool
+	catalog   map[string]tool.BaseTool
 	serversUp []string
 }
 
@@ -27,7 +31,7 @@ type Registry struct {
 // reached or whose tools fail to load degrades the agent to the remaining
 // servers' tools — startup never fails because of one bad server.
 func NewRegistry(ctx context.Context, servers config.MCPServers, log *slog.Logger) *Registry {
-	r := &Registry{}
+	r := &Registry{catalog: make(map[string]tool.BaseTool)}
 	for name, srv := range servers {
 		cli, err := dial(ctx, srv)
 		if err != nil {
@@ -44,22 +48,82 @@ func NewRegistry(ctx context.Context, servers config.MCPServers, log *slog.Logge
 				slog.String("server", name), slog.String("error", err.Error()))
 			continue
 		}
-		r.tools = append(r.tools, tools...)
+		added := 0
+		for _, tl := range tools {
+			tname, err := toolName(ctx, tl)
+			if err != nil || tname == "" {
+				log.Warn("mcp tool name unavailable; skipping tool",
+					slog.String("server", name), slog.String("error", nameError(err)))
+				continue
+			}
+			r.catalog[catalogKey(name, tname)] = tl
+			added++
+		}
 		r.serversUp = append(r.serversUp, name)
 		log.Info("mcp server connected",
-			slog.String("server", name), slog.Int("tools", len(tools)))
+			slog.String("server", name), slog.Int("tools", added))
 	}
 	return r
 }
 
-// Tools returns the collected eino tools.
+// Tools returns every collected eino tool, ordered by catalog name for
+// determinism. Callers that do not care about per-server identity can use
+// this flat view.
 func (r *Registry) Tools() []tool.BaseTool {
-	return r.tools
+	out := make([]tool.BaseTool, 0, len(r.catalog))
+	for _, name := range r.Names() {
+		out = append(out, r.catalog[name])
+	}
+	return out
+}
+
+// Catalog returns a copy of the named tool catalog, keyed
+// "<serverName>.<toolName>".
+func (r *Registry) Catalog() map[string]tool.BaseTool {
+	out := make(map[string]tool.BaseTool, len(r.catalog))
+	maps.Copy(out, r.catalog)
+	return out
+}
+
+// Names lists the catalog keys in sorted order.
+func (r *Registry) Names() []string {
+	return slices.Sorted(maps.Keys(r.catalog))
+}
+
+// Get looks up one tool by its catalog name "<serverName>.<toolName>".
+func (r *Registry) Get(name string) (tool.BaseTool, bool) {
+	t, ok := r.catalog[name]
+	return t, ok
 }
 
 // ServersUp lists the names of servers that connected successfully.
 func (r *Registry) ServersUp() []string {
 	return r.serversUp
+}
+
+// catalogKey builds the unique catalog name for one server's tool. The
+// server prefix keeps overlapping tool names (two servers both exposing
+// "search") as distinct entries.
+func catalogKey(server, tool string) string {
+	return server + "." + tool
+}
+
+// toolName extracts a tool's own declared name through the eino tool
+// interface (BaseTool.Info -> schema.ToolInfo.Name).
+func toolName(ctx context.Context, t tool.BaseTool) (string, error) {
+	info, err := t.Info(ctx)
+	if err != nil {
+		return "", fmt.Errorf("tool info: %w", err)
+	}
+	return info.Name, nil
+}
+
+// nameError renders a tool-name extraction failure for the skip warning.
+func nameError(err error) string {
+	if err != nil {
+		return err.Error()
+	}
+	return "empty tool name"
 }
 
 // dial builds and initializes a client for one server declaration.

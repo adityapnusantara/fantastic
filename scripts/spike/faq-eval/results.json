@@ -1,0 +1,622 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-05T21:26:29Z",
+  "scoring_rule_verbatim": "a hit is scored at the CHUNK level — top-k must contain the chunk whose `content_hash` equals the pinned expected chunk; MRR on the same unit",
+  "fixture_frozen_at": "2026-11-05T18:56:52Z",
+  "model": "text-embedding-3-small",
+  "dims": 1536,
+  "corpus_documents": 44,
+  "corpus_chunks": 421,
+  "k": 5,
+  "diag_k": 20,
+  "scored_questions": 9,
+  "dropped_questions": [
+    {
+      "n": 8,
+      "topic": "Account lifecycle",
+      "reason": "Topic genuinely absent from the corpus: no unit in data/corpus/linkaja-faq.json (420 units, questions and answers both scanned) covers deleting/closing/deactivating a LinkAja account. All 'hapus'/'tutup' hits are unrelated (metode pembayaran removal, 'Tutup dan Buka Kembali Aplikasi' restart step). No page-URL fallback pinned because no article is about account closure either. Escalate to owner: add a corpus article or replace this golden question."
+    }
+  ],
+  "results": [
+    {
+      "n": 1,
+      "question": "Apa itu LinkAja dan apa saja layanannya?",
+      "topic": "Product overview",
+      "expected_chunk_hash": "0e9b88c1dd4d576bdefbdcd70be25fe645c4eda75ce15739845a6ca9365b2e39",
+      "expected_source_url": "https://www.linkaja.id/news/pengajuan-full-service-linkaja-ditolak",
+      "rank": 5,
+      "hit_at_1": false,
+      "hit_at_3": false,
+      "hit_at_5": true,
+      "reciprocal_rank": 0.2,
+      "pinned_chunk_score": 0.6569950113721701,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": false,
+      "top1_snippet": "Apa Saja yang Bisa Dibayar atau Dibeli di LinkAja? Melalui aplikasi LinkAja, kamu bisa mengakses berbagai laya…",
+      "top1_source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+      "top1_score": 0.6723557187333449,
+      "embed_ms": 789.54,
+      "retrieve_ms": 9.779,
+      "question_chars": 40,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "0a10a7613dfdbbe2bf5395063aa1e7e14cdbd28d100f7c9e1dcd6b683905ce1e",
+          "source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+          "snippet": "Apa Saja yang Bisa Dibayar atau Dibeli di LinkAja? Melalui aplikasi LinkAja, kamu bisa mengakses berbagai laya…",
+          "score": 0.6723557187333449,
+          "is_pinned": false
+        },
+        {
+          "rank": 2,
+          "content_hash": "be790e395e2c16bd8e05b72879d8544cedaf38453e2a00604a167af107c37121",
+          "source_url": "https://www.linkaja.id/news/cara-aktivasi-linkaja-syariah",
+          "snippet": "Apa Itu LinkAja Syariah? LinkAja Syariah merupakan fitur layanan uang elektronik LinkAja yang dikelola sesuai …",
+          "score": 0.6718491332160228,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "23ee52f127cd13669175ce4a6c5b0b4a2dafcb1585bb3dd684f43c46f92a7451",
+          "source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+          "snippet": "Apa Itu LinkAja Syariah? LinkAja Syariah adalah fitur layanan uang elektronik LinkAja yang dikelola sesuai kai…",
+          "score": 0.66825433736903,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "ca650b4f566123cd8e7aa99e2d7ef6b548a8fe98cbdab40158f486a0fdd51e15",
+          "source_url": "https://www.linkaja.id/news/cara-daftar-aktivasi-akun-linkaja",
+          "snippet": "LinkAja atau LinkAja Syariah? Kamu tidak perlu membuat akun terpisah untuk menggunakan LinkAja Syariah. Saat p…",
+          "score": 0.6631077758175851,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "0e9b88c1dd4d576bdefbdcd70be25fe645c4eda75ce15739845a6ca9365b2e39",
+          "source_url": "https://www.linkaja.id/news/pengajuan-full-service-linkaja-ditolak",
+          "snippet": "Apa Itu LinkAja Full Service? LinkAja memiliki dua tipe akun, yaitu Basic Service dan Full Service. Akun Basic…",
+          "score": 0.6569950113721701,
+          "is_pinned": true
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "question": "Bagaimana cara top up / isi saldo LinkAja?",
+      "topic": "How-to: top up",
+      "expected_chunk_hash": "0642a0d958ad8eb6f037e6d0cf25690ec413e2f2685722b59e747e2c15eff3ce",
+      "expected_source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+      "rank": 5,
+      "hit_at_1": false,
+      "hit_at_3": false,
+      "hit_at_5": true,
+      "reciprocal_rank": 0.2,
+      "pinned_chunk_score": 0.7572928205103825,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": true,
+      "top1_snippet": "Cara Isi Saldo LinkAja via ATM Kalau sedang berada dekat ATM, kamu juga bisa langsung mengisi saldo LinkAja. S…",
+      "top1_source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+      "top1_score": 0.7915099261034236,
+      "embed_ms": 680.745,
+      "retrieve_ms": 7.323,
+      "question_chars": 42,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "685f2e62027f110cfec7f5d65d643ec7d0e63a022b31534a0960d738277e75ce",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via ATM Kalau sedang berada dekat ATM, kamu juga bisa langsung mengisi saldo LinkAja. S…",
+          "score": 0.7915099261034236,
+          "is_pinned": false
+        },
+        {
+          "rank": 2,
+          "content_hash": "6ff523693265609cebcd3abfc2c6da890b1fe88f88100701e44f0631bae420c7",
+          "source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+          "snippet": "6. Isi Saldo Sebelum bertransaksi, kamu bisa mengisi saldo LinkAja melalui bank atau channel yang bekerja sama…",
+          "score": 0.761124869458616,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "5b3edf1d18cb87466c5ac301be490c8b8e8b317d236eb09e483eddfa8a33cb41",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via Mobile Banking Nggak mau keluar rumah? Isi saldo juga bisa dilakukan lewat mobile b…",
+          "score": 0.7596634695961576,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "b15b9131fa9a7eec94c33d0494121219bd014ae427df8011c38073e78ce5496b",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via Bank Kamu bisa mengisi saldo LinkAja melalui berbagai bank, termasuk Bank Himbara: …",
+          "score": 0.7583372211075026,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "0642a0d958ad8eb6f037e6d0cf25690ec413e2f2685722b59e747e2c15eff3ce",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via ATM, Mobile Banking, dan Merchant Saldo LinkAja mulai menipis? Tenang, isi saldo bi…",
+          "score": 0.7572928205103825,
+          "is_pinned": true
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "question": "Berapa limit saldo dan transaksi LinkAja?",
+      "topic": "Limits (substituted for original fee-table question)",
+      "expected_chunk_hash": "6d7f192f7268a8d96679477eaf310e9bc7edb24019b627fd23f42efa577741fb",
+      "expected_source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+      "substitution_status": "confirmed_by_owner (2026-11-06)",
+      "rank": 1,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "reciprocal_rank": 1,
+      "pinned_chunk_score": 0.83263946869158,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": true,
+      "top1_snippet": "Apa Itu Limit Saldo dan Limit Transaksi LinkAja? Limit merupakan batas maksimum saldo atau transaksi yang dapa…",
+      "top1_source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+      "top1_score": 0.83263946869158,
+      "embed_ms": 496.011,
+      "retrieve_ms": 6.231,
+      "question_chars": 41,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "6d7f192f7268a8d96679477eaf310e9bc7edb24019b627fd23f42efa577741fb",
+          "source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+          "snippet": "Apa Itu Limit Saldo dan Limit Transaksi LinkAja? Limit merupakan batas maksimum saldo atau transaksi yang dapa…",
+          "score": 0.83263946869158,
+          "is_pinned": true
+        },
+        {
+          "rank": 2,
+          "content_hash": "58acf6198460f0115322a3e89f48c07e1ed4d416f9b5a4f38cfd6b046c9b6f80",
+          "source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+          "snippet": "Transaksi LinkAja Terkendala Limit Saldo? Kenali Batas Akunmu Mau isi saldo, menerima uang, atau melakukan tra…",
+          "score": 0.8172837878424257,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "85f652574e99c359b1e700acf1b0517de665a31bdcc7c34fee89e4884f299bdd",
+          "source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+          "snippet": "Berapa Maksimal Saldo LinkAja? Batas saldo tergantung jenis akun yang kamu gunakan.",
+          "score": 0.8115184425384239,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "b0f0509f092e8ff752b759916a6b5c1a6f73ed2d2e2fce947edc9f4742ba5d05",
+          "source_url": "https://www.linkaja.id/news/limit-saldo-transaksi-linkaja",
+          "snippet": "Kenali Limit, Biar Transaksi Tetap Lancar Setiap akun memiliki batas saldo dan transaksi untuk membantu penggu…",
+          "score": 0.8021851626983547,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "7eb49d7f3466fca2c28498bef689524e2ec24964d10e2c15505db8d5ecc34dda",
+          "source_url": "https://www.linkaja.id/news/isi-saldo-linkaja-gagal-ini-yang-harus-kamu-lakukan",
+          "snippet": "3. Cek Limit Saldo LinkAja Isi saldo juga bisa gagal apabila saldo atau transaksi masuk sudah mencapai batas y…",
+          "score": 0.7807788336643362,
+          "is_pinned": false
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "question": "Bagaimana cara transfer saldo LinkAja ke pengguna lain atau ke bank?",
+      "topic": "How-to: transfer/withdraw",
+      "expected_chunk_hash": "41f729990c2566a20de21931be3cd9f8343d8067e278b5bf7f03533c10936391",
+      "expected_source_url": "https://www.linkaja.id/news/cara-kirim-uang-pakai-linkaja-praktis-ke-sesama-linkaja-atau-rekening-bank",
+      "rank": 0,
+      "hit_at_1": false,
+      "hit_at_3": false,
+      "hit_at_5": false,
+      "reciprocal_rank": 0,
+      "pinned_chunk_score": 0,
+      "diag_rank_within_20": 7,
+      "expected_url_in_top5": true,
+      "top1_same_article": true,
+      "top1_snippet": "Cara Transfer Saldo LinkAja ke Rekening Bank Selain ke sesama pengguna LinkAja, kamu juga bisa mengirim saldo …",
+      "top1_source_url": "https://www.linkaja.id/news/cara-kirim-uang-pakai-linkaja-praktis-ke-sesama-linkaja-atau-rekening-bank",
+      "top1_score": 0.8216839751157663,
+      "embed_ms": 317.912,
+      "retrieve_ms": 7.138,
+      "question_chars": 68,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "dfac895c6ccfd8495a0304d925a5268349aeec15728a96c14788f26a5ce4f8bf",
+          "source_url": "https://www.linkaja.id/news/cara-kirim-uang-pakai-linkaja-praktis-ke-sesama-linkaja-atau-rekening-bank",
+          "snippet": "Cara Transfer Saldo LinkAja ke Rekening Bank Selain ke sesama pengguna LinkAja, kamu juga bisa mengirim saldo …",
+          "score": 0.8216839751157663,
+          "is_pinned": false
+        },
+        {
+          "rank": 2,
+          "content_hash": "7c20d65dc2394225d204e898a0b12ec291bd79ce5424aadd84aed475885e7555",
+          "source_url": "https://www.linkaja.id/news/cara-kirim-uang-pakai-linkaja-praktis-ke-sesama-linkaja-atau-rekening-bank",
+          "snippet": "Cara Kirim Uang ke Sesama Pengguna LinkAja Mau kirim saldo ke teman atau keluarga yang sama-sama menggunakan L…",
+          "score": 0.786518437817392,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "685f2e62027f110cfec7f5d65d643ec7d0e63a022b31534a0960d738277e75ce",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via ATM Kalau sedang berada dekat ATM, kamu juga bisa langsung mengisi saldo LinkAja. S…",
+          "score": 0.7519149256189912,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "b15b9131fa9a7eec94c33d0494121219bd014ae427df8011c38073e78ce5496b",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via Bank Kamu bisa mengisi saldo LinkAja melalui berbagai bank, termasuk Bank Himbara: …",
+          "score": 0.7497965659801685,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "7fe28c113e74079ec7afb3e3b34db0a8d9c4b4d0b287f7db4154f28c09666508",
+          "source_url": "https://www.linkaja.id/news/cara-isi-saldo-linkaja-via-atm-mobile-banking-dan-merchant",
+          "snippet": "Cara Isi Saldo LinkAja via Internet Banking Selain mobile banking, kamu juga dapat menggunakan layanan interne…",
+          "score": 0.7496328000543955,
+          "is_pinned": false
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "question": "Bagaimana cara reset PIN LinkAja kalau lupa?",
+      "topic": "Account recovery",
+      "expected_chunk_hash": "9da17a9bc71a925d991521772d4529178bfaa72dc3bd507284c2e07c26e2251b",
+      "expected_source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-via-email",
+      "rank": 3,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "reciprocal_rank": 0.3333333333333333,
+      "pinned_chunk_score": 0.7733983844997975,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": false,
+      "top1_snippet": "Gagal Reset PIN LinkAja dengan Pertanyaan Keamanan? Coba Cek Ini Lupa PIN LinkAja dan mencoba melakukan reset …",
+      "top1_source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-dengan-pertanyaan-keamanan-coba-cek-ini",
+      "top1_score": 0.7868572249870288,
+      "embed_ms": 543.365,
+      "retrieve_ms": 8.149,
+      "question_chars": 44,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "d2bcdd1c6bdd5f7d17a5d95efcedf1e8f4191423a16b3ff1748ba58c7c66a58a",
+          "source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-dengan-pertanyaan-keamanan-coba-cek-ini",
+          "snippet": "Gagal Reset PIN LinkAja dengan Pertanyaan Keamanan? Coba Cek Ini Lupa PIN LinkAja dan mencoba melakukan reset …",
+          "score": 0.7868572249870288,
+          "is_pinned": false
+        },
+        {
+          "rank": 2,
+          "content_hash": "359476cfedae45897fd8ad5db7f8670c46373099c7bf39f7160537c7f586ca4f",
+          "source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-dengan-pertanyaan-keamanan-coba-cek-ini",
+          "snippet": "Cara Reset PIN dengan Pertanyaan Keamanan Jika metode Pertanyaan Keamanan tersedia pada aplikasi kamu, secara …",
+          "score": 0.77447565319941,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "9da17a9bc71a925d991521772d4529178bfaa72dc3bd507284c2e07c26e2251b",
+          "source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-via-email",
+          "snippet": "Bagaimana Reset PIN LinkAja via Email? Email menjadi salah satu metode verifikasi yang dapat digunakan ketika …",
+          "score": 0.7733983844997975,
+          "is_pinned": true
+        },
+        {
+          "rank": 4,
+          "content_hash": "bfe8a9444a8b138ebecde310f3de64834ade0af7a1e42bf58a2625dd0e6dadfd",
+          "source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-via-email",
+          "snippet": "Bisa Reset PIN dengan Cara Lain? Bisa. Selain menggunakan email, LinkAja juga memiliki metode reset PIN melalu…",
+          "score": 0.7615040114525742,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "9e152407caa89a43852bc54f6e7d974a9eade9813ac71ecce9abff785e021ced",
+          "source_url": "https://www.linkaja.id/news/gagal-reset-pin-linkaja-via-email",
+          "snippet": "Gagal Reset PIN LinkAja via Email? Coba Cek Ini Lupa PIN LinkAja dan mencoba melakukan reset melalui email, ta…",
+          "score": 0.7601891966923097,
+          "is_pinned": false
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "question": "Bagaimana cara menghubungi customer service LinkAja?",
+      "topic": "Support channels",
+      "expected_chunk_hash": "d13d55677fbbe17cc7ad360991ad5b5c95c15852fc34c31976ca7085322120c0",
+      "expected_source_url": "https://www.linkaja.id/news/layanan-pelanggan-linkaja",
+      "rank": 1,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "reciprocal_rank": 1,
+      "pinned_chunk_score": 0.8204667776783527,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": true,
+      "top1_snippet": "1. Bagaimana cara menghubungi Layanan Pelanggan LinkAja? Kamu bisa menghubungi Tim LinkAja melalui kanal resmi…",
+      "top1_source_url": "https://www.linkaja.id/news/layanan-pelanggan-linkaja",
+      "top1_score": 0.8204667776783527,
+      "embed_ms": 318.275,
+      "retrieve_ms": 3.133,
+      "question_chars": 52,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "d13d55677fbbe17cc7ad360991ad5b5c95c15852fc34c31976ca7085322120c0",
+          "source_url": "https://www.linkaja.id/news/layanan-pelanggan-linkaja",
+          "snippet": "1. Bagaimana cara menghubungi Layanan Pelanggan LinkAja? Kamu bisa menghubungi Tim LinkAja melalui kanal resmi…",
+          "score": 0.8204667776783527,
+          "is_pinned": true
+        },
+        {
+          "rank": 2,
+          "content_hash": "7ff058ca22f52c406c3a0fe42a8d7b6fbd5c6e4c4c6299de5a846b937592b661",
+          "source_url": "https://www.linkaja.id/news/salah-nomor-tujuan-atau-nominal-saat-kirim-uang-linkaja-ini-yang-harus-dilakukan",
+          "snippet": "Hubungi Layanan Pelanggan LinkAja Jika membutuhkan bantuan, kamu bisa menghubungi LinkAja melalui: Live Chat d…",
+          "score": 0.7764231427434042,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "409a1d359b87a2076fd1cfdb3026367f8ad9b5870e605bafce96a4c3cf9dbff8",
+          "source_url": "https://www.linkaja.id/news/cara-mengatasi-token-linkaja-bermasalah",
+          "snippet": "Hubungi Layanan Pelanggan LinkAja Kamu bisa mendapatkan bantuan melalui: Live Chat di aplikasi LinkAja Buka Ak…",
+          "score": 0.7678134495664706,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "f55e28694d284eca852657e3df8779873f871fbfe632aa4e420ebd8ef99e5f54",
+          "source_url": "https://www.linkaja.id/news/isi-saldo-linkaja-gagal-ini-yang-harus-kamu-lakukan",
+          "snippet": "Hubungi Layanan Pelanggan LinkAja Kamu dapat menghubungi LinkAja melalui: Live Chat di aplikasi LinkAja Buka A…",
+          "score": 0.7665211619784397,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "a64b027f300aca8e3684a6c2f1644e9fb14ced92b836a79d140e865fe021055a",
+          "source_url": "https://www.linkaja.id/news/layanan-pelanggan-linkaja",
+          "snippet": "3. Bagaimana cara menggunakan Live Chat LinkAja? Mudah banget. Lewat aplikasi LinkAja: Akun → Pusat Bantuan → …",
+          "score": 0.7576629349023188,
+          "is_pinned": false
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "question": "Apa itu LinkAja Syariah dan apa bedanya dengan LinkAja biasa?",
+      "topic": "Product variant",
+      "expected_chunk_hash": "a29956e1e56aac05d702d67a9d9d3768de8a3937857907c24284e1aedd515ddb",
+      "expected_source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+      "rank": 1,
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "reciprocal_rank": 1,
+      "pinned_chunk_score": 0.8283136818968339,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": true,
+      "top1_snippet": "Apa yang Membuat LinkAja Syariah Berbeda? Perbedaannya bukan sekadar warna atau tampilan aplikasi. LinkAja Sya…",
+      "top1_source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+      "top1_score": 0.8283136818968339,
+      "embed_ms": 402.843,
+      "retrieve_ms": 7.442,
+      "question_chars": 61,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "a29956e1e56aac05d702d67a9d9d3768de8a3937857907c24284e1aedd515ddb",
+          "source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+          "snippet": "Apa yang Membuat LinkAja Syariah Berbeda? Perbedaannya bukan sekadar warna atau tampilan aplikasi. LinkAja Sya…",
+          "score": 0.8283136818968339,
+          "is_pinned": true
+        },
+        {
+          "rank": 2,
+          "content_hash": "be790e395e2c16bd8e05b72879d8544cedaf38453e2a00604a167af107c37121",
+          "source_url": "https://www.linkaja.id/news/cara-aktivasi-linkaja-syariah",
+          "snippet": "Apa Itu LinkAja Syariah? LinkAja Syariah merupakan fitur layanan uang elektronik LinkAja yang dikelola sesuai …",
+          "score": 0.7930085548563052,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "23ee52f127cd13669175ce4a6c5b0b4a2dafcb1585bb3dd684f43c46f92a7451",
+          "source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+          "snippet": "Apa Itu LinkAja Syariah? LinkAja Syariah adalah fitur layanan uang elektronik LinkAja yang dikelola sesuai kai…",
+          "score": 0.7911370275835975,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "ca650b4f566123cd8e7aa99e2d7ef6b548a8fe98cbdab40158f486a0fdd51e15",
+          "source_url": "https://www.linkaja.id/news/cara-daftar-aktivasi-akun-linkaja",
+          "snippet": "LinkAja atau LinkAja Syariah? Kamu tidak perlu membuat akun terpisah untuk menggunakan LinkAja Syariah. Saat p…",
+          "score": 0.766594429581456,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "9c0142cc37123487e20f0047076949d23119ce667341a03be4c5d7b6104b6c17",
+          "source_url": "https://www.linkaja.id/news/cara-aktivasi-linkaja-syariah",
+          "snippet": "Apa Saja yang Bisa Digunakan di LinkAja Syariah? LinkAja Syariah tetap dapat digunakan untuk berbagai kebutuha…",
+          "score": 0.7525069956101202,
+          "is_pinned": false
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "question": "Di mana saja LinkAja bisa dipakai untuk bayar (merchant/QRIS)?",
+      "topic": "Acceptance network",
+      "expected_chunk_hash": "0a10a7613dfdbbe2bf5395063aa1e7e14cdbd28d100f7c9e1dcd6b683905ce1e",
+      "expected_source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+      "rank": 4,
+      "hit_at_1": false,
+      "hit_at_3": false,
+      "hit_at_5": true,
+      "reciprocal_rank": 0.25,
+      "pinned_chunk_score": 0.7230819039414101,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": false,
+      "top1_snippet": "1. Bayar di Merchant dengan QRIS Pakai LinkAja Syariah untuk membayar transaksi di merchant yang menerima QRIS…",
+      "top1_source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+      "top1_score": 0.8075959794161283,
+      "embed_ms": 503.571,
+      "retrieve_ms": 7.393,
+      "question_chars": 62,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "f5191113f3ade6a2f6a3352ccf3092cf78b832225b38bf94ff25254bcb283b83",
+          "source_url": "https://www.linkaja.id/news/fitur-linkaja-syariah",
+          "snippet": "1. Bayar di Merchant dengan QRIS Pakai LinkAja Syariah untuk membayar transaksi di merchant yang menerima QRIS…",
+          "score": 0.8075959794161283,
+          "is_pinned": false
+        },
+        {
+          "rank": 2,
+          "content_hash": "838c59b95221d699673f34f5ca0ccab18e3d2656db3f462e6acca28ab8f4e1f7",
+          "source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+          "snippet": "Mau Bayar Langsung di Merchant? Pakai QRIS Selain melakukan pembelian dan pembayaran dari menu aplikasi, LinkA…",
+          "score": 0.8044364561462253,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "b855876ad69013d5b344a805344533bbcea4aae385a392c0af739bb896cc8fa6",
+          "source_url": "https://www.linkaja.id/news/tidak-bisa-scan-qris-linkaja",
+          "snippet": "4. Gunakan Menu Bayar di Aplikasi LinkAja Untuk melakukan pembayaran dengan scan QRIS: - Buka aplikasi LinkAja…",
+          "score": 0.7704697374380424,
+          "is_pinned": false
+        },
+        {
+          "rank": 4,
+          "content_hash": "0a10a7613dfdbbe2bf5395063aa1e7e14cdbd28d100f7c9e1dcd6b683905ce1e",
+          "source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+          "snippet": "Apa Saja yang Bisa Dibayar atau Dibeli di LinkAja? Melalui aplikasi LinkAja, kamu bisa mengakses berbagai laya…",
+          "score": 0.7230819039414101,
+          "is_pinned": true
+        },
+        {
+          "rank": 5,
+          "content_hash": "babcc749a31f201f0521a48dd1430ee251d92604eb6066b6dede1951914d487d",
+          "source_url": "https://www.linkaja.id/news/cara-pembayaran-pembelian-linkaja",
+          "snippet": "Cara Melakukan Pembayaran atau Pembelian Pakai LinkAja Bayar tagihan, beli pulsa, paket data, token listrik, a…",
+          "score": 0.7118316835686858,
+          "is_pinned": false
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "question": "Bagaimana cara upgrade akun ke KYC terverifikasi dan apa manfaatnya?",
+      "topic": "KYC/upgrade",
+      "expected_chunk_hash": "ffede28ad0a6e157c3f287d75cb53fc3551d7501e5e7208ba8ff6316842e4dc0",
+      "expected_source_url": "https://www.linkaja.id/news/cara-upgrade-full-service-linkaja",
+      "rank": 3,
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "hit_at_5": true,
+      "reciprocal_rank": 0.3333333333333333,
+      "pinned_chunk_score": 0.5978655479914282,
+      "diag_rank_within_20": 0,
+      "expected_url_in_top5": true,
+      "top1_same_article": false,
+      "top1_snippet": "Mengapa Upgrade Full Service Perlu Diverifikasi? Full Service memberikan akses terhadap fitur dan limit transa…",
+      "top1_source_url": "https://www.linkaja.id/news/upgrade-full-service-masih-dalam-antrian",
+      "top1_score": 0.6286675061783988,
+      "embed_ms": 484.075,
+      "retrieve_ms": 7.334,
+      "question_chars": 68,
+      "top5": [
+        {
+          "rank": 1,
+          "content_hash": "b3b329c3bfde51f093f91a0b4b50c7e178a0b8e0ada0acca75c2bc0c7042e790",
+          "source_url": "https://www.linkaja.id/news/upgrade-full-service-masih-dalam-antrian",
+          "snippet": "Mengapa Upgrade Full Service Perlu Diverifikasi? Full Service memberikan akses terhadap fitur dan limit transa…",
+          "score": 0.6286675061783988,
+          "is_pinned": false
+        },
+        {
+          "rank": 2,
+          "content_hash": "708d18bd535c58784b4f8f52dee7dff3e61e0317b989267d84ef8d6af51e2549",
+          "source_url": "https://www.linkaja.id/news/upgrade-full-service-masih-dalam-antrian",
+          "snippet": "Bagaimana Proses Upgrade Full Service? Secara umum, proses upgrade dilakukan langsung melalui aplikasi LinkAja…",
+          "score": 0.6272473892416038,
+          "is_pinned": false
+        },
+        {
+          "rank": 3,
+          "content_hash": "ffede28ad0a6e157c3f287d75cb53fc3551d7501e5e7208ba8ff6316842e4dc0",
+          "source_url": "https://www.linkaja.id/news/cara-upgrade-full-service-linkaja",
+          "snippet": "Cara Upgrade Akun LinkAja ke Full Service Upgrade dapat dilakukan langsung melalui aplikasi LinkAja tanpa perl…",
+          "score": 0.5978655479914282,
+          "is_pinned": true
+        },
+        {
+          "rank": 4,
+          "content_hash": "d39d83a8852569aa403cbc365009199738bf99232189efa55ee7a913a4e51c87",
+          "source_url": "https://www.linkaja.id/news/pengajuan-full-service-linkaja-ditolak",
+          "snippet": "Bagaimana Cara Upgrade ke Full Service? Pengajuan Full Service dapat dilakukan langsung melalui aplikasi LinkA…",
+          "score": 0.5853566436380157,
+          "is_pinned": false
+        },
+        {
+          "rank": 5,
+          "content_hash": "7cbeff651c27f08011e64c7d1782987d652bd949bfe97a614bf5b239071cf187",
+          "source_url": "https://www.linkaja.id/news/upgrade-full-service-masih-dalam-antrian",
+          "snippet": "Apa yang Perlu Diperhatikan Selama Proses Verifikasi? Selama menunggu proses upgrade selesai, ada beberapa hal…",
+          "score": 0.5753474177719221,
+          "is_pinned": false
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "hit_at_1": 0.3333333333333333,
+    "hit_at_3": 0.5555555555555556,
+    "hit_at_5": 0.8888888888888888,
+    "mrr": 0.47962962962962963
+  },
+  "cost": {
+    "total_question_chars": 478,
+    "estimated_tokens_chars_div_4": 120,
+    "measured_tokens_usage_probe": 140,
+    "price_usd_per_million_tokens": 0.02,
+    "estimated_cost_usd": 0.0000024000000000000003,
+    "measured_cost_usd": 0.0000028,
+    "usage_probe_ok": true,
+    "probe_note": ""
+  },
+  "gate": {
+    "hit_at_5_bar": 0.8,
+    "mrr_bar": 0.6,
+    "hit_at_5_pass": true,
+    "mrr_pass": false,
+    "gate_pass_retrieval_only": false
+  }
+}
