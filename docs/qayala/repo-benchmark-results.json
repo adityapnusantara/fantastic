@@ -1,0 +1,2213 @@
+{
+  "metadata": {
+    "caching": "disabled",
+    "generated_at": "2026-11-09T08:01:57.123331Z",
+    "history_window_rows": 20,
+    "indexing_requests": [
+      {
+        "case": "indexing",
+        "stage": "embedding",
+        "model": "text-embedding-3-small",
+        "response_id": "",
+        "status": "completed",
+        "http_status": 200,
+        "input_tokens": 2833,
+        "output_tokens": 0,
+        "reasoning_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_items": 11,
+        "input_types": {},
+        "seconds": 0.874561625
+      }
+    ],
+    "max_output_tokens": 2048,
+    "question": "Saya sudah punya akun LinkAja reguler. Bagaimana cara menghubungkannya ke Qayala, dan apakah setelah terhubung saya bisa langsung kirim saldo?",
+    "repeats": 5,
+    "source_url": "https://tcashsquad.atlassian.net/wiki/spaces/com/pages/5457182727",
+    "source_version": 4,
+    "test_scope": "chat.NewService -> Eino ADK -> search_faq -> live embedding -> PostgreSQL pgvector -> streaming answer -> persisted messages -> asynchronous rolling summary; HTTP/auth not exercised",
+    "top_k": 5,
+    "warmup_rows": 24,
+    "warmup_summary": "Pengguna bertanya apa itu Qayala dan apa saja fitur utamanya. Berdasarkan hasil pencarian FAQ, Qayala adalah aplikasi untuk mendukung ibadah harian sekaligus mengakses layanan donasi dan sosial.\n\nFitur utama:\n- Jadwal salat, notifikasi azan, arah kiblat, dan baca Al-Qur’an\n- Jejak Kebaikan dan Qayala Journey untuk mencatat serta melihat progres ibadah\n- Lifestyle dengan integrasi LinkAja Syariah\n- Infaq & Sedekah serta Zakat\n- Profil dan pusat bantuan\n\nCatatan MVP: di Lifestyle, **Isi Saldo** dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** belum dapat diklik dan berlabel “Soon”. Tidak ada pertanyaan terbuka.",
+    "warmup_summary_until": 4,
+    "warmup_turns": 6,
+    "database_isolation_verified": true,
+    "database_name": "qayala_bench_692b6e3fa0a4",
+    "database_removed_after_run": true
+  },
+  "monthly_interactions": 33574,
+  "monthly_indexing_budget_usd": "0.02",
+  "summary": [
+    {
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "repeats": 5,
+      "mean_input_tokens": 21861.2,
+      "mean_output_tokens_including_reasoning": 417.8,
+      "mean_non_reasoning_output_tokens": 385.2,
+      "mean_reasoning_tokens": 32.6,
+      "min_reasoning_tokens": 23.0,
+      "max_reasoning_tokens": 45.0,
+      "mean_query_embedding_tokens": 41.6,
+      "mean_model_requests": 3.0,
+      "mean_embedding_requests": 1.0,
+      "mean_cost_per_interaction_usd": "0.002395852",
+      "monthly_chat_and_query_embedding_usd": "80.438335",
+      "monthly_with_planned_indexing_usd": "80.458335",
+      "stages": {
+        "agent": {
+          "mean_calls": 2.0,
+          "mean_input": 19874.2,
+          "mean_output": 156.6,
+          "mean_reasoning": 0.0
+        },
+        "summary": {
+          "mean_calls": 1.0,
+          "mean_input": 1987.0,
+          "mean_output": 261.2,
+          "mean_reasoning": 32.6
+        },
+        "embedding": {
+          "mean_calls": 1.0,
+          "mean_input": 41.6,
+          "mean_output": 0.0,
+          "mean_reasoning": 0.0
+        }
+      }
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeats": 5,
+      "mean_input_tokens": 21792.4,
+      "mean_output_tokens_including_reasoning": 392.0,
+      "mean_non_reasoning_output_tokens": 392.0,
+      "mean_reasoning_tokens": 0.0,
+      "min_reasoning_tokens": 0.0,
+      "max_reasoning_tokens": 0.0,
+      "mean_query_embedding_tokens": 33.0,
+      "mean_model_requests": 3.0,
+      "mean_embedding_requests": 1.0,
+      "mean_cost_per_interaction_usd": "0.023753060",
+      "monthly_chat_and_query_embedding_usd": "797.485236",
+      "monthly_with_planned_indexing_usd": "797.505236",
+      "stages": {
+        "agent": {
+          "mean_calls": 2.0,
+          "mean_input": 19805.4,
+          "mean_output": 179.8,
+          "mean_reasoning": 0.0
+        },
+        "summary": {
+          "mean_calls": 1.0,
+          "mean_input": 1987.0,
+          "mean_output": 212.2,
+          "mean_reasoning": 0.0
+        },
+        "embedding": {
+          "mean_calls": 1.0,
+          "mean_input": 33.0,
+          "mean_output": 0.0,
+          "mean_reasoning": 0.0
+        }
+      }
+    },
+    {
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "repeats": 5,
+      "mean_input_tokens": 21866.2,
+      "mean_output_tokens_including_reasoning": 421.8,
+      "mean_non_reasoning_output_tokens": 383.2,
+      "mean_reasoning_tokens": 38.6,
+      "min_reasoning_tokens": 33.0,
+      "max_reasoning_tokens": 49.0,
+      "mean_query_embedding_tokens": 46.6,
+      "mean_model_requests": 3.0,
+      "mean_embedding_requests": 1.0,
+      "mean_cost_per_interaction_usd": "0.002398452",
+      "monthly_chat_and_query_embedding_usd": "80.525627",
+      "monthly_with_planned_indexing_usd": "80.545627",
+      "stages": {
+        "agent": {
+          "mean_calls": 2.0,
+          "mean_input": 19879.2,
+          "mean_output": 162.4,
+          "mean_reasoning": 0.0
+        },
+        "summary": {
+          "mean_calls": 1.0,
+          "mean_input": 1987.0,
+          "mean_output": 259.4,
+          "mean_reasoning": 38.6
+        },
+        "embedding": {
+          "mean_calls": 1.0,
+          "mean_input": 46.6,
+          "mean_output": 0.0,
+          "mean_reasoning": 0.0
+        }
+      }
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeats": 5,
+      "mean_input_tokens": 21842.8,
+      "mean_output_tokens_including_reasoning": 398.6,
+      "mean_non_reasoning_output_tokens": 398.6,
+      "mean_reasoning_tokens": 0.0,
+      "min_reasoning_tokens": 0.0,
+      "max_reasoning_tokens": 0.0,
+      "mean_query_embedding_tokens": 40.8,
+      "mean_model_requests": 3.0,
+      "mean_embedding_requests": 1.0,
+      "mean_cost_per_interaction_usd": "0.023836616",
+      "monthly_chat_and_query_embedding_usd": "800.290546",
+      "monthly_with_planned_indexing_usd": "800.310546",
+      "stages": {
+        "agent": {
+          "mean_calls": 2.0,
+          "mean_input": 19855.8,
+          "mean_output": 188.6,
+          "mean_reasoning": 0.0
+        },
+        "summary": {
+          "mean_calls": 1.0,
+          "mean_input": 1987.0,
+          "mean_output": 210.0,
+          "mean_reasoning": 0.0
+        },
+        "embedding": {
+          "mean_calls": 1.0,
+          "mean_input": 40.8,
+          "mean_output": 0.0,
+          "mean_reasoning": 0.0
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "gpt-6-luna-low-1",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "repeat": 1,
+      "conversation_id": "1700f43c-ad89-40dc-bb99-1a13bfb0744e",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda masih LinkAja reguler, Anda akan diminta menyetujui perubahan ke **LinkAja Syariah** sebelum melanjutkan proses penyambungan.\n\nSetelah terhubung, Anda **belum bisa mengirim saldo melalui Qayala** pada MVP. Fitur **Kirim Saldo** masih berlabel “Soon”; hanya **Isi Saldo** yang dapat digunakan.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala, lalu cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk mendukung ibadah harian dan mengakses layanan donasi serta sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Catatan MVP: hanya **Isi Saldo** di Lifestyle yang dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** berstatus “Soon”.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP yang dikirim lewat SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat.\n- Asisten mengingatkan agar OTP dan PIN tidak dibagikan.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-low-1",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_045b340f7b9e64a1016af17d3b763487d295e2b88bff3ed6ce",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 53,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.031944334
+        },
+        {
+          "case": "gpt-6-luna-low-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 45,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.3027035
+        },
+        {
+          "case": "gpt-6-luna-low-1",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_045b340f7b9e64a1016af17d3da1dc87d2bd3a356a1080ebb3",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10867,
+          "output_tokens": 111,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.098578667
+        },
+        {
+          "case": "gpt-6-luna-low-1",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_085695f26b3ee42d016af17d3fbc5087d2964973df183c6919",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 249,
+          "reasoning_tokens": 28,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.027923792
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-low-2",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "repeat": 2,
+      "conversation_id": "56bd922b-bc82-4ec5-9b2e-4fdd88ec7d9b",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda masih LinkAja reguler, Anda perlu menyetujui perubahan ke **LinkAja Syariah** sebelum melanjutkan penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di MVP**—fitur itu berlabel “Soon”. Saat ini hanya **Isi Saldo** yang dapat diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Catatan MVP: di Lifestyle, hanya **Isi Saldo** yang dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** belum aktif dan berlabel “Soon”.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP lewat SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat.\n- Pengguna diingatkan agar tidak membagikan OTP atau PIN.\n\nInformasi registrasi diperoleh dari hasil pencarian FAQ. Tidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-low-2",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0c5e492f4ee23044016af17d42d2d087d2837a399e7c1c8776",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 53,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.236995042
+        },
+        {
+          "case": "gpt-6-luna-low-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 42,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.26052575
+        },
+        {
+          "case": "gpt-6-luna-low-2",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0c5e492f4ee23044016af17d45549c87d28a89b0d7e54ae1d9",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10866,
+          "output_tokens": 101,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.903345292
+        },
+        {
+          "case": "gpt-6-luna-low-2",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0fdad2d6899ad228016af17d47411487d29aa49f3db1170953",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 256,
+          "reasoning_tokens": 23,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.521302875
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-low-3",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "repeat": 3,
+      "conversation_id": "433f9606-4475-4c9a-995b-75806f6fc621",
+      "answer": "Di Qayala, buka **Lifestyle** lalu pilih **Sambungkan akun**. Masukkan nomor handphone dan verifikasi OTP. Karena akun Anda masih LinkAja reguler, Anda akan diminta menyetujui perubahan akun menjadi **LinkAja Syariah**, lalu melanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum dapat digunakan di MVP**—fitur tersebut berlabel “Soon”. Hanya **Isi Saldo** yang bisa diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan apa itu Qayala, fitur utamanya, lalu cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial.\n- Fitur utama: jadwal salat dan notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle terintegrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya **Isi Saldo** di Lifestyle yang dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** berlabel “Soon” dan belum dapat diklik.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem memberi tahu dan tidak membuat akun duplikat.\n- Pengguna diingatkan agar tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-low-3",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_06fa0d139d85e683016af17d4aea5087d2a81d797f79c6aea9",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 51,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.785679792
+        },
+        {
+          "case": "gpt-6-luna-low-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 43,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.315723
+        },
+        {
+          "case": "gpt-6-luna-low-3",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_06fa0d139d85e683016af17d4cfaf887d2885039e0973b9b7f",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10864,
+          "output_tokens": 108,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.105317333
+        },
+        {
+          "case": "gpt-6-luna-low-3",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0d1d1d0345ff71fa016af17d4f191887d28004dd1ccc8e184c",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 257,
+          "reasoning_tokens": 29,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.167151375
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-low-4",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "repeat": 4,
+      "conversation_id": "9b8e2a7f-3a52-43a5-b9cb-12f8e96032de",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda LinkAja reguler, Anda perlu menyetujui perubahan akun dari LinkAja reguler ke LinkAja Syariah, lalu melanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum dapat digunakan di MVP**—fitur itu berlabel “Soon”. Hanya **Isi Saldo** yang bisa diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Qayala adalah aplikasi untuk mendukung ibadah harian sekaligus mengakses layanan donasi dan sosial. Fitur utamanya mencakup jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n\nDi Lifestyle pada versi MVP, hanya **Isi Saldo** yang dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** berlabel “Soon” dan belum bisa diklik.\n\nUntuk mendaftar dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP yang dikirim lewat SMS, lalu buat dan konfirmasikan PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat. Pengguna juga dapat mendaftar melalui Google jika opsi itu tersedia. Pengguna diingatkan agar tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-low-4",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_09cb51fadb01067b016af17d5265f087d2b9e0e85ab8fc6fb7",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 48,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.946002875
+        },
+        {
+          "case": "gpt-6-luna-low-4",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 38,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.380242833
+        },
+        {
+          "case": "gpt-6-luna-low-4",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_09cb51fadb01067b016af17d54bb6087d2acb16ba873985721",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10860,
+          "output_tokens": 106,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.754906042
+        },
+        {
+          "case": "gpt-6-luna-low-4",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_017c32ae4c3bed0e016af17d5687e087d29af9bea35d2cce97",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 268,
+          "reasoning_tokens": 45,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.028779167
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-low-5",
+      "model": "gpt-6-luna",
+      "effort": "low",
+      "repeat": 5,
+      "conversation_id": "dcbe4dc2-8dbe-46bc-945b-653825e9d7ae",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda masih LinkAja reguler, Anda akan diminta menyetujui perubahan akun ke LinkAja Syariah sebelum melanjutkan penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di MVP**—fitur tersebut berlabel “Soon”. Saat ini hanya **Isi Saldo** yang bisa diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala, lalu cara registrasi memakai nomor handphone.\n\nBerdasarkan FAQ, **Qayala** adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial. Fitur utamanya mencakup jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n\nUntuk registrasi dengan nomor handphone:\n1. Pilih kode negara dan masukkan nomor.\n2. Verifikasi kode OTP yang dikirim lewat SMS.\n3. Buat PIN 6 digit dan konfirmasikan.\n\nNomor yang sudah terdaftar tidak akan dibuatkan akun duplikat. Pengguna diingatkan agar tidak membagikan OTP atau PIN.\n\nCatatan MVP: di Lifestyle, **Isi Saldo** dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** belum dapat diklik dan berlabel “Soon”. Tidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-low-5",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0ea6bdaf397466e2016af17d59b15c87d28a3e96c00c2904b2",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 50,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.368221125
+        },
+        {
+          "case": "gpt-6-luna-low-5",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 40,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.307841958
+        },
+        {
+          "case": "gpt-6-luna-low-5",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0ea6bdaf397466e2016af17d5c630887d2b41b7d2aee3d7129",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10864,
+          "output_tokens": 102,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.8906108339999999
+        },
+        {
+          "case": "gpt-6-luna-low-5",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_04ed286e7066b29e016af17d5e4bec87d2a72fe9ce8f6341b5",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 276,
+          "reasoning_tokens": 38,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.064285584
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-1",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 1,
+      "conversation_id": "298f3942-88b8-43f9-98f3-4634f767bf64",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP di aplikasi.\n3. Setujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di Qayala**. Pada MVP, hanya Isi Saldo yang dapat diklik; Kirim Saldo berlabel “Soon”.\n\nJangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone.\n\n- Berdasarkan FAQ, Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi azan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP Lifestyle, **Isi Saldo** dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** belum dapat diklik dan berlabel “Soon”.\n- Berdasarkan hasil pencarian FAQ registrasi, pengguna memilih kode negara, memasukkan nomor handphone, memverifikasi OTP melalui SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan menghasilkan akun duplikat. Asisten juga mengingatkan agar OTP dan PIN tidak dibagikan.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a55a61da8e22d0b016af17d6178a487d2aaa4031b1f45af62",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 46,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.460122667
+        },
+        {
+          "case": "gpt-6.1-terra-low-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 33,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.31696325
+        },
+        {
+          "case": "gpt-6.1-terra-low-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a55a61da8e22d0b016af17d6354c087d289379f8304d53ace",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10755,
+          "output_tokens": 131,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.534770834
+        },
+        {
+          "case": "gpt-6.1-terra-low-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_04e72f303b8db754016af17d65fb7887d292ee706f559e0a3f",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 222,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.995391
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-2",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 2,
+      "conversation_id": "01f7281b-6f2e-42f2-a99d-249be7fe0413",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP di aplikasi.\n3. Setujui perubahan akun dari LinkAja reguler menjadi LinkAja Syariah, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di Qayala pada versi MVP** dan berlabel “Soon”. Saat ini, fitur keuangan yang bisa diklik hanya **Isi Saldo**.\n\nJangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone. Berdasarkan pencarian FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP Lifestyle, **Isi Saldo** dapat digunakan; Kirim Saldo, Tarik Saldo, dan Terima Saldo belum dapat diklik dan berlabel “Soon”.\n- Registrasi nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan menghasilkan akun duplikat. Pengguna diingatkan untuk tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f8772b6bba02b59016af17d69ea9487d2a1202a4e119b6a96",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 46,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.5031195
+        },
+        {
+          "case": "gpt-6.1-terra-low-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 35,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.322285
+        },
+        {
+          "case": "gpt-6.1-terra-low-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f8772b6bba02b59016af17d6bd01c87d2ace02f7c0f54ed74",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10754,
+          "output_tokens": 136,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.502888208
+        },
+        {
+          "case": "gpt-6.1-terra-low-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0447689221784b92016af17d6e542087d29bb24907fdf9922f",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 212,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.505432708
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-3",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 3,
+      "conversation_id": "464b85d9-0582-4177-a81e-c9788f326d6a",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP.\n3. Setujui perubahan akun LinkAja reguler menjadi **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, Anda **belum bisa mengirim saldo melalui Qayala**. Pada MVP, hanya Isi Saldo yang dapat digunakan; Kirim Saldo masih berlabel “Soon”. Jangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala, fitur utama, dan cara registrasi dengan nomor handphone.\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya mencakup jadwal salat, notifikasi azan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP Lifestyle, hanya **Isi Saldo** yang dapat diklik; Kirim, Tarik, dan Terima Saldo berlabel “Soon”.\n- Hasil pencarian FAQ: registrasi via nomor HP dilakukan dengan memilih kode negara dan memasukkan nomor, memverifikasi OTP melalui SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan menghasilkan akun duplikat.\n- Pengguna juga diingatkan untuk tidak membagikan OTP atau PIN. Tidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f9622239ea0de71016af17d71e3b887d29803bd65b820f659",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 45,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.5034635830000003
+        },
+        {
+          "case": "gpt-6.1-terra-low-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 33,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.5739905
+        },
+        {
+          "case": "gpt-6.1-terra-low-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f9622239ea0de71016af17d74fa0c87d2969fdb02433e048b",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10826,
+          "output_tokens": 129,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.418443625
+        },
+        {
+          "case": "gpt-6.1-terra-low-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0d8eb6ac5bc24d97016af17d77675087d2acf97a2687f3e90f",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 210,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.697885833
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-4",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 4,
+      "conversation_id": "e40bd005-03f7-47a0-b00a-2e480a9e7d04",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP.\n3. Setujui perubahan akun LinkAja reguler menjadi **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di Qayala**. Pada MVP, hanya Isi Saldo yang bisa diklik; Kirim Saldo, Tarik Saldo, dan Terima Saldo masih berlabel “Soon”.\n\nJangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala dan cara registrasi dengan nomor handphone. Berdasarkan FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP Lifestyle, hanya Isi Saldo yang bisa diklik; Kirim, Tarik, dan Terima Saldo berlabel “Soon”.\n- Registrasi dengan nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP yang dikirim via SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat. Asisten juga mengingatkan agar OTP dan PIN tidak dibagikan.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-4",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_01f8a5e2527078cc016af17d7b3c9087d2a51d8b44c29e7293",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 44,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.4573702499999999
+        },
+        {
+          "case": "gpt-6.1-terra-low-4",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 31,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.296586125
+        },
+        {
+          "case": "gpt-6.1-terra-low-4",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_01f8a5e2527078cc016af17d7d024087d297d49a84346ec768",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10825,
+          "output_tokens": 142,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 3.015795792
+        },
+        {
+          "case": "gpt-6.1-terra-low-4",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0165a5795598eb8c016af17d800e5487d29b119b46587130a4",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 204,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.702629458
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-5",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 5,
+      "conversation_id": "ac32031c-332b-4369-b757-1daa7d968618",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP di aplikasi.\n3. Setujui perubahan akun LinkAja reguler menjadi **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, Anda **belum bisa mengirim saldo melalui Qayala**. Pada MVP, Kirim Saldo masih berlabel “Soon” dan belum bisa diklik; hanya Isi Saldo yang tersedia. Jangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone. Berdasarkan hasil pencarian FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi azan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle terintegrasi LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP Lifestyle, hanya **Isi Saldo** yang dapat digunakan; Kirim Saldo, Tarik Saldo, dan Terima Saldo belum dapat diklik dan berlabel “Soon”.\n- Registrasi nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan menghasilkan akun duplikat. Pengguna diingatkan untuk tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-5",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f4b098af446cdc7016af17d83de4087d29b87ae244c2fb1a6",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 44,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.4127495420000002
+        },
+        {
+          "case": "gpt-6.1-terra-low-5",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 33,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.358145875
+        },
+        {
+          "case": "gpt-6.1-terra-low-5",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f4b098af446cdc7016af17d86a90887d28a190a717148d41d",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10817,
+          "output_tokens": 136,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.6805661670000003
+        },
+        {
+          "case": "gpt-6.1-terra-low-5",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0e0653ea5a0451fc016af17d895cdc87d281cb487fe8b36ea7",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 213,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 4.60706625
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-medium-1",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "repeat": 1,
+      "conversation_id": "212f5a2f-67f5-4375-a44b-c98468ebc22b",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda LinkAja reguler, Anda perlu menyetujui perubahan akun ke **LinkAja Syariah** dan melanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di MVP**—fitur itu berlabel “Soon”. Hanya **Isi Saldo** yang dapat diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala, fitur utamanya, dan cara mendaftar dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial. Fitur utamanya mencakup jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, di Lifestyle hanya **Isi Saldo** yang dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** belum aktif dan berlabel “Soon”.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP yang dikirim lewat SMS, lalu buat dan konfirmasikan PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat.\n- Pengguna diingatkan agar tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-medium-1",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0fdfb88fc0749354016af17d8e17bc87d2bafa88bf424eda53",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 50,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.90345125
+        },
+        {
+          "case": "gpt-6-luna-medium-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 39,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.491868708
+        },
+        {
+          "case": "gpt-6-luna-medium-1",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0fdfb88fc0749354016af17d9184e487d28a2b66448a871b00",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10864,
+          "output_tokens": 101,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 3.726487041
+        },
+        {
+          "case": "gpt-6-luna-medium-1",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0a585f953caaedbd016af17d9541e887d296a5cedfe697b75e",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 268,
+          "reasoning_tokens": 39,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.712769375
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-medium-2",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "repeat": 2,
+      "conversation_id": "0e2361b7-5bfd-49bb-b121-e1b8809a9740",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda LinkAja reguler, Anda perlu menyetujui perubahan akun menjadi **LinkAja Syariah** dan melanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di MVP**—fiturnya masih berlabel “Soon”. Hanya **Isi Saldo** yang dapat diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP, hanya **Isi Saldo** di Lifestyle yang bisa digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** berlabel “Soon” dan belum dapat diklik.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP yang dikirim via SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat. Pengguna diingatkan agar tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-medium-2",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0fe45f9842df54c0016af17d99135c87d28cdce99c176f0fe5",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 51,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.872698833
+        },
+        {
+          "case": "gpt-6-luna-medium-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 41,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.221569375
+        },
+        {
+          "case": "gpt-6-luna-medium-2",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0fe45f9842df54c0016af17d9c2fc087d298878e4865cb440d",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10862,
+          "output_tokens": 102,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.826919166
+        },
+        {
+          "case": "gpt-6-luna-medium-2",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0295ab5df3fa89d9016af17d9f0b4087d2a27d01c86eb018b8",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 257,
+          "reasoning_tokens": 33,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.301266167
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-medium-3",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "repeat": 3,
+      "conversation_id": "593ebe15-c22b-494e-82f6-d2c198ef5fa9",
+      "answer": "Dari halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda LinkAja reguler, alur akan meminta persetujuan untuk mengubahnya menjadi **LinkAja Syariah**, lalu melanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di MVP**—fitur itu ditandai “Soon”. Saat ini hanya **Isi Saldo** yang dapat diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna awalnya menanyakan Qayala dan fitur utamanya. Berdasarkan FAQ, Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan. Pada MVP, hanya **Isi Saldo** yang aktif; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** berlabel “Soon”.\n\nPengguna kemudian bertanya cara mendaftar dengan nomor handphone. Jawaban berdasarkan FAQ: pilih kode negara, masukkan nomor handphone, verifikasi OTP yang dikirim lewat SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah pernah terdaftar, sistem memberi tahu dan tidak membuat akun duplikat. Tidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-medium-3",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_094cac65f813c9f3016af17da26cc487d29bca4113f8e9ad87",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 62,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.824027333
+        },
+        {
+          "case": "gpt-6-luna-medium-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 54,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.295196167
+        },
+        {
+          "case": "gpt-6-luna-medium-3",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_094cac65f813c9f3016af17da5938087d2be8fbb0391121759",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10876,
+          "output_tokens": 106,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 4.079068417
+        },
+        {
+          "case": "gpt-6-luna-medium-3",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0713f8b82be14099016af17da9a7a087d290fff7bfdba50de2",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 243,
+          "reasoning_tokens": 33,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.107658583
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-medium-4",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "repeat": 4,
+      "conversation_id": "99c3aef1-7b7b-4f89-9943-107eef8951d3",
+      "answer": "Di halaman **Lifestyle**, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda masih LinkAja reguler, Anda perlu menyetujui perubahan ke LinkAja Syariah dan melanjutkan proses penyambungan.\n\nSetelah terhubung, pada MVP Anda **belum bisa mengirim saldo dari Qayala**—fitur **Kirim Saldo** belum dapat diklik dan berlabel “Soon”. **Isi Saldo** dapat digunakan.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya **Isi Saldo** di Lifestyle yang dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** berlabel “Soon” dan belum dapat diklik.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat.\n- Asisten mengingatkan pengguna agar tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-medium-4",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0179600eea1ee171016af17dacdf9c87d2803843e472a3901b",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 64,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 3.637283167
+        },
+        {
+          "case": "gpt-6-luna-medium-4",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 56,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.460903833
+        },
+        {
+          "case": "gpt-6-luna-medium-4",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0179600eea1ee171016af17db100b887d2a1af01925e7e6a0c",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10878,
+          "output_tokens": 108,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 4.414404167
+        },
+        {
+          "case": "gpt-6-luna-medium-4",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_07cf21fdd4c2bfa0016af17db5762c87d2919ad1ebb15ba4f8",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 260,
+          "reasoning_tokens": 39,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 4.832001083
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna-medium-5",
+      "model": "gpt-6-luna",
+      "effort": "medium",
+      "repeat": 5,
+      "conversation_id": "71c984c1-d951-4b9c-82d8-d8ba93fcadb9",
+      "answer": "Buka **Lifestyle** di Qayala, pilih **Sambungkan akun**, masukkan nomor handphone, lalu verifikasi OTP. Karena akun Anda LinkAja reguler, Anda perlu menyetujui perubahan ke **LinkAja Syariah** dan melanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di MVP**—fitur itu ditandai “Soon”. Hanya **Isi Saldo** yang dapat diklik. Jangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan fitur utama Qayala dan cara registrasi dengan nomor handphone.\n\n- **Qayala** adalah aplikasi untuk mendukung ibadah harian serta mengakses layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- **Registrasi dengan nomor handphone:** pilih kode negara, masukkan nomor, verifikasi OTP lewat SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan dibuatkan akun duplikat. Alternatifnya, pengguna dapat mendaftar dengan Google.\n- **Catatan MVP Lifestyle:** hanya Isi Saldo yang dapat digunakan; Kirim Saldo, Tarik Saldo, dan Terima Saldo berlabel “Soon” dan belum dapat diklik.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6-luna-medium-5",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0c6627b3b96f8abd016af17dba666887d2870d27c961191330",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 53,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 5.138970667
+        },
+        {
+          "case": "gpt-6-luna-medium-5",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 43,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.358805958
+        },
+        {
+          "case": "gpt-6-luna-medium-5",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0c6627b3b96f8abd016af17dbfe77887d2988ff67766a649ea",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10866,
+          "output_tokens": 115,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 5.022098708
+        },
+        {
+          "case": "gpt-6-luna-medium-5",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0c9031ca7a732050016af17dc4f5e887d2bb819148200ca922",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 269,
+          "reasoning_tokens": 49,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.661830708
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-1",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 1,
+      "conversation_id": "f2fb2793-c6bc-4c41-98d2-43dad17f86d8",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP.\n3. Setujui perubahan akun dari LinkAja reguler ke **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di Qayala pada tahap MVP**. Fitur tersebut masih berlabel “Soon”; fitur keuangan yang bisa diklik saat ini adalah Isi Saldo.\n\nJangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone. Berdasarkan pencarian FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat dan notifikasi azan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle terintegrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP Lifestyle, hanya **Isi Saldo** yang dapat digunakan; Kirim, Tarik, dan Terima Saldo belum dapat diklik dan berlabel “Soon”.\n- Registrasi via nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP yang dikirim via SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak membuat akun duplikat. Asisten mengingatkan agar OTP dan PIN tidak dibagikan.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0d11268b79aa7bca016af17dc8c00887d282a5315740e3a97b",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 52,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.613753792
+        },
+        {
+          "case": "gpt-6.1-terra-medium-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 42,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.409476209
+        },
+        {
+          "case": "gpt-6.1-terra-medium-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0d11268b79aa7bca016af17dcacdd887d2bccd909ae0ddaf32",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10833,
+          "output_tokens": 136,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.891353458
+        },
+        {
+          "case": "gpt-6.1-terra-medium-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_07b9dedb770678a1016af17dcdb58c87d29b1101be5509a404",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 212,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.531672708
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-2",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 2,
+      "conversation_id": "97cc19b8-a04d-4baf-b0d9-508170eb7b01",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP di aplikasi.\n3. Setujui perubahan akun LinkAja reguler menjadi **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, Anda **belum bisa kirim saldo melalui Qayala**. Pada MVP, fitur Kirim Saldo berlabel “Soon” dan belum dapat diklik; fitur yang tersedia adalah Isi Saldo.\n\nJangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat, notifikasi azan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP Lifestyle, hanya **Isi Saldo** yang dapat diklik; Kirim, Tarik, dan Terima Saldo berlabel “Soon”.\n- Berdasarkan pencarian FAQ, registrasi dengan nomor HP dilakukan dengan memilih kode negara dan memasukkan nomor, memverifikasi OTP via SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan menghasilkan akun duplikat. Pengguna diingatkan untuk tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_08cb501e8fe495c6016af17dd149b887d28eaed19a38c1adec",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 52,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.495424958
+        },
+        {
+          "case": "gpt-6.1-terra-medium-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 42,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.28046175
+        },
+        {
+          "case": "gpt-6.1-terra-medium-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_08cb501e8fe495c6016af17dd3194487d29c206df3aa57f15c",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10866,
+          "output_tokens": 138,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.627944667
+        },
+        {
+          "case": "gpt-6.1-terra-medium-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0f0028ef972cafab016af17dd5c03087d2b913d784c735b0f3",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 206,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.372063167
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-3",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 3,
+      "conversation_id": "e15fdbf1-363f-40fc-b548-75d549f04c18",
+      "answer": "Untuk menghubungkan akun LinkAja reguler ke Qayala:\n\n1. Buka halaman **Lifestyle**, lalu pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP.\n3. Setujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, Anda **belum bisa kirim saldo melalui Qayala**. Pada MVP, hanya fitur Isi Saldo yang bisa digunakan; Kirim Saldo masih berlabel “Soon”.\n\nJangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone.\n\nBerdasarkan pencarian FAQ, Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle terintegrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan. Pada MVP Lifestyle, hanya Isi Saldo yang dapat digunakan; Kirim, Tarik, dan Terima Saldo berlabel “Soon”.\n\nRegistrasi nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem memberi tahu dan tidak membuat akun duplikat. Pengguna juga diingatkan untuk tidak membagikan OTP atau PIN.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0756668e556859d1016af17dd9410887d2b072346da6f605bb",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 54,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 3.914445458
+        },
+        {
+          "case": "gpt-6.1-terra-medium-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 42,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.355097542
+        },
+        {
+          "case": "gpt-6.1-terra-medium-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0756668e556859d1016af17ddda0ec87d284df7bf22ae0af21",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10835,
+          "output_tokens": 130,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.854890041
+        },
+        {
+          "case": "gpt-6.1-terra-medium-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0efdf72065402701016af17de0640087d28537511762864560",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 208,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.557184833
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-4",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 4,
+      "conversation_id": "4c0e0696-9c7c-4921-b9cf-90d8d0f4a48e",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP.\n3. Setujui perubahan akun LinkAja reguler menjadi **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, Anda **belum bisa kirim saldo melalui Qayala**. Pada MVP, hanya Isi Saldo yang bisa diklik; Kirim Saldo, Tarik Saldo, dan Terima Saldo masih berlabel “Soon”.\n\nJangan bagikan OTP atau PIN kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone. Berdasarkan pencarian FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi azan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP, hanya **Isi Saldo** yang dapat digunakan di Lifestyle; Kirim, Tarik, dan Terima Saldo berlabel “Soon” dan belum dapat diklik.\n- Registrasi nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak akan menghasilkan akun duplikat. Asisten mengingatkan agar OTP dan PIN tidak dibagikan.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-4",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0c4818c6bbea3188016af17de40c2087d2b1a0b64a46e5c79e",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 52,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 1.6067485000000001
+        },
+        {
+          "case": "gpt-6.1-terra-medium-4",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 41,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.253003084
+        },
+        {
+          "case": "gpt-6.1-terra-medium-4",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0c4818c6bbea3188016af17de5e6e487d2a58ecf07e4097a2c",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10865,
+          "output_tokens": 138,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.456396084
+        },
+        {
+          "case": "gpt-6.1-terra-medium-4",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_024c2828153ec0e0016af17de8680487d2bd9afd3a67b476a3",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 208,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.676159709
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-5",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 5,
+      "conversation_id": "99dd625f-5f86-4160-b573-144b94cdcf13",
+      "answer": "Untuk menghubungkan akun LinkAja reguler:\n\n1. Buka halaman **Lifestyle** di Qayala dan pilih **Sambungkan akun**.\n2. Masukkan nomor handphone dan lakukan verifikasi OTP.\n3. Setujui perubahan akun LinkAja reguler menjadi **LinkAja Syariah**, lalu lanjutkan proses penyambungan.\n\nSetelah terhubung, **Kirim Saldo belum bisa digunakan di Qayala**. Pada MVP, hanya Isi Saldo yang dapat diklik; Kirim Saldo, Tarik Saldo, dan Terima Saldo masih berlabel “Soon”.\n\nJangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone. Berdasarkan pencarian FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat dan notifikasi azan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, profil, dan pusat bantuan.\n- Pada MVP Lifestyle, **Isi Saldo** dapat digunakan; **Kirim Saldo, Tarik Saldo, dan Terima Saldo** belum dapat diklik dan berlabel “Soon”.\n- Registrasi via nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Nomor yang sudah terdaftar tidak menghasilkan akun duplikat. Asisten mengingatkan agar OTP dan PIN tidak dibagikan.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-5",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_06771bfb093d9123016af17dec31f487d2934d0e05de69506a",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 9010,
+          "output_tokens": 49,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 23,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.59276775
+        },
+        {
+          "case": "gpt-6.1-terra-medium-5",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 37,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.445079042
+        },
+        {
+          "case": "gpt-6.1-terra-medium-5",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_06771bfb093d9123016af17def49c887d2894e17feae4358c0",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10830,
+          "output_tokens": 142,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 25,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 2,
+            "user": 6
+          },
+          "seconds": 2.5729619169999998
+        },
+        {
+          "case": "gpt-6.1-terra-medium-5",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_036dc8ff3dac91e5016af17df1dcc487d2989651ee3718c28b",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1987,
+          "output_tokens": 216,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.381608166
+        }
+      ]
+    }
+  ]
+}

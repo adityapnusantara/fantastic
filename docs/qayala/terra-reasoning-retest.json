@@ -1,0 +1,3271 @@
+{
+  "metadata": {
+    "agent_instruction": "Kamu chatbot pusat bantuan FAQ Qayala. Jawab dalam bahasa Indonesia, ringkas dan jelas.\nUntuk setiap pertanyaan baru tentang Qayala atau integrasi LinkAja, gunakan search_faq sebelum menjawab, termasuk bila topik ada dalam history.\nJawab hanya berdasarkan hasil pencarian. Bedakan fitur MVP dari fase berikutnya. Jangan melakukan transaksi atau tindakan akun.\nJangan meminta PIN atau OTP. Tidak perlu menampilkan referensi sumber. Jika FAQ tidak cukup, minta klarifikasi tanpa mengarang.",
+    "agent_instruction_changed_from_previous_benchmark": false,
+    "caching": "disabled",
+    "database_isolation_verified": true,
+    "database_name": "qayala_bench_18d8e646b9bb",
+    "generated_at": "2026-11-09T08:33:40.202428Z",
+    "history_qa_turns_requested": 10,
+    "history_window_rows": 40,
+    "indexing_requests": [
+      {
+        "case": "indexing",
+        "stage": "embedding",
+        "model": "text-embedding-3-small",
+        "response_id": "",
+        "status": "completed",
+        "http_status": 200,
+        "input_tokens": 2833,
+        "output_tokens": 0,
+        "reasoning_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_items": 11,
+        "input_types": {},
+        "seconds": 1.647542042
+      }
+    ],
+    "max_output_tokens": 2048,
+    "models": [
+      "gpt-6.1-terra"
+    ],
+    "parallel_tool_calls_disabled": true,
+    "question": "Saya sudah punya akun LinkAja reguler. Bagaimana cara menghubungkannya ke Qayala, dan apakah setelah terhubung saya bisa langsung kirim saldo?",
+    "questions": [
+      "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ."
+    ],
+    "repeats": 3,
+    "source_url": "https://tcashsquad.atlassian.net/wiki/spaces/com/pages/5457182727",
+    "source_version": 4,
+    "test_scope": "chat.NewService -> Eino ADK -> search_faq -> live embedding -> PostgreSQL pgvector -> streaming answer -> persisted messages -> asynchronous rolling summary; HTTP/auth not exercised",
+    "top_k": 5,
+    "warmup_rows": 44,
+    "warmup_summary": "Pengguna menanyakan apa itu Qayala dan fitur utamanya. Asisten mencari FAQ dan menjawab bahwa Qayala adalah aplikasi untuk aktivitas ibadah harian serta layanan donasi dan sosial.\n\nFitur utama:\n- Jadwal salat, notifikasi adzan, arah kiblat, dan baca Al-Qur’an.\n- Jejak Kebaikan dan Qayala Journey untuk mencatat serta meninjau progres ibadah.\n- Lifestyle dengan integrasi LinkAja Syariah.\n- Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n\nCatatan: Pada MVP, hanya Isi Saldo yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim Saldo, Tarik Saldo, dan Terima Saldo berstatus “Soon”. Beberapa fitur tertentu mungkin memerlukan login atau koneksi internet. Belum ada pertanyaan terbuka.",
+    "warmup_summary_until": 4,
+    "warmup_turns": 11
+  },
+  "summaries": {
+    "low": {
+      "interactions": 9,
+      "mean_reasoning": "0",
+      "min_reasoning": 0,
+      "max_reasoning": 0,
+      "p95_nearest_rank": 0,
+      "nonzero_interactions": 0,
+      "mean_input": "39192",
+      "mean_output_including_reasoning": "493.1111111111111111111111111",
+      "mean_query_embedding": "46.44444444444444444444444444",
+      "mean_cost_usd": "0.04165848444444444444444444444",
+      "monthly_with_indexing_usd": "1398.661956737777777777777778",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "37203",
+          "mean_output": "278.5555555555555555555555556",
+          "mean_reasoning": "0"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "214.5555555555555555555555556",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "46.44444444444444444444444444",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    },
+    "medium": {
+      "interactions": 9,
+      "mean_reasoning": "4",
+      "min_reasoning": 0,
+      "max_reasoning": 36,
+      "p95_nearest_rank": 36,
+      "nonzero_interactions": 1,
+      "mean_input": "39176.11111111111111111111111",
+      "mean_output_including_reasoning": "508.2222222222222222222222222",
+      "mean_query_embedding": "52.44444444444444444444444444",
+      "mean_cost_usd": "0.04171827111111111111111111111",
+      "monthly_with_indexing_usd": "1400.669234284444444444444444",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "37187.11111111111111111111111",
+          "mean_output": "297.6666666666666666666666667",
+          "mean_reasoning": "4"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "210.5555555555555555555555556",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "52.44444444444444444444444444",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    }
+  },
+  "by_question": {
+    "q1-low": {
+      "interactions": 3,
+      "mean_reasoning": "0",
+      "min_reasoning": 0,
+      "max_reasoning": 0,
+      "p95_nearest_rank": 0,
+      "nonzero_interactions": 0,
+      "mean_input": "39288.33333333333333333333333",
+      "mean_output_including_reasoning": "511.6666666666666666666666667",
+      "mean_query_embedding": "46",
+      "mean_cost_usd": "0.04184758666666666666666666667",
+      "monthly_with_indexing_usd": "1405.010874746666666666666667",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "37299.33333333333333333333333",
+          "mean_output": "291",
+          "mean_reasoning": "0"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "220.6666666666666666666666667",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "46",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    },
+    "q1-medium": {
+      "interactions": 3,
+      "mean_reasoning": "0",
+      "min_reasoning": 0,
+      "max_reasoning": 0,
+      "p95_nearest_rank": 0,
+      "nonzero_interactions": 0,
+      "mean_input": "39231.33333333333333333333333",
+      "mean_output_including_reasoning": "517",
+      "mean_query_embedding": "49",
+      "mean_cost_usd": "0.04181731333333333333333333333",
+      "monthly_with_indexing_usd": "1403.994477853333333333333333",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "37242.33333333333333333333333",
+          "mean_output": "299.6666666666666666666666667",
+          "mean_reasoning": "0"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "217.3333333333333333333333333",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "49",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    },
+    "q2-low": {
+      "interactions": 3,
+      "mean_reasoning": "0",
+      "min_reasoning": 0,
+      "max_reasoning": 0,
+      "p95_nearest_rank": 0,
+      "nonzero_interactions": 0,
+      "mean_input": "38893.33333333333333333333333",
+      "mean_output_including_reasoning": "485",
+      "mean_query_embedding": "55.33333333333333333333333333",
+      "mean_cost_usd": "0.04131944",
+      "monthly_with_indexing_usd": "1387.27887856",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "36904.33333333333333333333333",
+          "mean_output": "279.6666666666666666666666667",
+          "mean_reasoning": "0"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "205.3333333333333333333333333",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "55.33333333333333333333333333",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    },
+    "q2-medium": {
+      "interactions": 3,
+      "mean_reasoning": "0",
+      "min_reasoning": 0,
+      "max_reasoning": 0,
+      "p95_nearest_rank": 0,
+      "nonzero_interactions": 0,
+      "mean_input": "38902.33333333333333333333333",
+      "mean_output_including_reasoning": "506",
+      "mean_query_embedding": "67",
+      "mean_cost_usd": "0.04143367333333333333333333333",
+      "monthly_with_indexing_usd": "1391.114148493333333333333333",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "36913.33333333333333333333333",
+          "mean_output": "294.3333333333333333333333333",
+          "mean_reasoning": "0"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "211.6666666666666666666666667",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "67",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    },
+    "q3-low": {
+      "interactions": 3,
+      "mean_reasoning": "0",
+      "min_reasoning": 0,
+      "max_reasoning": 0,
+      "p95_nearest_rank": 0,
+      "nonzero_interactions": 0,
+      "mean_input": "39394.33333333333333333333333",
+      "mean_output_including_reasoning": "482.6666666666666666666666667",
+      "mean_query_embedding": "38",
+      "mean_cost_usd": "0.04180842666666666666666666667",
+      "monthly_with_indexing_usd": "1403.696116906666666666666667",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "37405.33333333333333333333333",
+          "mean_output": "265",
+          "mean_reasoning": "0"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "217.6666666666666666666666667",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "38",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    },
+    "q3-medium": {
+      "interactions": 3,
+      "mean_reasoning": "12",
+      "min_reasoning": 0,
+      "max_reasoning": 36,
+      "p95_nearest_rank": 36,
+      "nonzero_interactions": 1,
+      "mean_input": "39394.66666666666666666666667",
+      "mean_output_including_reasoning": "501.6666666666666666666666667",
+      "mean_query_embedding": "41.33333333333333333333333333",
+      "mean_cost_usd": "0.04190382666666666666666666667",
+      "monthly_with_indexing_usd": "1406.899076506666666666666667",
+      "mean_calls": {
+        "agent": "2",
+        "summary": "1",
+        "embedding": "1"
+      },
+      "stages": {
+        "agent": {
+          "mean_input": "37405.66666666666666666666667",
+          "mean_output": "299",
+          "mean_reasoning": "12"
+        },
+        "summary": {
+          "mean_input": "1989",
+          "mean_output": "202.6666666666666666666666667",
+          "mean_reasoning": "0"
+        },
+        "embedding": {
+          "mean_input": "41.33333333333333333333333333",
+          "mean_output": "0",
+          "mean_reasoning": "0"
+        }
+      }
+    }
+  },
+  "measured_suite_cost_usd": "0.75039080",
+  "setup_cost_usd": "0.02238512",
+  "total_run_cost_usd": "0.77277592",
+  "cases": [
+    {
+      "id": "gpt-6.1-terra-low-q1-1",
+      "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 1,
+      "conversation_id": "b7008a3a-fae3-4921-bb9f-c1a57956e176",
+      "answer": "1. **Login Google di HP baru:** Gunakan akun Google yang sudah terhubung dengan Qayala. Qayala tidak mengirim OTP tambahan secara default jika autentikasi Google berhasil, tetapi Google dapat meminta verifikasi tambahan.\n\n2. **PIN Qayala:** Menu Keamanan Akun untuk mengganti PIN Qayala tidak ditampilkan bagi pengguna yang mendaftar dengan Google.\n\n3. **Menyambungkan LinkAja reguler:** Di halaman Lifestyle, pilih **Sambungkan akun**, masukkan nomor handphone, dan lakukan verifikasi OTP. Anda perlu menyetujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu melanjutkan penyambungan. PIN LinkAja terpisah dari PIN Qayala; Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda.\n\n4. **Kirim dan tarik saldo:** Belum bisa melalui Qayala pada MVP, meskipun akun sudah tersambung. Kirim Saldo dan Tarik Saldo berstatus **Soon**; hanya Isi Saldo yang bisa diklik.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat dan notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Berdasarkan FAQ registrasi, pengguna memilih kode negara, memasukkan nomor handphone, memverifikasi OTP melalui SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q1-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f8a4b8b7dba3aba016af184b18ac887d2a80421aebbb7d534",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17772,
+          "output_tokens": 61,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 2.010714458,
+          "function_calls": 1,
+          "function_argument_bytes": 179,
+          "argument_delta_bytes": 179
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 48,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.290806917
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0f8a4b8b7dba3aba016af184b3cf2487d29a487434c912d804",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19471,
+          "output_tokens": 229,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.689582959
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0337d2661d7a7f05016af184b77c0887d2a3c006aec9763771",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 209,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.538626708
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q1-2",
+      "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 2,
+      "conversation_id": "e9a44338-3046-4f0f-83cb-521ba5327090",
+      "answer": "1. **Login Google di HP baru:** Gunakan akun Google yang sudah terhubung ke Qayala. Qayala tidak mengirim OTP tambahan secara default setelah autentikasi berhasil, tetapi Google dapat meminta verifikasi tambahan.\n\n2. **Ganti PIN Qayala:** Menu Keamanan Akun untuk mengganti PIN Qayala tidak ditampilkan bagi pengguna yang mendaftar melalui Google.\n\n3. **Menyambungkan LinkAja reguler:** Di halaman Lifestyle, pilih **Sambungkan akun**, masukkan nomor handphone, dan lakukan verifikasi OTP. Anda perlu menyetujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu melanjutkan proses penyambungan.\n\n4. **Kirim dan tarik saldo:** Pada MVP, keduanya belum bisa digunakan meski akun sudah tersambung. Hanya **Isi Saldo** yang bisa diklik; Kirim Saldo dan Tarik Saldo berstatus “Soon”.\n\nPIN Qayala dan PIN LinkAja adalah hal yang berbeda; tidak perlu diasumsikan sama. Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan dari fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Berdasarkan FAQ registrasi, pengguna memilih kode negara dan memasukkan nomor handphone, memverifikasi OTP melalui SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna dan tidak membuat akun duplikat. Registrasi melalui Google juga tersedia.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q1-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0fe3d5a23b587a4c016af184bb315087d29a5e350fcc9bed9c",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17772,
+          "output_tokens": 59,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.870398125,
+          "function_calls": 1,
+          "function_argument_bytes": 178,
+          "argument_delta_bytes": 178
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 46,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.472133042
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0fe3d5a23b587a4c016af184bd7b4887d2af5f0e5786b7eea0",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19470,
+          "output_tokens": 238,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.902089709
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0eb22fd4c99a53a0016af184c1633487d29c8a976ec47fadaf",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 221,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.386906375
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q1-3",
+      "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 3,
+      "conversation_id": "5a18cf36-f70c-431d-a05c-2fe79ce16eca",
+      "answer": "1. **Login Google di HP baru:** Gunakan akun Google yang sudah terhubung dengan Qayala. Qayala tidak mengirim OTP tambahan secara default jika autentikasi berhasil, tetapi Google dapat meminta verifikasi tambahan.\n\n2. **Ganti PIN Qayala:** Menu Keamanan Akun untuk mengganti PIN Qayala tidak ditampilkan bagi pengguna yang mendaftar dengan Google.\n\n3. **Sambungkan LinkAja reguler:** Di halaman Lifestyle, pilih **Sambungkan akun**, masukkan nomor handphone dan lakukan verifikasi OTP. Setujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu lanjutkan penyambungan.\n\n4. **Kirim dan tarik saldo:** Belum bisa melalui Qayala pada MVP, meskipun akun sudah tersambung. Keduanya berstatus **Soon**; hanya Isi Saldo yang bisa diklik.\n\n**PIN Qayala dan PIN LinkAja adalah hal yang berbeda.** Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda. Jangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan apa itu Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk aktivitas ibadah harian serta layanan donasi dan sosial. Fiturnya mencakup jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan dari fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Berdasarkan FAQ yang dicari, registrasi dengan nomor handphone dilakukan dengan memilih kode negara, memasukkan nomor, memverifikasi OTP melalui SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna dan tidak membuat akun duplikat.\n- Alternatif registrasi melalui Google tersedia.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q1-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0582581a4a4b520c016af184c4e71887d287a3c8a67e4669a5",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17772,
+          "output_tokens": 55,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.775748917,
+          "function_calls": 1,
+          "function_argument_bytes": 171,
+          "argument_delta_bytes": 171
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 44,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.302404916
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0582581a4a4b520c016af184c6ff1887d2b4026e93890f8d0d",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19641,
+          "output_tokens": 231,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.692824833
+        },
+        {
+          "case": "gpt-6.1-terra-low-q1-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0b40d47fe11c6f04016af184caafe087d282242becb467eaf2",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 232,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.7929027079999997
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q2-1",
+      "question": "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 1,
+      "conversation_id": "7fcafa02-5dc8-4d75-9a7f-a5bfc6f379b9",
+      "answer": "**Dirancang untuk offline**\n- **Baca Al-Qur’an:** dapat digunakan tanpa internet.\n\n**Bisa offline dengan syarat**\n- **Jadwal salat:** bisa dibuka jika data dari penggunaan sebelumnya sudah tersimpan di perangkat. Namun, **tidak pasti langsung sesuai kota baru**. Jadwal diperbarui jika sistem mendeteksi perpindahan lokasi yang signifikan; FAQ tidak menjamin pembaruan tersebut terjadi saat offline. Pastikan izin lokasi aktif.\n- **Arah kiblat:** bisa digunakan jika lokasi sebelumnya tersedia atau perangkat masih dapat menggunakan GPS satelit. Karena arah dihitung berdasarkan lokasi, lokasi terakhir dari kota lama belum tentu sesuai dengan posisi Anda sekarang.\n\n**Fase berikutnya**\n- **Murotal** belum tersedia sebagai fokus MVP.\n- Pilihan **suara adzan** dan **reminder sebelum adzan** dibahas untuk fase berikutnya. Pada MVP, sistem mengirimkan notifikasi pada waktu salat.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan apa itu Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone. Asisten merujuk FAQ dan menjelaskan:\n\n- Qayala mendukung ibadah harian, donasi, dan layanan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang aktif; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Registrasi nomor HP: pilih kode negara dan masukkan nomor, verifikasi OTP via SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem memberi tahu pengguna dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q2-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_05445a8a6ba41229016af184cea50087d2bfcead3921cde862",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17774,
+          "output_tokens": 51,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.874508834,
+          "function_calls": 1,
+          "function_argument_bytes": 164,
+          "argument_delta_bytes": 164
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 44,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.3531375
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_05445a8a6ba41229016af184d0e59887d2a1ee8e2920a4c31a",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19122,
+          "output_tokens": 200,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.379683542
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0c27495631fc2366016af184d4433c87d286fc8439c3741e7e",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 206,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.409448917
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q2-2",
+      "question": "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 2,
+      "conversation_id": "0918e3ae-074d-4ed6-9ac7-31ca45fd1d62",
+      "answer": "**Dirancang untuk offline**\n- **Baca Al-Qur’an** dapat digunakan tanpa internet.\n\n**Bisa offline dengan syarat**\n- **Jadwal salat** bisa dibuka jika sebelumnya pernah dibuka saat online dan datanya tersimpan di perangkat. Namun, jadwal **tidak dijamin langsung sesuai kota baru**. FAQ menyebut jadwal diperbarui jika sistem mendeteksi perpindahan lokasi yang signifikan, tetapi tidak memastikan pembaruan itu terjadi saat offline. Aktifkan izin lokasi dan periksa kota yang tertera.\n- **Arah kiblat** bisa digunakan dalam kondisi tertentu, misalnya dengan lokasi yang pernah diperoleh atau GPS satelit. Karena arah dihitung berdasarkan lokasi, lokasi terakhir dari kota lama belum tentu mencerminkan posisi Anda sekarang.\n\n**Fase berikutnya**\n- **Murotal** belum tersedia sebagai fokus MVP.\n- Pilihan **suara adzan** dan **reminder sebelum adzan** dibahas untuk fase berikutnya. Pada MVP, sistem mengirim notifikasi saat waktu salat.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala dan cara registrasi dengan nomor handphone. Berdasarkan FAQ:\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat dan adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo LinkAja Syariah yang aktif; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Sebagian fitur memerlukan login atau internet.\n- Registrasi nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q2-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_010700cefd353671016af184d7ce8487d2885ce2e3e09f8413",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17774,
+          "output_tokens": 71,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.881651959,
+          "function_calls": 1,
+          "function_argument_bytes": 238,
+          "argument_delta_bytes": 238
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 70,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.397080458
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_010700cefd353671016af184da378887d2aba5a3ac901187b0",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19141,
+          "output_tokens": 220,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.9106294999999998
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0439e9863b869692016af184de00c487d28d2d375d87096da4",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 199,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.222328542
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q2-3",
+      "question": "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 3,
+      "conversation_id": "d87f226e-39bb-4588-ac30-9b9f4447fe52",
+      "answer": "**Yang dirancang bisa offline**\n- **Baca Al-Qur’an:** dapat digunakan tanpa internet.\n\n**Yang bisa offline dengan syarat**\n- **Jadwal salat:** bisa dibuka jika data dari kunjungan online sebelumnya sudah tersimpan di perangkat. Namun, jadwal **tidak dijamin langsung sesuai kota baru**. Jadwal diperbarui jika sistem mendeteksi perpindahan lokasi yang signifikan; FAQ tidak memastikan pembaruan itu terjadi saat offline. Pastikan izin lokasi aktif dan periksa nama kota yang ditampilkan.\n- **Arah kiblat:** bisa digunakan dalam kondisi tertentu, misalnya dengan lokasi yang pernah diperoleh atau GPS satelit. Arah dihitung berdasarkan lokasi perangkat, sehingga lokasi tersimpan dari kota lama belum tentu sesuai dengan posisi Anda sekarang.\n\n**Fase berikutnya**\n- **Murotal** belum menjadi fokus MVP dan dibahas untuk fase berikutnya.\n- Pilihan **suara adzan** dan **reminder sebelum adzan** juga dibahas untuk fase berikutnya, bukan fokus utama MVP. Pada MVP, tersedia push notification saat waktu salat; FAQ tidak menjamin notifikasi tersebut bekerja offline.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala dan fitur utamanya. Berdasarkan FAQ, Qayala membantu aktivitas ibadah harian serta akses layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan. Pada MVP, hanya Isi Saldo yang aktif; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n\nPengguna kemudian menanyakan cara registrasi dengan nomor handphone. FAQ menyebutkan: pilih kode negara dan masukkan nomor, verifikasi OTP yang dikirim melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu dan tidak membuat akun duplikat. Asisten menyampaikan langkah tersebut kepada pengguna.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q2-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0d5690dfdeaa6f3f016af184e152bc87d28faf60e7086f9887",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17774,
+          "output_tokens": 57,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.9363730829999999,
+          "function_calls": 1,
+          "function_argument_bytes": 201,
+          "argument_delta_bytes": 201
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 52,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.28382275
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0d5690dfdeaa6f3f016af184e38e6c87d28a414c3fdbeb99e4",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19128,
+          "output_tokens": 240,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 4.333265167
+        },
+        {
+          "case": "gpt-6.1-terra-low-q2-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_056612d2a4b3b4a9016af184e7e3c087d29fe013d1b6cd6db5",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 211,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.4763855
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q3-1",
+      "question": "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 1,
+      "conversation_id": "dae4e0ab-dc84-44c3-a83e-28aabf68523a",
+      "answer": "### Perhitungan contoh\n\nDengan tarif program **Rp37.500 per hari**:\n\n- 7 hari: **Rp262.500**\n- 11 hari: **Rp412.500**\n- 13 hari: **Rp487.500**\n\n**Total: Rp1.162.500**  \n**Sisa anggaran Rp1.200.000: Rp37.500**\n\nTarif tersebut hanya contoh dari program yang Anda pilih, bukan tarif universal.\n\n### Ketentuan FAQ\n\n- **Binding:** Anda perlu menyambungkan akun LinkAja Syariah terlebih dahulu untuk masuk ke detail program dan melanjutkan donasi.\n- **Wakaf dan Kurban:** Pada MVP, keduanya belum bisa diklik; menu yang bisa diklik adalah Infaq & Sedekah dan Zakat.\n- **Transaksi gagal:** Tidak boleh dicatat sebagai transaksi sukses. FAQ tidak menyatakan bahwa kegagalan otomatis berarti saldo sudah terpotong, jadi status saldo tidak bisa disimpulkan hanya dari kegagalan transaksi.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang tersedia di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Berdasarkan pencarian FAQ, registrasi dengan nomor handphone dilakukan dengan memilih kode negara, memasukkan nomor, memverifikasi OTP via SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q3-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0527547f6e722072016af184eb99b087d29115fa60f3c14980",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17792,
+          "output_tokens": 51,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.926338167,
+          "function_calls": 1,
+          "function_argument_bytes": 147,
+          "argument_delta_bytes": 147
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 37,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.396857666
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0527547f6e722072016af184ede3c887d29c0a9c8c5d29f95d",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19614,
+          "output_tokens": 214,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.412979042
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_08d8932f88ded0fc016af184f149ac87d280745488ad667260",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 212,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.402930375
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q3-2",
+      "question": "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 2,
+      "conversation_id": "8515dd67-8dd5-4b1b-b634-fe414991f991",
+      "answer": "### Perhitungan contoh\n\nDengan tarif program **Rp37.500 per hari**:\n\n- 7 hari: **Rp262.500**\n- 11 hari: **Rp412.500**\n- 13 hari: **Rp487.500**\n\n**Total: Rp1.162.500** untuk 31 hari.  \n**Sisa anggaran: Rp37.500** dari Rp1.200.000.\n\nTarif contoh ini bukan tarif universal; tarif mengikuti konfigurasi program atau lembaga.\n\n### Ketentuan FAQ\n\n- **Binding:** Anda perlu menyambungkan akun LinkAja Syariah terlebih dahulu untuk masuk ke detail program dan melanjutkan donasi.\n- **Wakaf dan Kurban:** Pada MVP, keduanya belum bisa diklik. Menu yang bisa diklik adalah Infaq & Sedekah dan Zakat.\n- **Transaksi gagal:** Tidak boleh dicatat sebagai transaksi sukses. FAQ tidak menyatakan bahwa kegagalan otomatis berarti saldo sudah terpotong.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone. Berdasarkan FAQ:\n\n- Qayala membantu aktivitas ibadah harian serta menyediakan layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle terintegrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Registrasi dengan nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP yang dikirim via SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem memberi tahu pengguna dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q3-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0e96b5f789f71532016af184f4d4a887d2877992c95d6262f7",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17792,
+          "output_tokens": 53,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 2.02465525,
+          "function_calls": 1,
+          "function_argument_bytes": 164,
+          "argument_delta_bytes": 164
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 41,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.368834916
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_0e96b5f789f71532016af184f73d2487d28cd42e317f19a262",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19616,
+          "output_tokens": 208,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.349383125
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_005359de39fe1928016af184fa940887d2a6208393639475bd",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 218,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.383913083
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-low-q3-3",
+      "question": "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ.",
+      "model": "gpt-6.1-terra",
+      "effort": "low",
+      "repeat": 3,
+      "conversation_id": "1bdf7592-9c3d-4a95-83dd-b1aa112bd311",
+      "answer": "### Perhitungan contoh\n\nDengan tarif program **Rp37.500 per hari**:\n\n- 7 hari: **Rp262.500**\n- 11 hari: **Rp412.500**\n- 13 hari: **Rp487.500**\n\n**Total: Rp1.162.500** untuk 31 hari.  \n**Sisa anggaran: Rp37.500** dari Rp1.200.000.\n\n### Ketentuan FAQ\n\n- Tarif fidyah mengikuti konfigurasi program atau lembaga; Rp37.500 di atas **bukan tarif universal**.\n- Untuk masuk ke detail program dan melanjutkan donasi, Anda perlu menyambungkan akun LinkAja Syariah terlebih dahulu.\n- Pada MVP, hanya **Infaq & Sedekah** dan **Zakat** yang bisa diklik; Wakaf dan Kurban belum bisa diklik.\n- Transaksi gagal **tidak boleh dicatat sebagai sukses**. Kegagalan juga tidak otomatis berarti saldo sudah terpotong; FAQ tidak menjelaskan status saldo untuk transaksi gagal.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan apa itu Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan dari fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Sebagian fitur memerlukan login atau internet.\n- Berdasarkan hasil pencarian FAQ, registrasi dengan nomor handphone dilakukan dengan memilih kode negara dan memasukkan nomor, memverifikasi OTP melalui SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna dan tidak membuat akun duplikat.\n\nBelum ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-low-q3-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_01bacfad8c873723016af184fe1cfc87d2851aa2189c9bbdd9",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17792,
+          "output_tokens": 49,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.805327959,
+          "function_calls": 1,
+          "function_argument_bytes": 138,
+          "argument_delta_bytes": 138
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 36,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.330817666
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_01bacfad8c873723016af18500404c87d28aaa6b088db2463e",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19610,
+          "output_tokens": 220,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.468756125
+        },
+        {
+          "case": "gpt-6.1-terra-low-q3-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "low",
+          "response_id": "resp_04f4bab7b63fd38e016af18503c97c87d2a61f5abc1496e11b",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 223,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 4.136457334
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q1-1",
+      "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 1,
+      "conversation_id": "845059d1-28f2-493d-874f-f087a4c078e9",
+      "answer": "1. **Login Google di HP baru:** Gunakan akun Google yang sudah terhubung dengan Qayala. OTP tambahan tidak selalu diperlukan: jika autentikasi Google berhasil, Qayala tidak mengirim OTP tambahan secara default, tetapi Google dapat meminta verifikasi tambahan.\n2. **Ganti PIN Qayala:** Menu Keamanan Akun untuk mengganti PIN Qayala tidak ditampilkan bagi pengguna yang mendaftar dengan Google.\n3. **Sambungkan LinkAja reguler:** Di halaman Lifestyle, pilih **Sambungkan akun**, masukkan nomor handphone, dan lakukan verifikasi OTP. Anda perlu menyetujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu melanjutkan penyambungan.\n4. **Kirim dan tarik saldo:** Pada MVP, keduanya belum bisa diklik meskipun akun sudah tersambung. Keduanya ditandai “Soon”; hanya **Isi Saldo** yang bisa diklik.\n\nPIN Qayala dan PIN LinkAja adalah PIN untuk layanan yang berbeda; jangan menganggap keduanya sama. Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- FAQ registrasi menyebutkan langkah: pilih kode negara dan masukkan nomor, verifikasi OTP yang dikirim via SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem memberi tahu pengguna dan tidak membuat akun duplikat.\n- Asisten telah menjelaskan langkah registrasi tersebut. Tidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q1-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_01ddd5818943b25e016af18507ff8487d2b03ba78bd4f08120",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17772,
+          "output_tokens": 47,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.8611102499999999,
+          "function_calls": 1,
+          "function_argument_bytes": 154,
+          "argument_delta_bytes": 154
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 37,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.369029042
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_01ddd5818943b25e016af1850a3da087d2974bfcaddfc95e24",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19458,
+          "output_tokens": 242,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.922097666
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0b99b9211243632b016af1850e2d7887d287af78cb7c0d33b6",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 221,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.700627042
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q1-2",
+      "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 2,
+      "conversation_id": "b4221ecc-b161-400a-98d8-ea6d58f5f2e6",
+      "answer": "1. **Login Google di HP baru:** Gunakan akun Google yang sudah terhubung dengan Qayala. Qayala tidak mengirim OTP tambahan secara default setelah autentikasi Google berhasil, tetapi Google dapat meminta verifikasi tambahan.\n2. **Ganti PIN Qayala:** Menu Keamanan Akun untuk mengganti PIN Qayala tidak ditampilkan bagi pengguna yang mendaftar dengan Google.\n3. **Sambungkan LinkAja reguler:** Di halaman Lifestyle, pilih **Sambungkan akun**, masukkan nomor handphone, dan lakukan verifikasi OTP. Setujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu lanjutkan proses penyambungan.\n4. **Kirim dan tarik saldo:** Belum bisa, meskipun akun sudah tersambung. Pada MVP, hanya **Isi Saldo** yang bisa diklik; Kirim Saldo dan Tarik Saldo masih berstatus “Soon”.\n\nPIN Qayala dan PIN LinkAja adalah hal yang berbeda; Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda. Jangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala, fitur utama, dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya **Isi Saldo** yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Hasil pencarian FAQ registrasi: pilih kode negara, masukkan nomor handphone, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q1-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0acc835fd79f511b016af1851204f487d2a88f648032f6ac76",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17772,
+          "output_tokens": 62,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.686535208,
+          "function_calls": 1,
+          "function_argument_bytes": 179,
+          "argument_delta_bytes": 179
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 51,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.549634583
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0acc835fd79f511b016af18514481487d2935b9b6cf6cb24fd",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19472,
+          "output_tokens": 237,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.888634667
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_085a7b8cb89310bc016af18518222c87d28705de5d35280416",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 216,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 4.167864208
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q1-3",
+      "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 3,
+      "conversation_id": "4c151288-ce89-4e66-b80c-8c40f34dd114",
+      "answer": "1. **Login Google di HP baru:** Gunakan akun Google yang sudah terhubung dengan Qayala. Qayala tidak mengirim OTP tambahan secara default jika autentikasi Google berhasil, tetapi Google dapat meminta verifikasi tambahan.\n\n2. **Ganti PIN Qayala:** Menu Keamanan Akun untuk mengganti PIN Qayala tidak ditampilkan bagi pengguna yang mendaftar dengan Google.\n\n3. **Sambungkan LinkAja reguler:** Di halaman Lifestyle, pilih **Sambungkan akun**, masukkan nomor handphone, dan verifikasi OTP. Setujui perubahan akun LinkAja reguler menjadi LinkAja Syariah, lalu lanjutkan proses penyambungan.\n\n4. **Kirim dan tarik saldo:** Belum bisa pada MVP, meskipun akun sudah tersambung. Keduanya ditandai **Soon**; hanya **Isi Saldo** yang bisa diklik.\n\n**PIN Qayala dan PIN LinkAja berbeda konteksnya**; tidak perlu diasumsikan sama. Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda. Jangan bagikan PIN atau OTP kepada siapa pun.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala dan fitur utamanya. Berdasarkan FAQ, Qayala adalah aplikasi untuk aktivitas ibadah harian serta layanan donasi dan sosial. Fiturnya mencakup jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan. Pada MVP, hanya Isi Saldo yang aktif; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n\nPengguna kemudian bertanya cara registrasi dengan nomor handphone. Pencarian FAQ menunjukkan alurnya: pilih kode negara, masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu dan tidak membuat akun duplikat. Asisten telah menyampaikan langkah tersebut. Tidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q1-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_09254710f1c28957016af1851c7a3c87d28522b40a54b54b52",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17772,
+          "output_tokens": 72,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 2.014101584,
+          "function_calls": 1,
+          "function_argument_bytes": 230,
+          "argument_delta_bytes": 230
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 59,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.317241541
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_09254710f1c28957016af1851ec5a887d285fa22333a4e533a",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19481,
+          "output_tokens": 239,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.662648
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q1-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_062564b885f74234016af1852269a487d2bd01e0f62ceed25d",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 215,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.719067333
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q2-1",
+      "question": "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 1,
+      "conversation_id": "608d6935-d196-4e17-8e92-4970cb89f660",
+      "answer": "**Bisa digunakan offline**\n- **Baca Al-Qur’an:** dirancang untuk digunakan tanpa internet.\n\n**Bisa digunakan dengan syarat**\n- **Jadwal salat:** bisa dibuka offline jika data dari saat Anda membukanya online sudah tersimpan di perangkat. Namun, **tidak dijamin langsung sesuai kota baru**. FAQ menyebut jadwal diperbarui jika perpindahan lokasi yang signifikan terdeteksi, tetapi tidak menjamin pembaruan tersebut saat offline. Pastikan izin lokasi aktif dan periksa nama kota yang ditampilkan.\n- **Arah kiblat:** bisa digunakan offline dalam kondisi tertentu, misalnya jika lokasi terakhir tersimpan atau GPS satelit dapat digunakan. Fitur ini menghitung arah berdasarkan lokasi; lokasi lama belum tentu mencerminkan posisi Anda di kota baru.\n\n**Fase berikutnya, bukan fokus MVP**\n- **Murotal** belum tersedia pada MVP.\n- Pilihan **suara adzan** dan **reminder sebelum adzan** dibahas untuk fase berikutnya. Pada MVP, sistem mengirimkan push notification saat waktu salat; FAQ tidak memastikan pengirimannya dalam kondisi offline.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone. Berdasarkan FAQ:\n\n- Qayala adalah aplikasi untuk ibadah harian, donasi, dan layanan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan dari fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Registrasi via nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP yang diterima via SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q2-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0edd2e4f2fdc35fc016af185264bb887d2b8323d62ba5538c8",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17774,
+          "output_tokens": 53,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.8464384169999999,
+          "function_calls": 1,
+          "function_argument_bytes": 177,
+          "argument_delta_bytes": 177
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 44,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.39896825
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0edd2e4f2fdc35fc016af18528889c87d2aa7b390fd61e6ce1",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19123,
+          "output_tokens": 238,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.750626291
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0c6bbcd5c67dc53a016af1852c46bc87d29bb56108f786b345",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 209,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.476910792
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q2-2",
+      "question": "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 2,
+      "conversation_id": "9888651a-52d2-44af-b6a7-3c0b3dc10bdf",
+      "answer": "**Bisa digunakan tanpa internet**\n- **Baca Al-Qur’an** dirancang untuk digunakan secara offline.\n\n**Bisa digunakan dengan syarat**\n- **Jadwal salat:** bisa dibuka offline jika sebelumnya pernah dibuka saat online **dan datanya sudah tersimpan** di perangkat. FAQ tidak menjamin jadwal langsung sesuai kota baru saat offline. Secara umum, jadwal diperbarui jika sistem mendeteksi perpindahan lokasi yang signifikan; izin lokasi juga perlu aktif.\n- **Arah kiblat:** bisa digunakan offline dalam kondisi tertentu, misalnya jika lokasi sebelumnya tersimpan atau perangkat masih bisa menggunakan GPS satelit. Fitur ini menggunakan lokasi untuk menghitung arah, sehingga lokasi yang dipakai perlu diperhatikan saat Anda sudah berpindah kota.\n\n**MVP dan fase berikutnya**\n- Pada MVP, sistem mengirimkan **push notification pada waktu salat**. FAQ tidak memastikan notifikasi ini tetap diterima saat offline.\n- **Murotal**, pilihan suara adzan, dan reminder sebelum adzan dibahas untuk **fase berikutnya**, bukan fokus utama MVP.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala, fitur utama, dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, arah kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, dari fitur saldo LinkAja Syariah hanya Isi Saldo yang dapat digunakan; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Berdasarkan hasil pencarian FAQ, registrasi dengan nomor HP dilakukan dengan memilih kode negara, memasukkan nomor, memverifikasi OTP lewat SMS, lalu membuat dan mengonfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q2-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0ac78ee1957483fc016af1852ff12c87d286fddfaf7f7f9f7f",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17774,
+          "output_tokens": 84,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 2.0521105,
+          "function_calls": 1,
+          "function_argument_bytes": 300,
+          "argument_delta_bytes": 300
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 89,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.311205625
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0ac78ee1957483fc016af185324e9087d2be37aaac5ebeadd0",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19155,
+          "output_tokens": 228,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 4.301698125
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0ef5b86412a74d44016af18536976887d283e8f6a182c82c05",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 216,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 5.443262542
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q2-3",
+      "question": "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 3,
+      "conversation_id": "2be3304a-69aa-48ce-b779-8430ced58ee5",
+      "answer": "**Bisa digunakan offline menurut FAQ**\n\n- **Baca Al-Qur’an:** dirancang untuk digunakan tanpa internet.\n\n**Bisa digunakan dengan syarat**\n\n- **Jadwal salat:** bisa dibuka offline jika sebelumnya pernah dibuka saat online dan datanya tersimpan di perangkat. Dalam kondisi Anda, data kota lama mungkin tersedia, tetapi **FAQ tidak menjamin jadwal langsung sesuai kota baru saat offline**. Jadwal diperbarui jika sistem mendeteksi perpindahan lokasi yang signifikan; pastikan izin lokasi aktif.\n- **Arah kiblat:** bisa digunakan offline jika lokasi pernah diperoleh sebelumnya atau perangkat masih dapat menggunakan GPS satelit. Fitur ini menghitung arah berdasarkan lokasi; FAQ tidak menjamin lokasi tersimpan dari kota lama akan memberikan arah yang tepat di kota baru.\n\n**Fase berikutnya**\n\nMurotal, pilihan suara adzan, dan reminder sebelum adzan dibahas untuk fase berikutnya, bukan fokus MVP. Pada MVP, sistem mengirimkan push notification pada waktu salat.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone. Asisten mencari FAQ dan menjelaskan:\n\n- Qayala adalah aplikasi untuk ibadah harian serta layanan donasi dan sosial. Fiturnya mencakup jadwal salat, adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan bantuan.\n- Pada MVP, hanya Isi Saldo yang tersedia di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Sebagian fitur memerlukan login atau internet.\n- Registrasi nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu dan tidak membuat akun duplikat.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q2-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_04cc7f315ffbfa12016af1853c267c87d2bcbe890188fbdac5",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17774,
+          "output_tokens": 69,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 2.09502825,
+          "function_calls": 1,
+          "function_argument_bytes": 244,
+          "argument_delta_bytes": 244
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 68,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.614240084
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_04cc7f315ffbfa12016af1853edd9087d29b9df75c888cccc1",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19140,
+          "output_tokens": 211,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.760050959
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q2-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_037ea309b661262f016af18542b14887d292077cf6fc4b1c80",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 210,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.624557625
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q3-1",
+      "question": "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 1,
+      "conversation_id": "357c1a5b-968c-4edf-92d2-a09b56fda84e",
+      "answer": "### Perhitungan contoh\n\nDengan tarif program **Rp37.500 per hari**:\n\n- 7 hari: **Rp262.500**\n- 11 hari: **Rp412.500**\n- 13 hari: **Rp487.500**\n\n**Total: Rp1.162.500** untuk 31 hari.  \n**Sisa anggaran: Rp37.500** dari Rp1.200.000.\n\nTarif tersebut hanya contoh dari program yang Anda pilih, bukan tarif universal.\n\n### Ketentuan FAQ\n\n- **Binding:** Anda perlu menyambungkan akun LinkAja Syariah terlebih dahulu untuk masuk ke detail program dan melanjutkan donasi.\n- **Wakaf dan Kurban:** Pada MVP, keduanya belum bisa diklik; menu yang bisa diklik adalah Infaq & Sedekah dan Zakat.\n- **Transaksi gagal:** Tidak boleh dicatat atau ditampilkan sebagai transaksi sukses. FAQ tidak menyatakan bahwa transaksi gagal otomatis berarti saldo sudah terpotong, sehingga status potongan saldo tidak dapat dipastikan dari informasi tersebut.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna bertanya tentang Qayala dan cara registrasi dengan nomor handphone.\n\n- Qayala adalah aplikasi ibadah harian serta layanan donasi dan sosial. Fitur utamanya meliputi jadwal salat dan notifikasi adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan integrasi LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Sebagian fitur memerlukan login atau internet.\n- Hasil pencarian FAQ registrasi: pilih kode negara dan masukkan nomor handphone, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem memberi tahu pengguna dan tidak membuat akun duplikat.\n- Belum ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q3-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0a61e69ee0a5acba016af185465a1887d2a8f016f982951744",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17792,
+          "output_tokens": 53,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.751173458,
+          "function_calls": 1,
+          "function_argument_bytes": 158,
+          "argument_delta_bytes": 158
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 39,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.3700145
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-1",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0a61e69ee0a5acba016af18548a24087d2863d4ad41f2c23b4",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19615,
+          "output_tokens": 221,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 4.49796075
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-1",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_03a22acf8b21ad69016af1854cfc7c87d2b021fd30d5b55287",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 210,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.730511292
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q3-2",
+      "question": "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 2,
+      "conversation_id": "5d63ab55-4819-4e45-b84c-b79b8e856b65",
+      "answer": "### Perhitungan contoh\n\nDengan tarif **Rp37.500 per hari** yang Anda berikan:\n\n- 7 hari × Rp37.500 = **Rp262.500**\n- 11 hari × Rp37.500 = **Rp412.500**\n- 13 hari × Rp37.500 = **Rp487.500**\n\n**Total: Rp1.162.500** untuk 31 hari.  \n**Sisa anggaran: Rp37.500** dari Rp1.200.000.\n\nTarif tersebut hanya contoh; tarif Fidyah mengikuti konfigurasi program atau lembaga dan tidak berlaku universal.\n\n### Ketentuan di FAQ\n\n- **Binding:** Ya, Anda perlu menyambungkan akun LinkAja Syariah. Jika belum binding, Anda akan diarahkan ke proses tersebut sebelum masuk ke detail program dan melanjutkan donasi.\n- **Wakaf dan Kurban:** Pada MVP, keduanya belum bisa diklik. Menu donasi yang bisa diklik adalah Infaq & Sedekah dan Zakat.\n- **Transaksi gagal:** Tidak boleh ditampilkan sebagai transaksi sukses. FAQ tidak menyatakan bahwa transaksi gagal otomatis berarti saldo sudah terpotong, sehingga hal itu tidak dapat dipastikan dari status gagal saja.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan tentang Qayala dan cara registrasi dengan nomor handphone. Berdasarkan hasil pencarian FAQ:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial, termasuk jadwal salat, adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang tersedia di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo masih berstatus “Soon”. Beberapa fitur memerlukan login atau internet.\n- Registrasi dengan nomor handphone: pilih kode negara dan masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Sistem memberi tahu jika nomor sudah terdaftar.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q3-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_05fa80e5015f855c016af18550d95087d29a83c1fe22ac3dbe",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17792,
+          "output_tokens": 58,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 2.475824917,
+          "function_calls": 1,
+          "function_argument_bytes": 182,
+          "argument_delta_bytes": 182
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 45,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.30770875
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-2",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_05fa80e5015f855c016af185539f8087d2919c7e1b97e9b7b0",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19621,
+          "output_tokens": 257,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.771770833
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-2",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0741cf5180e2c86c016af18557631887d2bd1d9642821bfc31",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 193,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.279579709
+        }
+      ]
+    },
+    {
+      "id": "gpt-6.1-terra-medium-q3-3",
+      "question": "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ.",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "repeat": 3,
+      "conversation_id": "f0082f0f-5d6d-4d6c-9e37-183764f2287b",
+      "answer": "### Perhitungan contoh\n\nDengan tarif program **Rp37.500 per hari**:\n\n- 7 hari × Rp37.500 = **Rp262.500**\n- 11 hari × Rp37.500 = **Rp412.500**\n- 13 hari × Rp37.500 = **Rp487.500**\n\n**Total: Rp1.162.500**  \n**Sisa anggaran: Rp37.500**\n\nTarif tersebut hanya contoh dari program yang Anda pilih, bukan tarif universal.\n\n### Ketentuan dalam FAQ\n\n- **Binding:** Anda perlu menyambungkan akun LinkAja Syariah terlebih dahulu untuk masuk ke detail program dan melanjutkan donasi.\n- **Wakaf dan Kurban:** Pada MVP, keduanya belum bisa diklik; menu yang bisa diklik adalah Infaq & Sedekah dan Zakat.\n- **Transaksi gagal:** Tidak boleh dicatat atau ditampilkan sebagai transaksi sukses. FAQ tidak menjelaskan apakah saldo terpotong saat transaksi gagal, sehingga hal itu tidak bisa disimpulkan otomatis.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 4,
+      "summary_until_after": 8,
+      "updated_summary": "Pengguna menanyakan Qayala, fitur utamanya, dan cara registrasi dengan nomor handphone. Asisten mencari FAQ dan menjelaskan:\n\n- Qayala mendukung ibadah harian serta layanan donasi dan sosial. Fiturnya meliputi jadwal salat, notifikasi adzan, kiblat, Al-Qur’an, Jejak Kebaikan/Qayala Journey, Lifestyle dengan LinkAja Syariah, Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n- Pada MVP, hanya Isi Saldo yang aktif di antara fitur saldo LinkAja Syariah; Kirim, Tarik, dan Terima Saldo berstatus “Soon”. Beberapa fitur membutuhkan login atau internet.\n- Registrasi nomor handphone: pilih kode negara, masukkan nomor, verifikasi OTP melalui SMS, lalu buat dan konfirmasi PIN 6 digit. Jika nomor sudah terdaftar, sistem akan memberi tahu pengguna.\n\nTidak ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "gpt-6.1-terra-medium-q3-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0272c4f6e88f2bdf016af1855ad61887d28015b1288ec20bac",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17792,
+          "output_tokens": 51,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 43,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 1.57588675,
+          "function_calls": 1,
+          "function_argument_bytes": 156,
+          "argument_delta_bytes": 156
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 40,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.346975792
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-3",
+          "stage": "agent",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0272c4f6e88f2bdf016af1855cc2dc87d2b59bb3d1c22d66dc",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19605,
+          "output_tokens": 257,
+          "reasoning_tokens": 36,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 45,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 2,
+            "user": 11
+          },
+          "seconds": 3.832151542
+        },
+        {
+          "case": "gpt-6.1-terra-medium-q3-3",
+          "stage": "summary",
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium",
+          "response_id": "resp_0ad8fcee0bf7e1e1016af18560983c87d292d89f1551ac1d5a",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1989,
+          "output_tokens": 205,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 3.705814125
+        }
+      ]
+    }
+  ],
+  "warmup": [
+    {
+      "id": "warmup-1",
+      "question": "Apa itu Qayala dan fitur utamanya apa saja?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Qayala adalah aplikasi untuk membantu aktivitas ibadah harian sekaligus mengakses layanan donasi dan sosial dalam satu aplikasi.\n\nFitur utamanya meliputi:\n- Jadwal salat, notifikasi adzan, dan arah kiblat\n- Baca Al-Qur’an\n- Jejak Kebaikan dan Qayala Journey untuk mencatat serta melihat progres ibadah\n- Lifestyle dengan integrasi LinkAja Syariah\n- Infaq & Sedekah dan Zakat\n- Profil dan pusat bantuan\n\nPada MVP, beberapa layanan LinkAja Syariah belum tersedia untuk digunakan. Misalnya, hanya Isi Saldo yang bisa diklik; Kirim Saldo, Tarik Saldo, dan Terima Saldo ditandai “Soon”.",
+      "tool_results": 1,
+      "loaded_history_rows": 0,
+      "history_roles": {},
+      "history_final_answers": 0,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-1",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_07b445e656786c8c016af184786b4487d29808d7bd103ab6bb",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 300,
+          "output_tokens": 30,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 2,
+          "input_types": {
+            "system": 1,
+            "user": 1
+          },
+          "seconds": 1.954264,
+          "function_calls": 1,
+          "function_argument_bytes": 55,
+          "argument_delta_bytes": 55
+        },
+        {
+          "case": "warmup-1",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 15,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.403688875
+        },
+        {
+          "case": "warmup-1",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_07b445e656786c8c016af1847a998087d29f6cb6676701867a",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1929,
+          "output_tokens": 159,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 4,
+          "input_types": {
+            "function_call": 1,
+            "function_call_output": 1,
+            "system": 1,
+            "user": 1
+          },
+          "seconds": 2.824276791
+        }
+      ]
+    },
+    {
+      "id": "warmup-2",
+      "question": "Bagaimana cara registrasi menggunakan nomor handphone?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Untuk registrasi Qayala dengan nomor handphone:\n\n1. Pilih kode negara, lalu masukkan nomor handphone.\n2. Masukkan kode OTP yang diterima melalui SMS untuk verifikasi.\n3. Buat PIN 6 digit, lalu masukkan kembali untuk konfirmasi.\n\nJika nomor tersebut sudah pernah digunakan untuk registrasi, sistem akan memberi tahu bahwa nomor sudah terdaftar.",
+      "tool_results": 1,
+      "loaded_history_rows": 4,
+      "history_roles": {
+        "assistant": 2,
+        "tool": 1,
+        "user": 1
+      },
+      "history_final_answers": 1,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-2",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a4ac0d4d733b431016af1847d7a7087d2b139caad8f441711",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 2104,
+          "output_tokens": 32,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 6,
+          "input_types": {
+            "function_call": 1,
+            "function_call_output": 1,
+            "message": 1,
+            "system": 1,
+            "user": 2
+          },
+          "seconds": 1.851738125,
+          "function_calls": 1,
+          "function_argument_bytes": 76,
+          "argument_delta_bytes": 76
+        },
+        {
+          "case": "warmup-2",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 16,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.337572041
+        },
+        {
+          "case": "warmup-2",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a4ac0d4d733b431016af1847fb48c87d2bd099dbb24885542",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 3774,
+          "output_tokens": 82,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 8,
+          "input_types": {
+            "function_call": 2,
+            "function_call_output": 2,
+            "message": 1,
+            "system": 1,
+            "user": 2
+          },
+          "seconds": 1.774859041
+        }
+      ]
+    },
+    {
+      "id": "warmup-3",
+      "question": "Apa saja isi homepage dan menu navigasi utama?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Di homepage Qayala terdapat:\n- Sapaan “Assalamualaikum” dengan nama pengguna\n- Jadwal salat\n- Menu Teman Ibadah\n- Jejak Kebaikan\n- Banner dan iklan\n- Inspirasi Islam\n\nMenu navigasi bawah (Bottom Navbar) terdiri dari **Home, Lifestyle, QRIS Scanner, Journey,** dan **Profile**. Pada MVP, menu Teman Ibadah yang dapat diklik adalah **Arah Kiblat, Jadwal Sholat,** dan **Al-Qur’an**.",
+      "tool_results": 1,
+      "loaded_history_rows": 8,
+      "history_roles": {
+        "assistant": 4,
+        "tool": 2,
+        "user": 2
+      },
+      "history_final_answers": 2,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-3",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0af17a29fa773a7e016af18481824487d2a57d87d719a27fb1",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 3872,
+          "output_tokens": 31,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 10,
+          "input_types": {
+            "function_call": 2,
+            "function_call_output": 2,
+            "message": 2,
+            "system": 1,
+            "user": 3
+          },
+          "seconds": 1.3654676669999999,
+          "function_calls": 1,
+          "function_argument_bytes": 65,
+          "argument_delta_bytes": 65
+        },
+        {
+          "case": "warmup-3",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 15,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.365067041
+        },
+        {
+          "case": "warmup-3",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0af17a29fa773a7e016af184833ef487d2b7f457e500c4a85e",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 5383,
+          "output_tokens": 117,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 12,
+          "input_types": {
+            "function_call": 3,
+            "function_call_output": 3,
+            "message": 2,
+            "system": 1,
+            "user": 3
+          },
+          "seconds": 2.082520417
+        }
+      ]
+    },
+    {
+      "id": "warmup-4",
+      "question": "Bisa lihat jadwal salat tanpa internet?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Bisa, jika sebelumnya Anda sudah membuka jadwal salat saat online sehingga datanya tersimpan di perangkat. Jika belum pernah dibuka atau tidak ada data tersimpan, jadwal tidak dapat dimuat saat offline.",
+      "tool_results": 1,
+      "loaded_history_rows": 12,
+      "history_roles": {
+        "assistant": 6,
+        "tool": 3,
+        "user": 3
+      },
+      "history_final_answers": 3,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-4",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a3cd7083b0a645e016af184855fdc87d28b5b8c75493e6752",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 5516,
+          "output_tokens": 35,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 14,
+          "input_types": {
+            "function_call": 3,
+            "function_call_output": 3,
+            "message": 3,
+            "system": 1,
+            "user": 4
+          },
+          "seconds": 1.416144667,
+          "function_calls": 1,
+          "function_argument_bytes": 80,
+          "argument_delta_bytes": 80
+        },
+        {
+          "case": "warmup-4",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 20,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.361779333
+        },
+        {
+          "case": "warmup-4",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a3cd7083b0a645e016af18487235887d2bddd5bb91224d134",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 6973,
+          "output_tokens": 47,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 16,
+          "input_types": {
+            "function_call": 4,
+            "function_call_output": 4,
+            "message": 3,
+            "system": 1,
+            "user": 4
+          },
+          "seconds": 1.5103044159999999
+        }
+      ]
+    },
+    {
+      "id": "warmup-5",
+      "question": "Bagaimana arah kiblat bekerja dan bisa offline?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Arah Kiblat menggunakan lokasi smartphone untuk menghitung arah, lalu menampilkan kompas dengan ikon Ka’bah sebagai penunjuk. Indikator visual atau perubahan warna muncul saat perangkat sudah sejajar dengan arah kiblat.\n\nFitur ini bisa digunakan tanpa internet dalam kondisi tertentu, misalnya jika lokasi sudah pernah diperoleh sebelumnya atau perangkat masih bisa menggunakan GPS satelit.",
+      "tool_results": 1,
+      "loaded_history_rows": 16,
+      "history_roles": {
+        "assistant": 8,
+        "tool": 4,
+        "user": 4
+      },
+      "history_final_answers": 4,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-5",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0d008e737859219c016af18488b31887d2bd09bcad537b7ef8",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 7036,
+          "output_tokens": 34,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 18,
+          "input_types": {
+            "function_call": 4,
+            "function_call_output": 4,
+            "message": 4,
+            "system": 1,
+            "user": 5
+          },
+          "seconds": 1.5322879999999999,
+          "function_calls": 1,
+          "function_argument_bytes": 89,
+          "argument_delta_bytes": 89
+        },
+        {
+          "case": "warmup-5",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 23,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.289668458
+        },
+        {
+          "case": "warmup-5",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0d008e737859219c016af1848a82fc87d2844f618621c6db62",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 8492,
+          "output_tokens": 78,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 20,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 4,
+            "system": 1,
+            "user": 5
+          },
+          "seconds": 1.877265792
+        }
+      ]
+    },
+    {
+      "id": "warmup-6",
+      "question": "Bisa baca Al-Quran offline dan apakah murotal sudah tersedia?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Ya, Baca Al-Qur’an dirancang bisa digunakan tanpa internet. Pada MVP tersedia Mushaf Indonesia dengan terjemahan, Mushaf Indonesia tanpa terjemahan, dan Mushaf Madinah tanpa terjemahan.\n\nFitur murotal belum tersedia sebagai fokus MVP; fitur tersebut dibahas untuk fase berikutnya.",
+      "tool_results": 1,
+      "loaded_history_rows": 20,
+      "history_roles": {
+        "assistant": 10,
+        "tool": 5,
+        "user": 5
+      },
+      "history_final_answers": 5,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-6",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0e7456b88f7886c0016af1848c80b887d2ba73087a074c7fca",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 8591,
+          "output_tokens": 42,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 22,
+          "input_types": {
+            "function_call": 5,
+            "function_call_output": 5,
+            "message": 5,
+            "system": 1,
+            "user": 6
+          },
+          "seconds": 1.687902416,
+          "function_calls": 1,
+          "function_argument_bytes": 101,
+          "argument_delta_bytes": 101
+        },
+        {
+          "case": "warmup-6",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 27,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.320214916
+        },
+        {
+          "case": "warmup-6",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0e7456b88f7886c0016af1848e704487d29567aa326ce59083",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10346,
+          "output_tokens": 68,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 24,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 5,
+            "system": 1,
+            "user": 6
+          },
+          "seconds": 1.745852959
+        }
+      ]
+    },
+    {
+      "id": "warmup-7",
+      "question": "Apa itu Jejak Kebaikan dan Qayala Journey?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "**Jejak Kebaikan** adalah bagian di homepage untuk memantau aktivitas ibadah harian. Aktivitas yang punya menu sendiri, seperti Baca Qur’an atau Sedekah, akan mengarahkan Anda ke fitur terkait; aktivitas seperti Puasa, Tarawih, Dhuha, atau Tahajud bisa langsung ditandai selesai.\n\n**Qayala Journey** adalah halaman detailnya. Di sana Anda dapat melihat daftar aktivitas, status centang, progres ibadah, serta riwayat mingguan atau bulanan.",
+      "tool_results": 1,
+      "loaded_history_rows": 24,
+      "history_roles": {
+        "assistant": 12,
+        "tool": 6,
+        "user": 6
+      },
+      "history_final_answers": 6,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-7",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_003ab2d6e64164f0016af18490893c87d2b620d546ffd87fb6",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 10433,
+          "output_tokens": 37,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 26,
+          "input_types": {
+            "function_call": 6,
+            "function_call_output": 6,
+            "message": 6,
+            "system": 1,
+            "user": 7
+          },
+          "seconds": 2.089494334,
+          "function_calls": 1,
+          "function_argument_bytes": 80,
+          "argument_delta_bytes": 80
+        },
+        {
+          "case": "warmup-7",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 20,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.486664542
+        },
+        {
+          "case": "warmup-7",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_003ab2d6e64164f0016af18492ce7087d29f332de2cef2d6d0",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 12114,
+          "output_tokens": 112,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 28,
+          "input_types": {
+            "function_call": 7,
+            "function_call_output": 7,
+            "message": 6,
+            "system": 1,
+            "user": 7
+          },
+          "seconds": 2.430600125
+        }
+      ]
+    },
+    {
+      "id": "warmup-8",
+      "question": "Apa saja fitur saldo di Lifestyle yang sudah aktif pada MVP?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Di MVP, **Isi Saldo** adalah satu-satunya fitur saldo di Lifestyle yang bisa diklik. **Kirim Saldo, Tarik Saldo,** dan **Terima Saldo** belum aktif dan ditandai “Soon”. Setelah akun LinkAja Syariah berhasil disambungkan, saldo juga dapat dilihat di halaman tersebut.",
+      "tool_results": 1,
+      "loaded_history_rows": 28,
+      "history_roles": {
+        "assistant": 14,
+        "tool": 7,
+        "user": 7
+      },
+      "history_final_answers": 7,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-8",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a528745084c9122016af184954c2087d28cb01f18e9ecc873",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 12244,
+          "output_tokens": 36,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 30,
+          "input_types": {
+            "function_call": 7,
+            "function_call_output": 7,
+            "message": 7,
+            "system": 1,
+            "user": 8
+          },
+          "seconds": 2.179831833,
+          "function_calls": 1,
+          "function_argument_bytes": 98,
+          "argument_delta_bytes": 98
+        },
+        {
+          "case": "warmup-8",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 22,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.280426583
+        },
+        {
+          "case": "warmup-8",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0a528745084c9122016af18497c2d087d2a5a8eddc4f33fbbf",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 13946,
+          "output_tokens": 76,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 32,
+          "input_types": {
+            "function_call": 8,
+            "function_call_output": 8,
+            "message": 7,
+            "system": 1,
+            "user": 8
+          },
+          "seconds": 1.822928792
+        }
+      ]
+    },
+    {
+      "id": "warmup-9",
+      "question": "Apa itu account binding LinkAja Syariah?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "**Account binding** adalah proses menyambungkan akun LinkAja Syariah ke Qayala agar saldo dan layanan terkait dapat digunakan melalui Qayala.\n\nProsesnya dimulai dari memilih **Sambungkan akun**, memasukkan nomor handphone, lalu memverifikasi OTP. Langkah berikutnya bergantung pada status akun LinkAja Anda. Qayala tidak dapat melihat atau menyimpan PIN LinkAja Anda.",
+      "tool_results": 1,
+      "loaded_history_rows": 32,
+      "history_roles": {
+        "assistant": 16,
+        "tool": 8,
+        "user": 8
+      },
+      "history_final_answers": 8,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-9",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_08e2c5bb0008e2a6016af184999f8887d28fc96fab9c25aead",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 14039,
+          "output_tokens": 33,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 34,
+          "input_types": {
+            "function_call": 8,
+            "function_call_output": 8,
+            "message": 8,
+            "system": 1,
+            "user": 9
+          },
+          "seconds": 1.573737417,
+          "function_calls": 1,
+          "function_argument_bytes": 62,
+          "argument_delta_bytes": 62
+        },
+        {
+          "case": "warmup-9",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 16,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.325458125
+        },
+        {
+          "case": "warmup-9",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_08e2c5bb0008e2a6016af1849b8c8487d2b30d073eada73522",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 15836,
+          "output_tokens": 90,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 36,
+          "input_types": {
+            "function_call": 9,
+            "function_call_output": 9,
+            "message": 8,
+            "system": 1,
+            "user": 9
+          },
+          "seconds": 5.315317542
+        }
+      ]
+    },
+    {
+      "id": "warmup-10",
+      "question": "Menu donasi apa yang tersedia pada MVP dan bagaimana fidyah dihitung?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Pada MVP, menu donasi yang bisa diklik adalah **Infaq & Sedekah** dan **Zakat**. Kategori Infaq & Sedekah yang ditampilkan meliputi **Sedekah Subuh, Sedekah Jumat, Sedekah Palestina,** dan **Fidyah**; kategori utama Zakat adalah **Zakat Fitrah**.\n\nUntuk Fidyah, pengguna memasukkan jumlah hari puasa yang akan dibayarkan. Qayala menghitung total berdasarkan tarif per hari yang dikonfigurasi pada program atau lembaga, jadi tarifnya tidak universal.",
+      "tool_results": 1,
+      "loaded_history_rows": 36,
+      "history_roles": {
+        "assistant": 18,
+        "tool": 9,
+        "user": 9
+      },
+      "history_final_answers": 9,
+      "summary_until_before": 0,
+      "summary_until_after": 0,
+      "updated_summary": "",
+      "requests": [
+        {
+          "case": "warmup-10",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_062b6fcf118157eb016af184a0e0d887d2a998d16a69da3ef2",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 15947,
+          "output_tokens": 44,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 38,
+          "input_types": {
+            "function_call": 9,
+            "function_call_output": 9,
+            "message": 9,
+            "system": 1,
+            "user": 10
+          },
+          "seconds": 1.6894474590000002,
+          "function_calls": 1,
+          "function_argument_bytes": 120,
+          "argument_delta_bytes": 120
+        },
+        {
+          "case": "warmup-10",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 30,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.301070875
+        },
+        {
+          "case": "warmup-10",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_062b6fcf118157eb016af184a2f6a887d2843962e06935f7fa",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17569,
+          "output_tokens": 126,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 40,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 9,
+            "system": 1,
+            "user": 10
+          },
+          "seconds": 2.353169042
+        }
+      ]
+    },
+    {
+      "id": "warmup-11",
+      "question": "Bagaimana cara mengubah nama profil Qayala?",
+      "model": "",
+      "effort": "",
+      "repeat": 0,
+      "conversation_id": "7c7636af-dcc1-4c43-a136-ba3642102006",
+      "answer": "Buka **Profil**, lalu pilih **Data Pribadi** untuk mengubah nama. Nama yang tampil di homepage hanya bisa diubah melalui menu tersebut.",
+      "tool_results": 1,
+      "loaded_history_rows": 40,
+      "history_roles": {
+        "assistant": 20,
+        "tool": 10,
+        "user": 10
+      },
+      "history_final_answers": 10,
+      "summary_until_before": 0,
+      "summary_until_after": 4,
+      "updated_summary": "Pengguna menanyakan apa itu Qayala dan fitur utamanya. Asisten mencari FAQ dan menjawab bahwa Qayala adalah aplikasi untuk aktivitas ibadah harian serta layanan donasi dan sosial.\n\nFitur utama:\n- Jadwal salat, notifikasi adzan, arah kiblat, dan baca Al-Qur’an.\n- Jejak Kebaikan dan Qayala Journey untuk mencatat serta meninjau progres ibadah.\n- Lifestyle dengan integrasi LinkAja Syariah.\n- Infaq & Sedekah, Zakat, Profil, dan pusat bantuan.\n\nCatatan: Pada MVP, hanya Isi Saldo yang dapat digunakan di antara fitur saldo LinkAja Syariah; Kirim Saldo, Tarik Saldo, dan Terima Saldo berstatus “Soon”. Beberapa fitur tertentu mungkin memerlukan login atau koneksi internet. Belum ada pertanyaan terbuka.",
+      "requests": [
+        {
+          "case": "warmup-11",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_06d61852b58c4107016af184a54bd487d2a7d190186515f072",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 17712,
+          "output_tokens": 35,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 42,
+          "input_types": {
+            "function_call": 10,
+            "function_call_output": 10,
+            "message": 10,
+            "system": 1,
+            "user": 11
+          },
+          "seconds": 4.302407917,
+          "function_calls": 1,
+          "function_argument_bytes": 89,
+          "argument_delta_bytes": 89
+        },
+        {
+          "case": "warmup-11",
+          "stage": "embedding",
+          "model": "text-embedding-3-small",
+          "response_id": "",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19,
+          "output_tokens": 0,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {},
+          "seconds": 0.353519666
+        },
+        {
+          "case": "warmup-11",
+          "stage": "agent",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_06d61852b58c4107016af184a9f59487d2b33fc0a9f41f95d2",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 19227,
+          "output_tokens": 35,
+          "reasoning_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 44,
+          "input_types": {
+            "function_call": 11,
+            "function_call_output": 11,
+            "message": 10,
+            "system": 1,
+            "user": 11
+          },
+          "seconds": 1.462850333
+        },
+        {
+          "case": "warmup-11",
+          "stage": "summary",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "response_id": "resp_0407d2a5b7ae8838016af184ac140087d285f8d01922167a26",
+          "status": "completed",
+          "http_status": 200,
+          "input_tokens": 1842,
+          "output_tokens": 224,
+          "reasoning_tokens": 36,
+          "cached_input_tokens": 0,
+          "cache_write_tokens": 0,
+          "input_items": 1,
+          "input_types": {
+            "user": 1
+          },
+          "seconds": 5.936611375
+        }
+      ]
+    }
+  ],
+  "excluded_runs": [
+    {
+      "cases": [
+        {
+          "id": "gpt-6.1-terra-low-q1-1",
+          "question": "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+          "model": "gpt-6.1-terra",
+          "effort": "low",
+          "repeat": 1,
+          "conversation_id": "8e4c74de-b55c-4746-a0f4-60515a31bb00",
+          "answer": "",
+          "error": "[NodeRunError] failed to stream tool call call_0e9653f5a87a4d178419de7452034dfb: [LocalFunc] failed to unmarshal arguments in json, toolName=search_faq, err=EOF\n------------------------\nnode path: [node_1, ToolNode]",
+          "tool_results": 0,
+          "loaded_history_rows": 40,
+          "history_roles": {
+            "assistant": 20,
+            "tool": 10,
+            "user": 10
+          },
+          "history_final_answers": 10,
+          "summary_until_before": 4,
+          "summary_until_after": 0,
+          "updated_summary": "",
+          "requests": [
+            {
+              "case": "gpt-6.1-terra-low-q1-1",
+              "stage": "agent",
+              "model": "gpt-6.1-terra",
+              "reasoning_effort": "low",
+              "response_id": "resp_0b0bc3ae7b141678016af1840cdde087d2bc60952c3884f151",
+              "status": "completed",
+              "http_status": 200,
+              "input_tokens": 17964,
+              "output_tokens": 104,
+              "reasoning_tokens": 0,
+              "cached_input_tokens": 0,
+              "cache_write_tokens": 0,
+              "input_items": 43,
+              "input_types": {
+                "function_call": 10,
+                "function_call_output": 10,
+                "message": 10,
+                "system": 2,
+                "user": 11
+              },
+              "seconds": 2.205655625
+            }
+          ]
+        }
+      ],
+      "observed_cost_excluding_indexing_usd": "0.04104806",
+      "warmup_turns": 11
+    }
+  ]
+}

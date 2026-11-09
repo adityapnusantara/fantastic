@@ -1,0 +1,133 @@
+{
+  "source_url": "https://tcashsquad.atlassian.net/wiki/spaces/com/pages/5457182727",
+  "source_version": 4,
+  "sections": [
+    {
+      "id": "A",
+      "title": "Tentang Qayala secara umum",
+      "answer": "Qayala adalah aplikasi yang membantu user menjalankan aktivitas ibadah harian dan mengakses layanan donasi serta sosial dalam satu aplikasi.\n\nFitur utama Qayala mencakup jadwal salat, notifikasi adzan, arah kiblat, baca Al-Qur’an, Jejak Kebaikan atau Qayala Journey, halaman Lifestyle dengan integrasi LinkAja Syariah, menu Infaq & Sedekah, Zakat, halaman Profil, dan pusat bantuan.\n\nUntuk beberapa alur di dokumen sumber, user masuk ke fitur setelah berhasil login ke aplikasi. Jika user belum login, akses ke fitur tertentu bisa mengikuti flow login yang tersedia di aplikasi.\n\nBeberapa fitur bisa tetap digunakan dalam kondisi tertentu tanpa internet, seperti welcome screen, jadwal salat jika data sudah pernah tersimpan, arah kiblat dengan lokasi terakhir atau GPS satelit, dan baca Al-Qur’an. Namun beberapa fitur lain tetap membutuhkan koneksi, seperti login tertentu, binding akun, atau proses transaksi."
+    },
+    {
+      "id": "B",
+      "title": "Registrasi dan login",
+      "answer": "User dapat mendaftar menggunakan nomor handphone atau Sign In with Google, sesuai opsi yang tersedia di halaman registrasi.\n\nUser memilih country code, memasukkan nomor handphone, menerima OTP via SMS, memverifikasi OTP, lalu membuat PIN 6 digit dan konfirmasi PIN sebelum menyelesaikan registrasi.\n\nYa. User dapat memilih Continue atau Sign In with Google, mengikuti alur autentikasi Google, lalu melanjutkan registrasi jika autentikasi berhasil.\n\nTidak secara default. Jika autentikasi Google berhasil, Qayala tidak mengirim OTP tambahan, kecuali jika ada kebutuhan verifikasi tambahan dari Google.\n\nSistem tidak akan membuat akun duplikat. User akan diberi tahu bahwa nomor tersebut sudah pernah digunakan untuk registrasi.\n\nUser dapat login menggunakan nomor handphone yang sudah terdaftar dan PIN yang sudah dibuat saat registrasi, atau menggunakan akun Google yang sudah pernah terhubung dengan akun Qayala.\n\nJika PIN salah, sistem menampilkan pesan error dan user tetap berada di halaman login. Jika salah sampai 3 kali, user akan diminta melakukan reset PIN.\n\nYa. Untuk login dengan nomor handphone di device baru, user perlu menerima OTP terlebih dahulu, lalu memasukkan PIN. Setelah berhasil login di device baru, sesi di device lama akan berakhir otomatis."
+    },
+    {
+      "id": "C",
+      "title": "Homepage dan navigasi utama",
+      "answer": "Di homepage, user dapat melihat greeting Assalamualaikum dengan nama user, jadwal salat, menu Teman Ibadah, section Jejak Kebaikan, banner dan iklan, section Inspirasi Islam, serta Bottom Navbar.\n\nBottom Navbar berisi Home, Lifestyle, QRIS Scanner, Journey, dan Profile.\n\nUntuk MVP, menu Teman Ibadah yang bisa diklik adalah Arah Kiblat, Jadwal Sholat, dan Al-Qur’an."
+    },
+    {
+      "id": "D",
+      "title": "Jadwal salat dan adzan",
+      "answer": "Halaman Jadwal Salat menampilkan 5 waktu salat: Subuh, Dzuhur, Ashar, Maghrib, dan Isya, lengkap dengan nama kota atau daerah serta tanggal Hijriah dan Masehi.\n\nPastikan izin lokasi di device aktif. Jadwal salat menggunakan lokasi user untuk menampilkan waktu yang sesuai. Jika izin lokasi ditolak, sistem akan meminta user mengaktifkan akses lokasi.\n\nYa. Jika sistem mendeteksi perpindahan lokasi yang signifikan, jadwal salat akan diperbarui sesuai lokasi baru.\n\nBisa jika user sebelumnya pernah membuka fitur ini saat online dan data sudah tersimpan di device. Jika belum pernah membuka dan tidak ada data tersimpan, jadwal salat tidak dapat dimuat saat offline.\n\nDi MVP, sistem mengirimkan push notification pada waktu salat. Jika user menekan notifikasi tersebut, user akan diarahkan ke halaman jadwal salat.\n\nPengaturan yang lebih lengkap seperti memilih suara adzan, push notification biasa, silent, atau reminder sebelum adzan termasuk pembahasan fase berikutnya, bukan fokus utama MVP."
+    },
+    {
+      "id": "E",
+      "title": "Arah kiblat",
+      "answer": "Fitur Arah Kiblat menggunakan lokasi smartphone user untuk menghitung arah kiblat, lalu menampilkan kompas dan ikon Ka'bah sebagai penunjuk arah.\n\nKarena sistem perlu mengetahui posisi user agar dapat menghitung arah kiblat dengan benar.\n\nSistem akan menampilkan indikator visual atau perubahan warna ketika device user sudah sejajar dengan arah kiblat.\n\nBisa dalam kondisi tertentu, misalnya jika lokasi sudah pernah didapat sebelumnya atau device masih bisa menggunakan GPS satelit."
+    },
+    {
+      "id": "F",
+      "title": "Baca Al-Qur'an",
+      "answer": "Di MVP, user dapat melihat 3 jenis mushaf: Mushaf Indonesia dengan terjemahan, Mushaf Indonesia tanpa terjemahan, dan Mushaf Madinah tanpa terjemahan.\n\nYa. Untuk Mushaf Indonesia dengan terjemahan, bahasa terjemahan dapat mengikuti pengaturan bahasa di HP user, yaitu bahasa Indonesia atau bahasa Inggris.\n\nYa. User bisa mencari nama surah pada mushaf yang dipilih.\n\nYa. User bisa mencari nomor ayat dalam surah yang sedang dibuka, dan sistem hanya menampilkan nomor ayat yang memang ada di surah tersebut.\n\nYa. Menu Baca Al-Qur’an dirancang bisa digunakan tanpa internet.\n\nTidak. Fitur murotal dibahas pada phase berikutnya, bukan sebagai fokus utama MVP."
+    },
+    {
+      "id": "G",
+      "title": "Jejak Kebaikan dan Qayala Journey",
+      "answer": "Jejak Kebaikan adalah section di homepage yang menampilkan aktivitas ibadah harian yang bisa dipantau user.\n\nJika aktivitas memiliki menu tersendiri, seperti Baca Qur’an atau Sedekah, user akan diarahkan ke halaman fitur terkait dan aktivitas dapat ditandai selesai. Jika aktivitas tidak memiliki menu tersendiri, seperti Puasa, Tarawih, Dhuha, atau Tahajud, aktivitas akan langsung ditandai selesai tanpa pindah halaman.\n\nQayala Journey adalah halaman detail dari Jejak Kebaikan yang menampilkan daftar aktivitas ibadah harian, status centang tiap aktivitas, dan progress bar aktivitas ibadah.\n\nYa. Jika aktivitas sudah tercentang lalu user menekannya lagi, status aktivitas akan berubah menjadi tidak tercentang.\n\nProgress bar menunjukkan perkembangan aktivitas ibadah user berdasarkan jumlah aktivitas yang sudah ditandai selesai.\n\nYa. User dapat membuka riwayat perjalanan untuk melihat aktivitas ibadah dalam rentang mingguan atau bulanan, termasuk persentase penyelesaian dan rincian per ibadah."
+    },
+    {
+      "id": "H",
+      "title": "Lifestyle dan LinkAja Syariah",
+      "answer": "Lifestyle adalah halaman di Qayala yang menjadi pintu masuk ke integrasi LinkAja Syariah, fitur keuangan tertentu, menu Donasi & Sosial, dan Program Pilihan.\n\nJika belum binding, user akan melihat CTA untuk menghubungkan akun LinkAja Syariah dari halaman Lifestyle.\n\nSetelah berhasil binding, user dapat melihat saldo LinkAja Syariah dan area fitur keuangan.\n\nUser dapat melihat Isi Saldo, Kirim Saldo, Tarik Saldo, dan Terima Saldo.\n\nTidak. Pada MVP, hanya Isi Saldo yang bisa diklik. Kirim Saldo, Tarik Saldo, dan Terima Saldo belum bisa diklik dan ditandai dengan ikon Soon.\n\nHalaman Riwayat Transaksi dari Qayala hanya menampilkan transaksi yang dilakukan melalui aplikasi Qayala.\n\nTidak persis sama. Di Qayala, yang ditampilkan hanya transaksi Qayala. Di aplikasi LinkAja Syariah, user dapat melihat transaksi LinkAja Syariah dan juga transaksi Qayala."
+    },
+    {
+      "id": "I",
+      "title": "Account Binding LinkAja Syariah",
+      "answer": "Account binding adalah proses menyambungkan akun LinkAja Syariah ke Qayala agar user dapat menggunakan saldo dan layanan terkait di dalam aplikasi Qayala.\n\nUser menekan CTA sambungkan akun, memasukkan nomor handphone, memverifikasi OTP, lalu melanjutkan alur sesuai status akun LinkAja miliknya.\n\nJika user sudah memiliki akun LinkAja Syariah, user cukup melalui verifikasi yang diperlukan, menyetujui syarat dan ketentuan, lalu melanjutkan proses penyambungan.\n\nUser perlu menyetujui perubahan akun dari LinkAja regular ke LinkAja Syariah, lalu melanjutkan proses sambungkan akun.\n\nUser akan diminta mengisi data pendaftaran seperti nama, email, buat PIN, dan konfirmasi PIN. Akun yang dibuat dari flow ini adalah akun LinkAja Syariah.\n\nTidak. Pada informasi izin akses, dijelaskan bahwa Qayala tidak bisa melihat atau menyimpan PIN LinkAja user."
+    },
+    {
+      "id": "J",
+      "title": "Donasi, sosial, dan program",
+      "answer": "Section Donasi & Sosial dapat menampilkan Infaq & Sedekah, Zakat, Wakaf, dan Kurban sesuai konfigurasi yang tersedia.\n\nUntuk MVP, menu yang bisa diklik adalah Infaq & Sedekah dan Zakat.\n\nProgram Pilihan adalah section di halaman Lifestyle yang menampilkan daftar program yang dapat dipilih user untuk melihat detail lebih lanjut.\n\nYa. Menu Donasi & Sosial dan Program Pilihan dapat dikelola melalui CMS, sehingga daftar yang tampil bisa berubah tanpa perlu rilis aplikasi baru.\n\nYa, untuk masuk ke detail program dan melanjutkan flow donasi, sistem melakukan binding check. Jika user belum binding akun LinkAja Syariah, user akan diarahkan ke flow binding terlebih dahulu.\n\nUser dapat melihat hero banner, icon kategori donasi, dan featured program. Kontennya dapat berubah sesuai konfigurasi CMS.\n\nPada MVP, kategori yang ditampilkan adalah Sedekah Subuh, Sedekah Jumat, Sedekah Palestina, dan Fidyah.\n\nFidyah adalah flow donasi khusus di mana user memasukkan jumlah hari puasa yang akan dibayarkan. Sistem lalu menghitung total nominal berdasarkan rate per hari yang dikonfigurasi pada program.\n\nTidak. Rate Fidyah mengikuti konfigurasi program atau lembaga dan tidak di-hardcode secara universal.\n\nUntuk MVP, kategori utama Zakat yang ditampilkan adalah Zakat Fitrah.\n\nYa. User bisa memilih nominal cepat yang sudah ditentukan atau memasukkan nominal manual, sesuai aturan minimum atau konfigurasi yang berlaku pada program.\n\nYa. Setelah transaksi berhasil, sistem dapat membuat bukti digital atau receipt yang berisi informasi dasar transaksi.\n\nTransaksi yang berhasil akan tercatat di riwayat transaksi user. Transaksi gagal tidak boleh ditampilkan sebagai transaksi yang sukses."
+    },
+    {
+      "id": "K",
+      "title": "Profil, keamanan, dan bantuan",
+      "answer": "Di halaman Profil, user dapat melihat nama dan inisial profil, membuka notifikasi, mengubah nama melalui Data Pribadi, mengganti bahasa aplikasi, membuka pusat bantuan, membaca syarat dan ketentuan serta kebijakan privasi, dan logout.\n\nNama yang tampil di homepage hanya bisa diubah melalui menu Data Pribadi di halaman Profil.\n\nTidak. Menu Keamanan Akun untuk mengganti PIN ditampilkan untuk user yang registrasi menggunakan nomor telepon. Untuk user yang registrasi menggunakan Google, menu ini tidak ditampilkan.\n\nUser perlu masuk ke menu Keamanan Akun, melewati verifikasi OTP, lalu memasukkan PIN baru dan konfirmasi PIN baru.\n\nSaat ini tersedia 2 pilihan bahasa, yaitu Indonesia dan English.\n\nPusat Bantuan adalah akses ke chatbot yang digunakan user untuk bertanya atau menyampaikan keluhan terkait aplikasi Qayala.\n\nUser bisa membukanya dari halaman Profil. Keduanya ditampilkan dalam bentuk webview.\n\nUser dapat menekan tombol Keluar di bagian bawah halaman Profil untuk logout secara manual."
+    }
+  ],
+  "question": "Saya sudah punya akun LinkAja reguler. Bagaimana cara menghubungkannya ke Qayala, dan apakah setelah terhubung saya bisa langsung kirim saldo?",
+  "warmup_questions": [
+    "Apa itu Qayala dan fitur utamanya apa saja?",
+    "Bagaimana cara registrasi menggunakan nomor handphone?",
+    "Apa saja isi homepage dan menu navigasi utama?",
+    "Bisa lihat jadwal salat tanpa internet?",
+    "Bagaimana arah kiblat bekerja dan bisa offline?",
+    "Bisa baca Al-Quran offline dan apakah murotal sudah tersedia?",
+    "Apa itu Jejak Kebaikan dan Qayala Journey?",
+    "Apa saja fitur saldo di Lifestyle yang sudah aktif pada MVP?",
+    "Apa itu account binding LinkAja Syariah?",
+    "Menu donasi apa yang tersedia pada MVP dan bagaimana fidyah dihitung?",
+    "Bagaimana cara mengubah nama profil Qayala?"
+  ],
+  "questions": [
+    "Saya mendaftar Qayala memakai Google, lalu pindah ke HP baru. Di sisi lain akun LinkAja saya masih reguler dan belum tersambung ke Qayala. Jelaskan terpisah: apakah login Google selalu perlu OTP tambahan, apakah menu ganti PIN Qayala tersedia untuk saya, bagaimana menyambungkan LinkAja reguler, dan apakah setelah tersambung saya sudah bisa kirim serta tarik saldo pada MVP? Bedakan PIN Qayala dan PIN LinkAja; jangan mengasumsikan keduanya sama.",
+    "Saya bepergian ke kota baru tanpa internet. Jadwal salat pernah saya buka online di kota lama, lokasi terakhir masih tersimpan, dan GPS satelit mungkin tersedia. Mana yang masih bisa dipakai dan apa syaratnya untuk jadwal salat, arah kiblat, dan baca Al-Quran? Apakah jadwal pasti langsung sesuai kota baru, apakah murotal sudah ada, dan apakah pada MVP saya bisa memilih suara adzan serta reminder sebelum adzan? Tolong bedakan yang dijamin FAQ, bersyarat, dan fitur fase berikutnya.",
+    "Saya belum binding akun dan ingin membayar fidyah lewat Qayala untuk tiga anggota keluarga: 7, 11, dan 13 hari. Sebagai contoh, program yang saya pilih menampilkan rate Rp37.500 per hari dan anggaran saya Rp1.200.000. Hitung nominal masing-masing, total dan sisa anggaran; jangan menganggap rate ini universal. Jelaskan juga apakah saya harus binding dulu, apakah Wakaf dan Kurban sudah bisa diklik pada MVP, dan apakah transaksi gagal boleh dicatat sukses atau otomatis berarti saldo sudah terpotong. Pisahkan perhitungan dari ketentuan yang memang ada di FAQ."
+  ],
+  "session_question_sequences": [
+    [
+      "Apa itu Qayala dan fitur utama yang tersedia pada MVP?",
+      "Jika mendaftar Qayala memakai Google, apakah selalu ada OTP SMS tambahan dan apakah menu ganti PIN tersedia?",
+      "Bagaimana login dengan nomor handphone di HP baru, dan bagaimana sesi di HP lama?",
+      "Jika salah memasukkan PIN Qayala tiga kali, apa yang harus dilakukan?",
+      "Apa syarat jadwal salat bisa dibuka tanpa internet?",
+      "Bagaimana arah kiblat bekerja, dan kapan dapat digunakan tanpa internet?",
+      "Mushaf apa saja yang tersedia dan apakah baca Al-Quran bisa offline?",
+      "Apakah murotal, pilihan suara adzan, dan reminder sebelum adzan sudah tersedia pada MVP?",
+      "Bagaimana menandai dan membatalkan centang aktivitas Journey, serta melihat riwayat mingguan?",
+      "Saya punya akun LinkAja reguler. Bagaimana cara menyambungkannya ke Qayala?",
+      "Setelah binding berhasil, fitur saldo apa yang bisa digunakan pada MVP dan apakah bisa kirim saldo?",
+      "Menu donasi apa yang bisa diklik pada MVP dan apakah perlu binding sebelum melanjutkan donasi?",
+      "Program fidyah contoh memakai rate Rp37.500 per hari. Untuk 7, 11, dan 13 hari pada tiga orang, berapa nominal masing-masing dan totalnya? Apakah rate itu berlaku universal?",
+      "Apakah riwayat transaksi di Qayala sama dengan di LinkAja Syariah, dan apakah transaksi gagal boleh dicatat sukses?",
+      "Bagaimana mengubah nama profil, bahasa aplikasi, dan membuka pusat bantuan Qayala?"
+    ],
+    [
+      "Bagaimana arah kiblat bekerja, dan kapan dapat digunakan tanpa internet?",
+      "Mushaf apa saja yang tersedia dan apakah baca Al-Quran bisa offline?",
+      "Apakah murotal, pilihan suara adzan, dan reminder sebelum adzan sudah tersedia pada MVP?",
+      "Bagaimana menandai dan membatalkan centang aktivitas Journey, serta melihat riwayat mingguan?",
+      "Saya punya akun LinkAja reguler. Bagaimana cara menyambungkannya ke Qayala?",
+      "Setelah binding berhasil, fitur saldo apa yang bisa digunakan pada MVP dan apakah bisa kirim saldo?",
+      "Menu donasi apa yang bisa diklik pada MVP dan apakah perlu binding sebelum melanjutkan donasi?",
+      "Program fidyah contoh memakai rate Rp37.500 per hari. Untuk 7, 11, dan 13 hari pada tiga orang, berapa nominal masing-masing dan totalnya? Apakah rate itu berlaku universal?",
+      "Apakah riwayat transaksi di Qayala sama dengan di LinkAja Syariah, dan apakah transaksi gagal boleh dicatat sukses?",
+      "Bagaimana mengubah nama profil, bahasa aplikasi, dan membuka pusat bantuan Qayala?",
+      "Apa itu Qayala dan fitur utama yang tersedia pada MVP?",
+      "Jika mendaftar Qayala memakai Google, apakah selalu ada OTP SMS tambahan dan apakah menu ganti PIN tersedia?",
+      "Bagaimana login dengan nomor handphone di HP baru, dan bagaimana sesi di HP lama?",
+      "Jika salah memasukkan PIN Qayala tiga kali, apa yang harus dilakukan?",
+      "Apa syarat jadwal salat bisa dibuka tanpa internet?"
+    ],
+    [
+      "Setelah binding berhasil, fitur saldo apa yang bisa digunakan pada MVP dan apakah bisa kirim saldo?",
+      "Menu donasi apa yang bisa diklik pada MVP dan apakah perlu binding sebelum melanjutkan donasi?",
+      "Program fidyah contoh memakai rate Rp37.500 per hari. Untuk 7, 11, dan 13 hari pada tiga orang, berapa nominal masing-masing dan totalnya? Apakah rate itu berlaku universal?",
+      "Apakah riwayat transaksi di Qayala sama dengan di LinkAja Syariah, dan apakah transaksi gagal boleh dicatat sukses?",
+      "Bagaimana mengubah nama profil, bahasa aplikasi, dan membuka pusat bantuan Qayala?",
+      "Apa itu Qayala dan fitur utama yang tersedia pada MVP?",
+      "Jika mendaftar Qayala memakai Google, apakah selalu ada OTP SMS tambahan dan apakah menu ganti PIN tersedia?",
+      "Bagaimana login dengan nomor handphone di HP baru, dan bagaimana sesi di HP lama?",
+      "Jika salah memasukkan PIN Qayala tiga kali, apa yang harus dilakukan?",
+      "Apa syarat jadwal salat bisa dibuka tanpa internet?",
+      "Bagaimana arah kiblat bekerja, dan kapan dapat digunakan tanpa internet?",
+      "Mushaf apa saja yang tersedia dan apakah baca Al-Quran bisa offline?",
+      "Apakah murotal, pilihan suara adzan, dan reminder sebelum adzan sudah tersedia pada MVP?",
+      "Bagaimana menandai dan membatalkan centang aktivitas Journey, serta melihat riwayat mingguan?",
+      "Saya punya akun LinkAja reguler. Bagaimana cara menyambungkannya ke Qayala?"
+    ]
+  ]
+}
