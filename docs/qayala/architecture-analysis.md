@@ -75,11 +75,11 @@ Estimasi saat memory sudah penuh. Chat dapat terus berlanjut; setiap pasangan pe
 
 Agent dan summary memakai model yang sama, reasoning `none`, tanpa caching. Biaya per pertanyaan ≈ **$0,001252** (model + embedding query), ditambah indexing **$0,02/bulan**. Dengan N pertanyaan, **biaya AI bulanan = N × $0,001252 + $0,02**. Pemakaian aktual mengikuti jumlah token.
 
+Baseline **33.574 interaksi per bulan**, dengan satu interaksi dihitung sebagai satu pertanyaan baru pengguna dan satu jawaban chatbot.
+
 | Pertanyaan/bulan | Agent + update summary | Embedding query + indexing | Total AI OpenAI | Total AI Bedrock Global + Titan |
 |---:|---:|---:|---:|---:|
-| 1.000 | $1,250 | $0,022 | **$1,272** | **$1,272** |
-| 10.000 | $12,500 | $0,040 | **$12,540** | **$12,540** |
-| 100.000 | $125,000 | $0,220 | **$125,220** | **$125,220** |
+| 33.574 | $41,968 | $0,087 | **$42,055** | **$42,055** |
 
 Estimasi mencakup pemakaian model dan embedding. Pencarian ulang oleh Agent dapat menambah biaya. Biaya infrastruktur belum termasuk dan mengikuti alokasi layanan yang digunakan.
 
